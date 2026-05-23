@@ -111,7 +111,7 @@ export default function App() {
   };
 
   return (
-    <div className="page-bg">
+    <div className="page-bg" style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       {showBatch && <BatchChecker onClose={() => setShowBatch(false)} />}
 
       {/* Navbar */}
@@ -142,7 +142,8 @@ export default function App() {
         </div>
       </nav>
 
-      <div className="mx-auto px-16 pt-10 pb-6" style={{ maxWidth: '720px' }}>
+      <div style={{ flex: 1 }}>
+      <div className="mx-auto px-16 pt-10 pb-6" style={{ maxWidth: "720px" }}>
 
         {activeTab === 'check' && (
           <>
@@ -378,6 +379,7 @@ export default function App() {
           </div>
         )}
 
+      </div>
       </div>
 
       <footer className="border-t border-[#d6d7d9] bg-white">
