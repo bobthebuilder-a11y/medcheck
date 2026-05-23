@@ -257,43 +257,45 @@ export default function App() {
 
             {/* Loading */}
             {phase === 'streaming' && (
-              <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden mb-4">
-                <div className="bg-slate-900 px-5 py-4 text-white">
-                  <div className="flex items-center justify-between mb-3">
+              <div className="bg-slate-900 rounded-xl overflow-hidden mb-4 shadow-lg">
+                <div className="px-5 py-5">
+                  <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                        <span className="text-sm animate-pulse">🔬</span>
+                      <div className="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center shadow-sm">
+                        <span className="text-base">🔬</span>
                       </div>
                       <div>
-                        <p className="font-bold text-sm">Analyzing claim</p>
-                        <p className="text-xs text-slate-400">AI-powered fact verification</p>
+                        <p className="font-bold text-sm text-white">Analyzing claim</p>
+                        <p className="text-xs text-slate-500">Cross-referencing scientific literature</p>
                       </div>
                     </div>
-                    <span className="text-xs text-slate-500 font-mono">
+                    <span className="text-sm font-black text-blue-400 font-mono">
                       {Math.round(((loadingStep + 1) / LOADING_STEPS.length) * 100)}%
                     </span>
                   </div>
-                  <div className="h-1 bg-slate-700 rounded-full">
-                    <div className="h-1 bg-blue-500 rounded-full transition-all duration-700"
+
+                  {/* Progress bar */}
+                  <div className="h-1.5 bg-slate-700 rounded-full mb-5">
+                    <div className="h-1.5 bg-blue-500 rounded-full transition-all duration-700"
                       style={{ width: `${Math.round(((loadingStep + 1) / LOADING_STEPS.length) * 100)}%` }} />
                   </div>
-                </div>
-                <div className="px-5 py-4">
-                  <div className="space-y-2">
+
+                  {/* Steps */}
+                  <div className="space-y-2.5">
                     {LOADING_STEPS.map((step, i) => (
                       <div key={step} className={`flex items-center gap-3 transition-all duration-200 ${
                         i < loadingStep ? 'opacity-40' : i === loadingStep ? 'opacity-100' : 'opacity-20'
                       }`}>
-                        <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold ${
+                        <div className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-xs font-bold ${
                           i < loadingStep ? 'bg-emerald-500 text-white' :
-                          i === loadingStep ? 'bg-blue-100 border-2 border-blue-500' :
-                          'bg-slate-100 border border-slate-200'
+                          i === loadingStep ? 'border-2 border-blue-400 bg-slate-800' :
+                          'border border-slate-700 bg-slate-800'
                         }`}>
                           {i < loadingStep ? '✓' : i === loadingStep
-                            ? <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse block" />
-                            : ''}
+                            ? <span className="w-2 h-2 bg-blue-400 rounded-full animate-pulse block" />
+                            : <span className="w-1 h-1 bg-slate-600 rounded-full block" />}
                         </div>
-                        <span className={`text-xs ${i === loadingStep ? 'text-slate-800 font-semibold' : 'text-slate-500'}`}>
+                        <span className={`text-sm ${i === loadingStep ? 'text-white font-medium' : 'text-slate-600'}`}>
                           {step}
                         </span>
                       </div>
