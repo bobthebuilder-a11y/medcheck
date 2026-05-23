@@ -6,6 +6,7 @@ import HistoryPanel from './components/HistoryPanel';
 import SessionStats from './components/SessionStats';
 import RelatedClaims from './components/RelatedClaims';
 import BatchChecker from './components/BatchChecker';
+import TrendingClaims from './components/TrendingClaims';
 import type { ClaimAnalysis, HistoryEntry } from './types';
 
 const STORAGE_KEY = 'medcheck_history';
@@ -334,6 +335,7 @@ export default function App() {
                   <span>📋</span>
                   Check multiple claims at once (Batch Mode)
                 </button>
+                <TrendingClaims onSelect={(c) => { setClaim(c); handleAnalyze(c); }} />
               </div>
             )}
           </>
