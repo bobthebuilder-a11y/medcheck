@@ -26,9 +26,16 @@ MedCheck closes that gap. It's an AI tool that analyzes any health claim in real
 
 AI is the core of MedCheck, not a decoration. The tool uses a large language model (Llama 4, via Groq) with a carefully engineered system prompt designed specifically for structured health claim analysis.
 
-The key innovation is not just calling an AI API — it's the prompt engineering. The system prompt instructs the model to: (1) decompose compound claims into individual assertions, (2) evaluate each assertion separately, (3) calibrate confidence honestly ("a low-confidence honest answer is better than a high-confidence wrong answer"), (4) return structured JSON with verdicts, confidence scores, assertions, sources, and political charge classification.
+The key innovation is not just calling an AI API — it's the structured prompt engineering and feature design. MedCheck includes: The system prompt instructs the model to: (1) decompose compound claims into individual assertions, (2) evaluate each assertion separately, (3) calibrate confidence honestly ("a low-confidence honest answer is better than a high-confidence wrong answer"), (4) return structured JSON with verdicts, confidence scores, assertions, sources, and political charge classification.
 
-This structured output is what makes MedCheck a tool rather than a chatbot. The AI does the core intellectual work: finding relevant evidence, weighing it, and synthesizing a verdict — tasks that require exactly the pattern matching and knowledge synthesis that LLMs are trained for.
+- **Single claim analysis** with structured JSON output (not conversational)
+- **Batch mode** — check up to 5 claims simultaneously with live status
+- **Social media post extraction** — paste a full viral post and AI extracts the health claim
+- **Trending claims panel** — pre-verified common misinformation for quick reference
+- **Session export** — download your fact-checking session as a formatted report
+- **Related claims** — after checking, see similar claims in the same category
+
+This feature set is what makes MedCheck a tool rather than a chatbot. The AI does the core intellectual work: finding relevant evidence, weighing it, and synthesizing a verdict — and the app is designed to make that accessible to anyone.
 
 ---
 
