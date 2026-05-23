@@ -107,16 +107,15 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #f0f7ff 0%, #f8fafc 40%, #f5f3ff 100%)' }}>
+    <div className="min-h-screen" style={{ background: 'linear-gradient(160deg, #eef4ff 0%, #f9fafb 45%, #f3f0ff 100%)' }}>
 
       {/* Sticky navbar */}
-      <nav className="border-b border-gray-200/80 bg-white/90 backdrop-blur-md sticky top-0 z-20 shadow-sm">
+      <nav className="border-b border-gray-200/80 bg-white/95 backdrop-blur-md sticky top-0 z-20 shadow-sm">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-xl">🔬</span>
             <span className="font-black text-gray-900 text-lg tracking-tight">MedCheck</span>
-            <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-bold">BETA</span>
-
+            <span className="text-xs bg-blue-600 text-white px-2 py-0.5 rounded-full font-bold">BETA</span>
           </div>
           <div className="flex items-center gap-1">
             {(['check', 'about'] as const).map(tab => (
@@ -169,9 +168,10 @@ export default function App() {
             )}
 
             {/* Input card */}
-            <div className={`bg-white rounded-2xl shadow-sm border transition-all duration-200 p-5 mb-5 ${
-              phase === 'streaming' ? 'border-blue-400 shadow-md shadow-blue-100' :
-              phase === 'done' ? 'border-gray-200' : 'border-gray-200 focus-within:border-blue-400 focus-within:shadow-md focus-within:shadow-blue-50'
+            <div className={`bg-white rounded-2xl shadow-sm border-2 transition-all duration-200 p-5 mb-5 ${
+              phase === 'streaming' ? 'border-blue-400 shadow-blue-100 shadow-md' :
+              phase === 'done' ? 'border-gray-200' :
+              'border-gray-200 focus-within:border-blue-500 focus-within:shadow-md focus-within:shadow-blue-50'
             }`}>
               <textarea
                 ref={textareaRef}
@@ -416,17 +416,22 @@ export default function App() {
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-gray-200 bg-white/60 mt-12">
-        <div className="max-w-2xl mx-auto px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="text-center sm:text-left">
-            <p className="text-xs font-semibold text-gray-600">🔬 MedCheck · Built by David Xiao</p>
-            <p className="text-xs text-gray-400 mt-0.5">ACP Student AI Championship 2026 · SDG 3 & SDG 16</p>
+      <footer className="border-t border-gray-200 bg-white/70 mt-16">
+        <div className="max-w-2xl mx-auto px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-2 text-center sm:text-left">
+            <span className="text-base">🔬</span>
+            <div>
+              <p className="text-xs font-bold text-gray-700">MedCheck · Built by David Xiao</p>
+              <p className="text-xs text-gray-400 mt-0.5">ACP Student AI Championship 2026 · SDG 3 & SDG 16</p>
+            </div>
           </div>
-          <div className="flex items-center gap-4 text-xs text-gray-400">
+          <div className="flex items-center gap-3">
             <a href="https://github.com/bobthebuilder-a11y/medcheck" target="_blank" rel="noopener noreferrer"
-              className="hover:text-blue-600 transition-colors font-medium">GitHub</a>
-            <span>·</span>
-            <span>Powered by Llama 4 via Groq</span>
+              className="text-xs text-gray-400 hover:text-blue-600 transition-colors font-semibold flex items-center gap-1">
+              <span>⌥</span> GitHub
+            </a>
+            <span className="text-gray-200">·</span>
+            <span className="text-xs text-gray-400">Llama 4 via Groq</span>
           </div>
         </div>
       </footer>
