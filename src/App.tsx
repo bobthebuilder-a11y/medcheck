@@ -227,27 +227,44 @@ export default function App() {
 
             {/* Loading state */}
             {phase === 'streaming' && (
-              <div className="bg-white rounded-2xl border border-blue-200 shadow-sm p-8 text-center mb-5">
-                <div className="text-4xl mb-4">
-                  <span className="inline-block animate-bounce">🔬</span>
-                </div>
-                <p className="text-gray-800 font-semibold text-base mb-1">Analyzing your claim</p>
-                <p className="text-sm text-blue-500 font-medium mb-5 transition-all">
-                  {LOADING_STEPS[loadingStep]}
-                </p>
-                <div className="flex justify-center gap-1.5 mb-5">
-                  {LOADING_STEPS.map((_, i) => (
-                    <div key={i} className={`h-1.5 rounded-full transition-all duration-500 ${
-                      i <= loadingStep ? 'bg-blue-500 w-8' : 'bg-gray-200 w-4'
-                    }`} />
-                  ))}
-                </div>
-                {streamText.length > 20 && (
-                  <div className="bg-gray-50 rounded-xl p-3 text-left text-xs text-gray-400 font-mono max-h-16 overflow-hidden">
-                    {streamText.slice(-120)}
-                    <span className="animate-pulse">▊</span>
+              <div className="bg-white rounded-2xl border border-blue-200 shadow-sm overflow-hidden mb-5">
+                <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-4 text-white">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-2xl animate-bounce">🔬</span>
+                    <div>
+                      <p className="font-bold text-sm">Analyzing your claim</p>
+                      <p className="text-xs text-blue-200">Cross-referencing scientific literature...</p>
+                    </div>
                   </div>
-                )}
+                  <div className="h-1.5 bg-white/20 rounded-full">
+                    <div
+                      className="h-1.5 bg-white rounded-full transition-all duration-700"
+                      style={{ width: `${Math.round(((loadingStep + 1) / LOADING_STEPS.length) * 100)}%` }}
+                    />
+                  </div>
+                </div>
+                <div className="p-5">
+                  <div className="space-y-2.5">
+                    {LOADING_STEPS.map((step, i) => (
+                      <div key={step} className={`flex items-center gap-3 transition-all duration-300 ${
+                        i < loadingStep ? 'opacity-50' :
+                        i === loadingStep ? 'opacity-100' :
+                        'opacity-30'
+                      }`}>
+                        <div className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-xs ${
+                          i < loadingStep ? 'bg-blue-500 text-white' :
+                          i === loadingStep ? 'bg-blue-100 border-2 border-blue-500' :
+                          'bg-gray-100 border border-gray-200'
+                        }`}>
+                          {i < loadingStep ? '✓' : i === loadingStep ? <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse block" /> : ''}
+                        </div>
+                        <span className={`text-sm ${i === loadingStep ? 'text-blue-700 font-semibold' : 'text-gray-500'}`}>
+                          {step}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             )}
 
