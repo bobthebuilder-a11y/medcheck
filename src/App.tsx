@@ -239,7 +239,7 @@ export default function App() {
                 <div className="flex items-center gap-3">
                   {claim.length > 0 && phase !== 'streaming' && (
                     <span className="text-xs text-gray-400">
-                      {claim.length > 200 ? '📄 Long post detected' : `${claim.length} chars`}
+                      {claim.length > 200 ? '📄 Long post detected' : phase === 'done' ? '✓ Analyzed' : `${claim.length} chars`}
                     </span>
                   )}
                   {phase === 'streaming' && (
