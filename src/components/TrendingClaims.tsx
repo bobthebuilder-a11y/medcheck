@@ -64,17 +64,17 @@ export default function TrendingClaims({ onSelect }: Props) {
       <div className="divide-y divide-slate-50">
         {TRENDING.map((item) => (
           <button key={item.claim} onClick={() => onSelect(item.claim)}
-            className="w-full text-left px-4 py-3 hover:bg-slate-50 transition-colors group">
+            className="w-full text-left px-4 py-3 hover:bg-slate-50 transition-colors group border-l-2 border-transparent hover:border-blue-400">
             <div className="flex items-start justify-between gap-3">
               <div className="flex-1 min-w-0">
-                <p className="text-sm text-slate-800 font-medium group-hover:text-blue-600 truncate">
-                  {item.claim}
+                <p className="text-sm text-slate-800 font-medium group-hover:text-blue-600 leading-snug">
+                  "{item.claim}"
                 </p>
-                <p className="text-xs text-slate-500 mt-0.5 leading-relaxed line-clamp-1">{item.summary}</p>
+                <p className="text-xs text-slate-500 mt-1 leading-relaxed">{item.summary}</p>
+                <p className="text-[10px] text-slate-400 mt-1">{item.checked} · Click to re-analyze</p>
               </div>
-              <div className={`flex items-center gap-1 text-xs font-bold border rounded-full px-2 py-0.5 shrink-0 mt-0.5 ${VERDICT_STYLES[item.verdict]}`}>
+              <div className={`flex items-center gap-1 text-xs font-bold border rounded-lg px-2 py-1 shrink-0 mt-0.5 ${VERDICT_STYLES[item.verdict]}`}>
                 <span>{VERDICT_ICONS[item.verdict]}</span>
-                <span>{item.verdict.toUpperCase()}</span>
               </div>
             </div>
           </button>
