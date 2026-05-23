@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { ClaimAnalysis } from '../types';
 
 export const VERDICT_CONFIG = {
@@ -58,6 +59,7 @@ interface Props {
 export default function ResultCard({ analysis, claim, onReset }: Props) {
   const vc = VERDICT_CONFIG[analysis.verdict];
   const cc = CONFIDENCE_CONFIG[analysis.confidence];
+  const [showFullExplanation, setShowFullExplanation] = useState(false);
 
   const getShareText = () => {
     const divider = '─'.repeat(40);
@@ -140,10 +142,10 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
       </div>
 
       {/* Body */}
-      <div className="px-5 py-4 space-y-3">
+      <div className="px-5 py-4 space-y-4">
 
         {/* Claim */}
-        <div className="bg-slate-50 rounded-lg p-3 border border-slate-100">
+        <div className="bg-slate-50 rounded-lg p-2.5 border border-slate-100">
           {analysis.extractedClaim && analysis.extractedClaim !== claim ? (
             <div>
               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">Core claim extracted</p>
@@ -174,11 +176,24 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
         <div className={`text-sm font-bold ${vc.text} leading-relaxed border-l-4 ${vc.leftBorder} pl-3 py-0.5`}>{analysis.summary}</div>
 
         {/* Explanation */}
-        <div className="text-sm text-slate-600 leading-relaxed space-y-2">
-          {analysis.explanation.split('\n').filter(p => p.trim()).map((para, i) => (
-            <p key={i}>{para}</p>
-          ))}
-        </div>
+        {(() => {
+          const paras = analysis.explanation.split('\n').filter(p => p.trim());
+          const hasMore = paras.length > 1;
+          return (
+            <div className="text-sm text-slate-600 leading-relaxed space-y-2">
+              <p>{paras[0]}</p>
+              {hasMore && showFullExplanation && paras.slice(1).map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+              {hasMore && (
+                <button onClick={() => setShowFullExplanation(v => !v)}
+                  className="text-xs text-blue-600 hover:text-blue-800 font-medium">
+                  {showFullExplanation ? 'Show less' : 'Read more'}
+                </button>
+              )}
+            </div>
+          );
+        })()}
 
         {/* Assertions */}
         {analysis.assertions?.length > 0 && (
@@ -190,14 +205,11 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
               {analysis.assertions.map((a, i) => {
                 const ac = VERDICT_CONFIG[a.verdict];
                 return (
-                  <div key={i} className={`rounded border-l-4 ${ac.leftBorder} ${ac.assertionBg} border border-slate-100 px-3 py-2`}>
-                    <div className="flex items-start justify-between gap-2">
-                      <p className="text-xs text-slate-700 leading-relaxed flex-1">"{a.text}"</p>
-                      <span className={`text-[10px] font-black uppercase shrink-0 ${ac.text}`}>
-                        {ac.icon} {ac.label}
-                      </span>
-                    </div>
-                    <p className="text-xs text-slate-500 leading-relaxed mt-1">{a.explanation}</p>
+                  <div key={i} className={`rounded border-l-4 ${ac.leftBorder} ${ac.assertionBg} border border-slate-100 px-3 py-2 flex items-center justify-between gap-2`}>
+                    <p className="text-xs text-slate-700 leading-snug flex-1">"{a.text}"</p>
+                    <span className={`text-[10px] font-black uppercase shrink-0 ${ac.text}`}>
+                      {ac.icon} {ac.label}
+                    </span>
                   </div>
                 );
               })}

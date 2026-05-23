@@ -58,7 +58,7 @@ export default function TrendingClaims({ onSelect }: Props) {
         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Most Checked Claims</p>
       </div>
       <div className="divide-y divide-slate-50">
-        {TRENDING.map((item) => (
+        {TRENDING.slice(0, 3).map((item) => (
           <button key={item.claim} onClick={() => onSelect(item.claim)}
             className="w-full text-left px-4 py-2.5 hover:bg-slate-50 transition-colors group flex items-center gap-3">
             <span className={`text-xs font-bold shrink-0 ${VERDICT_COLORS[item.verdict]}`}>

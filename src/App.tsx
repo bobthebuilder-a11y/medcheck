@@ -211,40 +211,13 @@ export default function App() {
             {/* Loading */}
             {phase === 'streaming' && (
               <div className="bg-white rounded-lg border border-slate-200 overflow-hidden mb-4">
-                <div className="px-5 py-5">
-                  <div className="flex items-center justify-between mb-3">
-                    <div>
-                      <p className="font-bold text-sm text-slate-800">Analyzing claim</p>
-                      <p className="text-xs text-slate-400">Cross-referencing scientific literature</p>
-                    </div>
-                    <span className="text-sm font-black font-mono" style={{ color: '#003087' }}>
-                      {Math.round(((loadingStep + 1) / LOADING_STEPS.length) * 100)}%
-                    </span>
-                  </div>
-                  <div className="h-1.5 bg-slate-100 rounded-full mb-4">
-                    <div className="h-1.5 rounded-full transition-all duration-700"
-                      style={{ width: `${Math.round(((loadingStep + 1) / LOADING_STEPS.length) * 100)}%`, background: '#003087' }} />
-                  </div>
-                  <div className="space-y-2">
-                    {LOADING_STEPS.map((step, i) => (
-                      <div key={step} className={`flex items-center gap-3 transition-all ${
-                        i < loadingStep ? 'opacity-40' : i === loadingStep ? 'opacity-100' : 'opacity-20'
-                      }`}>
-                        <div className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-xs font-bold border ${
-                          i < loadingStep ? 'bg-emerald-500 border-emerald-500 text-white' :
-                          i === loadingStep ? 'border-blue-400 bg-white' :
-                          'border-slate-200 bg-white'
-                        }`}>
-                          {i < loadingStep ? '✓' : i === loadingStep
-                            ? <span className="w-2 h-2 bg-blue-400 rounded-full animate-pulse block" />
-                            : <span className="w-1 h-1 bg-slate-300 rounded-full block" />}
-                        </div>
-                        <span className={`text-sm ${i === loadingStep ? 'text-slate-800 font-medium' : 'text-slate-400'}`}>
-                          {step}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
+                <div className="h-1 bg-slate-100">
+                  <div className="h-1 rounded-r-full transition-all duration-700"
+                    style={{ width: `${Math.round(((loadingStep + 1) / LOADING_STEPS.length) * 100)}%`, background: '#003087' }} />
+                </div>
+                <div className="px-5 py-4 text-center">
+                  <p className="text-sm text-slate-500">{LOADING_STEPS[loadingStep]}</p>
+                  <p className="text-xs text-slate-400 mt-1 font-mono">{Math.round(((loadingStep + 1) / LOADING_STEPS.length) * 100)}%</p>
                 </div>
               </div>
             )}
@@ -269,15 +242,10 @@ export default function App() {
             {phase === 'done' && result && (
               <div className="space-y-3 result-enter">
                 <ResultCard analysis={result} claim={lastClaim} onReset={handleReset} />
-                <div className="flex gap-2">
-                  <button onClick={handleReset}
-                    className="flex-1 py-2.5 bg-white border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50 text-sm font-semibold flex items-center justify-center gap-2">
-                    + Check another claim
-                  </button>
-                  <button onClick={() => { handleReset(); setActiveTab('about'); }}
-                    className="px-3.5 py-2.5 bg-white border border-slate-200 rounded-lg text-slate-400 hover:text-slate-600 text-sm"
-                    title="About MedCheck">i</button>
-                </div>
+                <button onClick={handleReset}
+                  className="w-full py-2.5 bg-white border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50 text-sm font-semibold flex items-center justify-center gap-2">
+                  + Check another claim
+                </button>
                 <RelatedClaims
                   category={result.category}
                   currentClaim={lastClaim}
