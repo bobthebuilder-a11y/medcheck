@@ -104,11 +104,11 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
       {/* Header */}
       <div className={`${vc.headerBg} px-4 py-4`}>
         {/* Row 1: verdict + actions */}
-        <div className="flex items-center justify-between gap-2 mb-1">
-          <div className="flex items-center gap-2 min-w-0">
+        <div className="flex items-center justify-between gap-2 mb-2">
+          <div className="flex items-center gap-3 min-w-0">
             <span className="text-lg font-black text-white tracking-wide leading-none">{vc.icon} {vc.label}</span>
             {analysis.politicalCharge === 'high' && (
-              <span className="text-[10px] font-bold text-white/80 bg-white/15 border border-white/25 px-1.5 py-0.5 rounded shrink-0">
+              <span className="text-[10px] font-bold text-white/80 bg-white/15 border border-white/25 px-2 py-0.5 rounded shrink-0">
                 ⚡ Contested
               </span>
             )}
@@ -172,8 +172,8 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
 
         {/* Political charge warning */}
         {analysis.politicalCharge === 'high' && (
-          <div className="bg-purple-50 border border-purple-200 rounded-lg p-3 flex items-start gap-2">
-            <span className="shrink-0 text-purple-500">⚡</span>
+          <div className="bg-purple-50 border border-purple-200 rounded-lg p-3 flex items-center gap-2">
+            <span className="shrink-0 text-purple-500 text-sm leading-none">⚡</span>
             <p className="text-xs text-purple-700 leading-relaxed">
               <strong>Politically contested topic.</strong> AI reliability may be lower here — apply extra scrutiny and verify from multiple independent sources.
             </p>
