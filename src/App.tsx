@@ -111,7 +111,10 @@ export default function App() {
             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-sm text-white text-lg leading-none">
               🔬
             </div>
-            <span className="font-black text-white text-base tracking-tight">MedCheck</span>
+            <div>
+              <span className="font-black text-white text-base tracking-tight block leading-tight">MedCheck</span>
+              <span className="text-[9px] text-slate-500 leading-none hidden sm:block">AI Health Fact-Checker</span>
+            </div>
             <span className="text-[10px] font-bold text-blue-300 bg-blue-500/20 border border-blue-500/30 px-1.5 py-0.5 rounded-full uppercase tracking-wider">Beta</span>
           </div>
           <div className="flex items-center gap-0.5">
