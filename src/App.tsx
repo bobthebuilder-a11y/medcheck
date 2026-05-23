@@ -272,7 +272,7 @@ export default function App() {
 
             {/* Session stats + History */}
             {phase !== 'streaming' && history.length > 0 && (
-              <div className="mt-6 space-y-3" style={{ marginBottom: "6rem" }}>
+              <div className="mt-6 space-y-3">
                 <SessionStats history={history} />
                 <HistoryPanel history={history} onSelect={handleHistorySelect} onClear={() => setHistory([])} />
               </div>
@@ -280,7 +280,7 @@ export default function App() {
 
             {/* Trending (idle + no history) */}
             {phase === 'idle' && history.length === 0 && (
-              <div className="mt-6" style={{ marginBottom: "6rem" }}>
+              <div className="mt-6">
                 <TrendingClaims onSelect={(c) => { setClaim(c); handleAnalyze(c); }} />
               </div>
             )}
