@@ -46,7 +46,7 @@ Respond ONLY with valid JSON — no text before or after, no markdown code fence
   "confidence": "high" | "medium" | "low",
   "confidenceScore": 0-100,
   "summary": "One punchy sentence summarizing your finding",
-  "explanation": "2-3 paragraph detailed explanation in plain English. Explain the science, not just the conclusion.",
+  "explanation": "2-3 paragraph detailed explanation in plain English. Start with the key finding, explain the science, then address why this claim spreads despite being wrong. No jargon.",
   "assertions": [
     {
       "text": "the specific factual claim being evaluated",
