@@ -44,7 +44,7 @@ export default function App() {
 
   useEffect(() => { saveHistory(history); }, [history]);
 
-  const totalChecked = history.length;
+  // const totalChecked = history.length; // used when hero section is shown
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
@@ -136,65 +136,33 @@ export default function App() {
 
         {activeTab === 'check' && (
           <>
-            {/* Hero — left-aligned, more impactful */}
+            {/* Compact header for idle state */}
             {phase === 'idle' && (
-              <div className="mb-8">
-                {/* Urgency banner */}
-                <div className="bg-red-50 border border-red-200 text-red-700 text-xs font-semibold px-3 py-2 rounded-lg mb-5 flex items-center gap-2">
-                  <span className="text-red-500 shrink-0">⚠</span>
-                  <span>Health misinformation causes real harm — vaccine hesitancy, delayed diagnoses, dangerous self-treatment. It spreads faster than corrections.</span>
+              <div className="mb-5">
+                <div className="flex items-start justify-between gap-4 mb-3">
+                  <div>
+                    <h1 className="text-2xl font-black text-slate-900 leading-tight mb-1">
+                      AI Health Fact-Checker
+                    </h1>
+                    <p className="text-sm text-slate-500 leading-relaxed">
+                      Paste any health claim to check it against CDC, WHO & peer-reviewed science.
+                    </p>
+                  </div>
+                  <div className="hidden sm:flex flex-wrap gap-2 shrink-0">
+                    {[
+                      { val: '6×', label: 'faster spread', c: 'text-red-600', bg: 'bg-red-50 border-red-200' },
+                      { val: '1 in 3', label: 'misled', c: 'text-amber-600', bg: 'bg-amber-50 border-amber-200' },
+                    ].map(s => (
+                      <div key={s.val} className={`flex items-center gap-1.5 ${s.bg} border rounded-lg px-2.5 py-1.5`}>
+                        <span className={`text-sm font-black ${s.c}`}>{s.val}</span>
+                        <span className="text-xs text-slate-500">{s.label}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 mb-5 flex-wrap">
-                  <span className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 bg-white border border-slate-200 px-3 py-1 rounded-full shadow-sm">
-                    <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse shrink-0"></span>
-                    ACP 2026 · SDG 3 & 16
-                  </span>
-                  {totalChecked > 0 && (
-                    <span className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
-                      ✓ {totalChecked} analyzed this session
-                    </span>
-                  )}
-                </div>
-
-                <h1 className="text-4xl sm:text-[52px] font-black text-slate-900 tracking-tight leading-[1.05] mb-4">
-                  Is that health claim<br />
-                  <span className="text-blue-600">actually true?</span>
-                </h1>
-
-                <p className="text-slate-500 text-base leading-relaxed mb-2 max-w-lg">
-                  Health misinformation kills. Fake cures delay real treatment. Vaccine myths cause outbreaks.
-                </p>
-                <p className="text-slate-500 text-base leading-relaxed mb-5 max-w-lg">
-                  Paste any claim, headline, or viral post — AI cross-references CDC, WHO & peer-reviewed science and returns a structured verdict in seconds.
-                </p>
-
-                {/* Stats row */}
-                <div className="flex flex-wrap gap-3 mb-6">
-                  {[
-                    { val: '6×', label: 'false claims spread vs. corrections', c: 'text-red-600', bg: 'bg-red-50', border: 'border-red-200' },
-                    { val: '30M+', label: 'uninsured Americans at risk', c: 'text-orange-600', bg: 'bg-orange-50', border: 'border-orange-200' },
-                    { val: '1 in 3', label: 'acted on unverified health info', c: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-200' },
-                  ].map(s => (
-                    <div key={s.val} className={`flex items-center gap-2 ${s.bg} border ${s.border} rounded-lg px-3 py-2`}>
-                      <span className={`text-lg font-black ${s.c} leading-none`}>{s.val}</span>
-                      <span className="text-xs text-slate-600 leading-tight">{s.label}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Pipeline */}
-                <div className="flex flex-wrap items-center gap-1">
-                  {[
-                    { label: 'Decompose claims', color: 'bg-blue-50 text-blue-700 border-blue-200' },
-                    { label: 'Synthesize evidence', color: 'bg-indigo-50 text-indigo-700 border-indigo-200' },
-                    { label: 'Calibrate confidence', color: 'bg-purple-50 text-purple-700 border-purple-200' },
-                    { label: 'Cite sources', color: 'bg-slate-50 text-slate-600 border-slate-200' },
-                  ].map((s, i) => (
-                    <div key={s.label} className="flex items-center gap-1">
-                      {i > 0 && <span className="text-slate-300 text-xs mx-0.5">→</span>}
-                      <span className={`text-xs font-semibold px-2.5 py-1 rounded-md border ${s.color}`}>{s.label}</span>
-                    </div>
-                  ))}
+                <div className="bg-red-50 border border-red-200 text-red-700 text-xs font-medium px-3 py-2 rounded-lg flex items-center gap-2">
+                  <span className="text-red-400 shrink-0">⚠</span>
+                  <span>Health misinformation causes real harm — vaccine hesitancy, delayed diagnoses, dangerous self-treatment.</span>
                 </div>
               </div>
             )}
