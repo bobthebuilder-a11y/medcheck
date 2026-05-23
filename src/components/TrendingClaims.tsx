@@ -54,9 +54,12 @@ interface Props {
 export default function TrendingClaims({ onSelect }: Props) {
   return (
     <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-100 bg-slate-50">
-        <span className="text-sm">🔥</span>
-        <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">Most Checked Claims</p>
+      <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 bg-slate-50">
+        <div className="flex items-center gap-2">
+          <span className="text-sm">🔥</span>
+          <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">Most Checked Claims</p>
+        </div>
+        <span className="text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-100 px-1.5 py-0.5 rounded-full">NEW</span>
       </div>
       <div className="divide-y divide-slate-50">
         {TRENDING.map((item) => (
