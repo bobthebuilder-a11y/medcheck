@@ -155,13 +155,13 @@ export default function App() {
             <span className="font-black text-gray-900 text-lg tracking-tight">MedCheck</span>
             <span className="text-xs bg-blue-600 text-white px-2 py-0.5 rounded-full font-bold">BETA</span>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1.5">
             {(['check', 'about'] as const).map(tab => (
               <button key={tab} onClick={() => setActiveTab(tab)}
                 className={`px-3 py-1.5 text-sm rounded-lg font-semibold capitalize transition-all ${
                   activeTab === tab ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
                 }`}>
-                {tab === 'check' ? '🔍 Check' : 'ℹ️ About'}
+                {tab === 'check' ? '🔍 Analyze' : 'ℹ️ About'}
               </button>
             ))}
           </div>
