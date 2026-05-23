@@ -60,12 +60,30 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
   const cc = CONFIDENCE_CONFIG[analysis.confidence];
 
   const handleShare = async () => {
+    const divider = '─'.repeat(40);
     const sourcesText = analysis.sources?.length
-      ? '\n\nSources:\n' + analysis.sources.map((s, i) => `${i+1}. ${s.name}: ${s.url}`).join('\n')
+      ? '\n\nSources:\n' + analysis.sources.map((s, i) => `[${i+1}] ${s.name}`).join('\n')
       : '';
-    const text = `MedCheck verdict on: "${claim}"\n\n${vc.icon} ${vc.label} (${analysis.confidenceScore}% confidence)\n\n${analysis.summary}\n\n${analysis.explanation}${sourcesText}\n\nhttps://medcheck-murex.vercel.app`;
+    const text = [
+      '🔬 MEDCHECK FACT-CHECK REPORT',
+      divider,
+      `Claim: "${claim}"`,
+      '',
+      `Verdict: ${vc.icon} ${vc.label}`,
+      `Confidence: ${analysis.confidenceScore}% (${analysis.confidence})`,
+      analysis.politicalCharge === 'high' ? '⚡ Politically contested topic' : '',
+      '',
+      `Summary: ${analysis.summary}`,
+      '',
+      analysis.explanation,
+      sourcesText,
+      '',
+      divider,
+      'Verified by MedCheck AI · https://medcheck-murex.vercel.app',
+    ].filter(Boolean).join('\n');
+
     if (navigator.share) {
-      try { await navigator.share({ title: 'MedCheck Result', text }); } catch { /* cancelled */ }
+      try { await navigator.share({ title: 'MedCheck Fact-Check Report', text }); } catch { /* cancelled */ }
     } else {
       await navigator.clipboard.writeText(text);
     }
