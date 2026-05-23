@@ -442,18 +442,12 @@ export default function App() {
 
       </div>
 
-      <footer className="border-t border-slate-800" style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)' }}>
-        <div className="max-w-3xl mx-auto px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-blue-600 rounded flex items-center justify-center text-sm">🔬</div>
-            <div>
-              <p className="text-xs font-semibold text-slate-300">MedCheck · David Xiao</p>
-              <p className="text-xs text-slate-500">ACP 2026 · SDG 3 & 16</p>
-            </div>
-          </div>
+      <footer className="border-t border-slate-800" style={{ background: '#0f172a' }}>
+        <div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
+          <span className="text-xs text-slate-500">MedCheck · David Xiao · ACP 2026</span>
           <div className="flex items-center gap-3 text-xs text-slate-500">
             <a href="https://github.com/bobthebuilder-a11y/medcheck" target="_blank" rel="noopener noreferrer"
-              className="hover:text-blue-400 font-medium">GitHub ↗</a>
+              className="hover:text-blue-400">GitHub ↗</a>
             <span>·</span>
             <span>Llama 4 · Groq</span>
           </div>
