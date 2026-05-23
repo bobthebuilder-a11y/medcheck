@@ -341,15 +341,37 @@ export default function App() {
               </div>
             )}
 
-            {/* Trust signals */}
+            {/* Impact callout + trust signals */}
             {phase === 'idle' && history.length === 0 && (
-              <div className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-slate-400">
-                {['Free to use', 'No account required', 'Works on any device', 'No data stored'].map(s => (
-                  <span key={s} className="flex items-center gap-1.5">
-                    <span className="w-1 h-1 rounded-full bg-slate-300"></span>
-                    {s}
-                  </span>
-                ))}
+              <div className="mt-6 space-y-3">
+                <div className="bg-slate-900 rounded-xl p-4 text-white">
+                  <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Why this matters</p>
+                  <p className="text-sm text-slate-200 leading-relaxed">
+                    False health claims cause real harm — vaccine hesitancy, delayed diagnoses, dangerous self-treatment.
+                    MedCheck gives anyone the ability to verify a claim in the same time it takes to read it.
+                  </p>
+                  <div className="flex items-center gap-3 mt-3 pt-3 border-t border-slate-700">
+                    <div className="text-center">
+                      <p className="text-xs font-black text-blue-400">Free</p>
+                      <p className="text-[10px] text-slate-500 mt-0.5">Always</p>
+                    </div>
+                    <div className="w-px h-6 bg-slate-700"></div>
+                    <div className="text-center">
+                      <p className="text-xs font-black text-blue-400">No account</p>
+                      <p className="text-[10px] text-slate-500 mt-0.5">Required</p>
+                    </div>
+                    <div className="w-px h-6 bg-slate-700"></div>
+                    <div className="text-center">
+                      <p className="text-xs font-black text-blue-400">No data</p>
+                      <p className="text-[10px] text-slate-500 mt-0.5">Stored</p>
+                    </div>
+                    <div className="w-px h-6 bg-slate-700"></div>
+                    <div className="text-center">
+                      <p className="text-xs font-black text-blue-400">Any device</p>
+                      <p className="text-[10px] text-slate-500 mt-0.5">Works everywhere</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           </>
