@@ -162,11 +162,13 @@ export default function App() {
                     ))}
                   </div>
                 </div>
-                <div className="bg-red-50 border border-red-200 text-red-700 text-xs px-3 py-2 rounded-lg flex items-center gap-2">
-                  <span className="shrink-0">⚠️</span>
-                  <span className="font-medium">Health misinformation causes real harm</span>
-                  <span className="text-red-500">—</span>
-                  <span>vaccine hesitancy, delayed diagnoses, dangerous self-treatment.</span>
+                <div className="bg-red-50 border border-red-200 text-red-700 text-xs px-3 py-2.5 rounded-xl flex items-start gap-2.5">
+                  <span className="shrink-0 mt-0.5 font-black text-red-500">!</span>
+                  <div>
+                    <span className="font-bold">Health misinformation causes real harm.</span>
+                    <span className="text-red-600"> Fake cancer cures delay real treatment. Vaccine myths cause outbreaks. Dangerous supplements harm thousands. </span>
+                    <span className="font-semibold text-red-700">MedCheck helps you verify before you share.</span>
+                  </div>
                 </div>
               </div>
             )}
