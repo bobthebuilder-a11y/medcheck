@@ -35,7 +35,7 @@ export default function HistoryPanel({ history, onSelect, onClear }: Props) {
       <div className="divide-y divide-gray-50">
         {history.slice(0, 5).map((entry) => (
           <button key={entry.id} onClick={() => onSelect(entry)}
-            className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 text-left transition-colors group">
+            className="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-gray-50 text-left transition-colors group">
             <span className="text-xl shrink-0">{VERDICT_ICONS[entry.analysis.verdict]}</span>
             <div className="min-w-0 flex-1">
               <p className="text-sm text-gray-700 truncate font-medium group-hover:text-blue-600 transition-colors">
