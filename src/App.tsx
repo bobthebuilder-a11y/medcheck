@@ -152,7 +152,7 @@ export default function App() {
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-xl">🔬</span>
-            <span className="font-black text-gray-900 text-lg tracking-tight">MedCheck</span>
+            <span className="font-black text-lg tracking-tight" style={{ background: 'linear-gradient(135deg, #1d4ed8, #7c3aed)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>MedCheck</span>
             <span className="text-xs bg-blue-600 text-white px-2 py-0.5 rounded-full font-bold">BETA</span>
           </div>
           <div className="flex items-center gap-1.5">
