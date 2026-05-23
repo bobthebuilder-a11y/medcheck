@@ -150,19 +150,18 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
       <div className={`${vc.bg} px-5 py-4 space-y-4`}>
 
         {/* Claim */}
-        <div className="bg-white/70 rounded-lg p-3 border border-slate-200/60">
+        <div className="bg-white/60 rounded-lg p-3 border border-slate-100">
           {analysis.extractedClaim && analysis.extractedClaim !== claim ? (
-            <>
-              <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mb-1">Core claim extracted</p>
-              <p className="text-sm text-slate-800 italic leading-relaxed mb-2">"{analysis.extractedClaim}"</p>
-              <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mb-1">From input</p>
-              <p className="text-xs text-slate-500 italic line-clamp-2">"{claim}"</p>
-            </>
+            <div>
+              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">Core claim extracted</p>
+              <p className="text-sm text-slate-800 italic leading-snug">"{analysis.extractedClaim}"</p>
+              <p className="text-[10px] text-slate-400 mt-2 italic truncate">From: "{claim.substring(0, 80)}{claim.length > 80 ? '…' : ''}"</p>
+            </div>
           ) : (
-            <>
-              <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mb-1">Claim analyzed</p>
-              <p className="text-sm text-slate-800 italic leading-relaxed">"{claim}"</p>
-            </>
+            <div>
+              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">Claim</p>
+              <p className="text-sm text-slate-800 italic leading-snug">"{claim}"</p>
+            </div>
           )}
         </div>
 
