@@ -3,30 +3,30 @@ import type { ClaimAnalysis } from '../types';
 export const VERDICT_CONFIG = {
   true: {
     bg: 'bg-emerald-50',
-    border: 'border-emerald-300',
-    headerBg: 'bg-emerald-600',
+    border: 'border-emerald-400',
+    headerBg: 'bg-emerald-700',
     text: 'text-emerald-800',
-    icon: '✅',
-    label: 'TRUE',
+    icon: '✓',
+    label: 'VERIFIED TRUE',
     barColor: 'bg-emerald-400',
     dot: 'bg-emerald-500',
   },
   false: {
     bg: 'bg-red-50',
-    border: 'border-red-300',
-    headerBg: 'bg-red-600',
+    border: 'border-red-400',
+    headerBg: 'bg-red-700',
     text: 'text-red-800',
-    icon: '❌',
+    icon: '✗',
     label: 'FALSE',
     barColor: 'bg-red-400',
     dot: 'bg-red-500',
   },
   misleading: {
     bg: 'bg-amber-50',
-    border: 'border-amber-300',
+    border: 'border-amber-400',
     headerBg: 'bg-amber-600',
     text: 'text-amber-800',
-    icon: '⚠️',
+    icon: '⚠',
     label: 'MISLEADING',
     barColor: 'bg-amber-400',
     dot: 'bg-amber-500',
@@ -34,9 +34,9 @@ export const VERDICT_CONFIG = {
   unverifiable: {
     bg: 'bg-slate-50',
     border: 'border-slate-300',
-    headerBg: 'bg-slate-600',
+    headerBg: 'bg-slate-700',
     text: 'text-slate-700',
-    icon: '❓',
+    icon: '?',
     label: 'UNVERIFIABLE',
     barColor: 'bg-slate-400',
     dot: 'bg-slate-400',
@@ -75,14 +75,16 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
     <div className={`rounded-xl border-2 ${vc.border} overflow-hidden shadow-sm`}>
 
       {/* Header */}
-      <div className={`${vc.headerBg} px-5 py-4`}>
+      <div className={`${vc.headerBg} px-5 py-5`}>
         <div className="flex items-start justify-between gap-2">
           <div className="flex items-center gap-3 min-w-0">
-            <span className="text-2xl shrink-0">{vc.icon}</span>
+            <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+              <span className="text-xl font-black text-white">{vc.icon}</span>
+            </div>
             <div className="min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
                 <span
-                  className="text-lg font-black tracking-widest text-white"
+                  className="text-xl font-black tracking-widest text-white"
                   title={`Verdict: ${vc.label} — ${
                     analysis.verdict === 'true' ? 'Scientific evidence supports this claim' :
                     analysis.verdict === 'false' ? 'Scientific evidence contradicts this claim' :
