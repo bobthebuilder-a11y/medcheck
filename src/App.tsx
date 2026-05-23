@@ -438,6 +438,28 @@ export default function App() {
                 </div>
               </div>
 
+              <div>
+                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Accuracy & Limitations</h3>
+                <div className="space-y-2">
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-emerald-500 mt-0.5 shrink-0">✓</span>
+                    <p className="text-xs text-slate-600">Strong on well-studied topics: vaccine safety, basic nutrition, COVID-19 claims</p>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-emerald-500 mt-0.5 shrink-0">✓</span>
+                    <p className="text-xs text-slate-600">Confidence scores honestly reflect AI uncertainty — low confidence = verify extra carefully</p>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-amber-500 mt-0.5 shrink-0">⚠</span>
+                    <p className="text-xs text-slate-600">Less reliable on politically charged claims — the ⚡ flag signals when this is the case</p>
+                  </div>
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-amber-500 mt-0.5 shrink-0">⚠</span>
+                    <p className="text-xs text-slate-600">May not reflect very recent research published after the model's training cutoff</p>
+                  </div>
+                </div>
+              </div>
+
               <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
                 <p className="text-xs text-amber-800 leading-relaxed">
                   ⚕️ <strong>Medical Disclaimer:</strong> For educational purposes only. Not medical advice. Always verify independently and consult qualified healthcare professionals.
