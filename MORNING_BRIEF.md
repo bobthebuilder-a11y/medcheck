@@ -32,6 +32,12 @@ https://docs.google.com/forms/d/e/1FAIpQLScu7kE1PkZnm1Ca_FR4S-9JMCTzHcWuE42-pj04
 
 ---
 
+## 🆕 New Features Added This Morning
+
+- **Batch Mode** — check up to 5 claims at once (click "Batch" in navbar or button on idle page)
+- **Export Report** — download your session history as a formatted text file
+- **Full UI redesign** — dark navbar, cleaner layout, better mobile
+
 ## 🌐 What Was Built Overnight
 
 53 commits. The app went from "basically no styling" to genuinely polished.
