@@ -53,5 +53,42 @@ Deliverables: polished website, slides, process doc, basics guide
 ### Iteration 3 — BASICS guide written (22:30)
 - BASICS.md created: full guide covering verdicts, confidence scores, political charge flag, architecture explanation, demo sequence, judge Q&A prep, SDG connection, tech stack
 
+### Iteration 4 — Final Polish (23:00)
+**What changed:**
+- Input card gets focus ring + shadow when active (better affordance)
+- Pipeline steps displayed as pill badges (mobile-friendly)
+- Example claim chips no longer auto-analyze — they fill the field instead (less jarring, more control)
+- Explanation paragraphs now properly spaced using split/map (better readability)
+
+**Status: App is presentation-ready. Moving to slides creation.**
+
+---
+
+## Final State Summary
+
+**Live URL:** https://medcheck-murex.vercel.app
+**GitHub:** https://github.com/bobthebuilder-a11y/medcheck
+
+**Features:**
+- Health claim analysis with 4-verdict system (true/false/misleading/unverifiable)
+- Confidence score 0-100% with honest calibration
+- Claim breakdown (individual assertions)
+- Plain-language explanation
+- Real source citations
+- Political charge flag
+- Category tagging
+- History panel (localStorage, last 20 checks)
+- Share button (native share API or clipboard)
+- About page with research context and stats bar
+- Research callout banner
+- Full mobile support
+
+**Files in repo:**
+- `src/` — Full React + TypeScript app
+- `BASICS.md` — David's guide to the app
+- `SLIDES.md` — Full presentation script with 12 slides + Q&A prep
+- `PROCESS.md` — Build process document from David's perspective
+- `BUILD_LOG.md` — This file
+
 ## Planned Iterations
 
