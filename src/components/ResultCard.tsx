@@ -95,7 +95,7 @@ export default function ResultCard({ analysis, claim }: Props) {
               </div>
               <div className="flex items-center gap-2 mt-1">
                 <span className={`w-2 h-2 rounded-full bg-white/60`}></span>
-                <span className="text-sm text-white/85 font-medium">
+                <span className="text-sm text-white/85 font-medium" title="Confidence reflects how certain the AI is in this verdict — not whether the claim is definitely true or false.">
                   {cc.label} · {analysis.confidenceScore}%
                 </span>
               </div>
@@ -119,6 +119,10 @@ export default function ResultCard({ analysis, claim }: Props) {
 
         {/* Confidence bar */}
         <div className="mt-3">
+          <div className="flex items-center justify-between mb-1">
+            <span className="text-xs text-white/60">AI Certainty</span>
+            <span className="text-xs text-white/60" title="How confident the AI is in this verdict. Lower = more uncertain. Always verify from sources.">What is this? ↑</span>
+          </div>
           <div className="h-1.5 bg-white/25 rounded-full">
             <div className="h-1.5 bg-white/80 rounded-full transition-all duration-700"
               style={{ width: `${analysis.confidenceScore}%` }} />
