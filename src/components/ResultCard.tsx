@@ -4,10 +4,10 @@ export const VERDICT_CONFIG = {
   true: {
     bg: 'bg-emerald-50',
     border: 'border-emerald-400',
-    headerBg: 'bg-emerald-700',
+    headerBg: 'bg-emerald-600',
     text: 'text-emerald-800',
     icon: '✓',
-    label: 'VERIFIED TRUE',
+    label: 'SCIENTIFICALLY SUPPORTED',
     barColor: 'bg-emerald-400',
     dot: 'bg-emerald-500',
   },
