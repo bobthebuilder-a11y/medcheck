@@ -379,6 +379,20 @@ export default function App() {
 
         {activeTab === 'about' && (
           <div className="space-y-4">
+            {/* About hero */}
+            <div className="bg-slate-900 rounded-xl p-6 text-white">
+              <div className="flex items-center gap-2.5 mb-4">
+                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-black text-sm">M</div>
+                <span className="font-black text-lg">MedCheck</span>
+              </div>
+              <h2 className="text-2xl font-black leading-tight mb-2">
+                AI-powered health<br />misinformation detection
+              </h2>
+              <p className="text-sm text-slate-400 leading-relaxed">
+                Built for the ACP Student AI Championship 2026.
+                Addresses SDG 3 (Good Health) and SDG 16 (Strong Institutions).
+              </p>
+            </div>
             <StatsBar />
             <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 space-y-6">
               <div>
