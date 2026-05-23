@@ -189,7 +189,7 @@ export default function App() {
                 disabled={phase === 'streaming'}
                 className="w-full border-0 text-base text-slate-800 placeholder-slate-300 focus:outline-none resize-none leading-relaxed disabled:opacity-60 bg-transparent"
               />
-              <div className="flex items-center justify-between pt-3 border-t border-slate-100 mt-2">
+              <div className="flex items-center justify-between pt-3 border-t border-slate-100 mt-3">
                 <span className="text-xs text-slate-400 flex items-center gap-1.5">
                   {phase === 'streaming' ? (
                     <><span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></span>Analyzing...</>
