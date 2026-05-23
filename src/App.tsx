@@ -272,7 +272,7 @@ export default function App() {
 
             {/* Session stats + History */}
             {phase !== 'streaming' && history.length > 0 && (
-              <div className="mt-6 space-y-3">
+              <div className="mt-6 mb-16 space-y-3">
                 <SessionStats history={history} />
                 <HistoryPanel history={history} onSelect={handleHistorySelect} onClear={() => setHistory([])} />
               </div>
@@ -280,7 +280,7 @@ export default function App() {
 
             {/* Trending (idle + no history) */}
             {phase === 'idle' && history.length === 0 && (
-              <div className="mt-6">
+              <div className="mt-6 mb-16">
                 <TrendingClaims onSelect={(c) => { setClaim(c); handleAnalyze(c); }} />
               </div>
             )}
@@ -380,7 +380,7 @@ export default function App() {
 
       </div>
 
-      <footer className="border-t border-[#d6d7d9] bg-white mt-12">
+      <footer className="border-t border-[#d6d7d9] bg-white">
         <div className="mx-auto px-16 py-4 flex items-center justify-between" style={{ maxWidth: '720px' }}>
           <span className="text-sm" style={{ color: '#767676' }}>MedCheck · David Xiao · ACP 2026</span>
           <div className="flex items-center gap-3 text-sm" style={{ color: '#767676' }}>
