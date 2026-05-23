@@ -51,6 +51,10 @@ export default function App() {
       if (e.key === 'Escape' && phase === 'done') {
         setPhase('idle'); setResult(null); setClaim(''); setLastClaim(''); setError('');
       }
+      if (e.key === 'b' && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setShowBatch(true);
+      }
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
