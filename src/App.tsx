@@ -163,16 +163,16 @@ export default function App() {
                   Paste any health claim, headline, or social media post.<br className="hidden sm:block" />
                   Get a structured, sourced verdict in seconds.
                 </p>
-                <div className="flex flex-wrap items-center justify-center gap-2">
+                <div className="flex flex-wrap items-center justify-center gap-2 max-w-lg mx-auto">
                   {[
-                    { icon: '🔍', label: 'Claim decomposition' },
-                    { icon: '📚', label: 'Evidence synthesis' },
-                    { icon: '⚖️', label: 'Confidence calibration' },
-                    { icon: '📎', label: 'Source citations' },
+                    { icon: '🔍', label: 'Decompose' },
+                    { icon: '📚', label: 'Synthesize' },
+                    { icon: '⚖️', label: 'Calibrate' },
+                    { icon: '📎', label: 'Cite Sources' },
                   ].map((step, i) => (
                     <div key={step.label} className="flex items-center gap-2">
-                      {i > 0 && <span className="text-gray-300 text-xs hidden sm:inline">→</span>}
-                      <span className="bg-white border border-gray-200 px-2.5 py-1.5 rounded-xl text-xs font-medium text-gray-600 shadow-sm flex items-center gap-1.5">
+                      {i > 0 && <span className="text-blue-200 font-bold hidden sm:inline">→</span>}
+                      <span className="bg-white border border-blue-100 px-3 py-1.5 rounded-full text-xs font-semibold text-blue-700 shadow-sm flex items-center gap-1.5 hover:shadow-md transition-shadow">
                         <span>{step.icon}</span>
                         {step.label}
                       </span>
