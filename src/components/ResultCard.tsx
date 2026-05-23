@@ -77,14 +77,14 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
       {/* Header */}
       <div className={`${vc.headerBg} px-5 py-5`}>
         <div className="flex items-start justify-between gap-2">
-          <div className="flex items-center gap-3 min-w-0">
-            <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-              <span className="text-xl font-black text-white">{vc.icon}</span>
+          <div className="flex items-start gap-3 min-w-0">
+            <div className="w-10 h-10 rounded-xl bg-white/15 border border-white/20 flex items-center justify-center shrink-0 mt-0.5">
+              <span className="text-xl font-black text-white leading-none">{vc.icon}</span>
             </div>
             <div className="min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
                 <span
-                  className="text-xl font-black tracking-widest text-white"
+                  className="text-2xl font-black tracking-wider text-white leading-tight"
                   title={`Verdict: ${vc.label} — ${
                     analysis.verdict === 'true' ? 'Scientific evidence supports this claim' :
                     analysis.verdict === 'false' ? 'Scientific evidence contradicts this claim' :
