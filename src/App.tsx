@@ -60,6 +60,13 @@ export default function App() {
     const target = (claimText ?? claim).trim();
     if (!target || phase === 'streaming') return;
 
+    // Minimum length guard
+    if (target.length < 5) {
+      setError('Please enter a full health claim (at least a few words).');
+      setPhase('error');
+      return;
+    }
+
     setPhase('streaming');
     setError('');
     setResult(null);
@@ -82,7 +89,15 @@ export default function App() {
       };
       setHistory(prev => [entry, ...prev.filter(e => e.claim !== target)]);
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Something went wrong. Please try again.');
+      const msg = e instanceof Error ? e.message : 'Something went wrong.';
+      // Make error messages more user-friendly
+      if (msg.includes('parse') || msg.includes('JSON')) {
+        setError('The AI returned an unexpected response. Please try again.');
+      } else if (msg.includes('network') || msg.includes('fetch')) {
+        setError('Network error. Please check your connection and try again.');
+      } else {
+        setError(msg + ' Please try again.');
+      }
       setPhase('error');
     }
   };
