@@ -185,20 +185,20 @@ export default function App() {
             )}
 
             {/* Input card */}
-            <div className={`bg-white rounded-xl border transition-all duration-150 p-4 mb-4 ${
-              phase === 'streaming' ? 'border-blue-400 ring-2 ring-blue-100 shadow-sm' :
+            <div className={`bg-white rounded-xl border-2 transition-all duration-150 p-4 mb-4 ${
+              phase === 'streaming' ? 'border-blue-500 shadow-md shadow-blue-50' :
               phase === 'done' ? 'border-slate-200 shadow-sm' :
-              'border-slate-200 shadow-sm focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-50'
+              'border-slate-200 shadow-sm focus-within:border-blue-500 focus-within:shadow-md focus-within:shadow-blue-50'
             }`}>
               <textarea
                 ref={textareaRef}
                 value={claim}
                 onChange={e => setClaim(e.target.value)}
                 onKeyDown={e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) handleAnalyze(); }}
-                placeholder="Paste a health claim, headline, or social media post..."
+                placeholder="Enter a health claim to fact-check..."
                 rows={3}
                 disabled={phase === 'streaming'}
-                className="w-full border-0 text-sm text-slate-800 placeholder-slate-400 focus:outline-none resize-none leading-relaxed disabled:opacity-60 bg-transparent"
+                className="w-full border-0 text-base text-slate-800 placeholder-slate-300 focus:outline-none resize-none leading-relaxed disabled:opacity-60 bg-transparent"
               />
               <div className="flex items-center justify-between pt-3 border-t border-slate-100 mt-1">
                 <div className="flex items-center gap-2">
