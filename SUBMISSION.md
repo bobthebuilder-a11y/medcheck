@@ -61,6 +61,9 @@ The scale path: V1 (web app) → V2 (browser extension, flags claims automatical
 - Explicit confidence calibration in the system prompt
 - Political charge detection and flagging
 - Social media post extraction (AI extracts core claim from longer posts)
+- Batch mode (check up to 5 claims simultaneously)
+- Trending claims panel (pre-verified common misinformation)
+- Session history export (formatted report download)
 
 **Why Groq/Llama instead of OpenAI:**
 - Free tier available, fast inference, works for our use case
