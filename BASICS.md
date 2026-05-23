@@ -142,6 +142,113 @@ If you need to explain it in one sentence:
 
 ---
 
+## How the Code Works — Main Ideas (No Syntax)
+
+### The Big Picture
+
+MedCheck has two main parts that talk to each other:
+1. **The Frontend** — what users see and interact with (React app in your browser)
+2. **The AI Backend** — Groq's servers running Llama 4, which does the actual analysis
+
+There's no "middle" server you run. Your browser talks directly to Groq's API. Vercel just hosts the static files.
+
+---
+
+### Concept 1: Components
+
+React breaks the UI into **components** — reusable pieces that each do one job. Think of them like LEGO bricks.
+
+MedCheck has these components:
+- `App.tsx` — the main container, manages all the state (what's happening right now)
+- `ResultCard.tsx` — displays the analysis result
+- `ExampleClaims.tsx` — the colored claim chips
+- `HistoryPanel.tsx` — the recent checks list
+- `SessionStats.tsx` — the verdict breakdown after multiple checks
+- `StatsBar.tsx` — the problem statistics on the About page
+
+Each component receives **props** (inputs) from its parent and renders HTML. They don't know about each other — they just receive data and show it.
+
+---
+
+### Concept 2: State
+
+**State** is the memory of what's currently happening. In MedCheck, the main state lives in `App.tsx`:
+
+- `claim` — what's typed in the text box right now
+- `phase` — is the app idle, streaming, done, or errored?
+- `result` — the analysis the AI returned
+- `history` — the list of past checks (also saved to browser localStorage)
+- `loadingStep` — which step of the loading animation is showing
+
+When state changes, React automatically re-renders the UI to match. You never manually update the DOM — you just update state and React handles the rest.
+
+---
+
+### Concept 3: The API Call
+
+When you click "Analyze", this is what happens:
+
+1. `App.tsx` calls `analyzeClaimStream()` from `analyzer.ts`
+2. `analyzer.ts` sends your claim to Groq's servers with a carefully written **system prompt**
+3. Groq streams the response back word-by-word (that's the "streaming" part)
+4. As chunks arrive, the loading animation updates
+5. When complete, the text is parsed as JSON → becomes a `ClaimAnalysis` object
+6. `App.tsx` stores it in `result` state → `ResultCard` renders it
+
+The key thing: **the AI returns structured JSON, not a paragraph**. That's what makes MedCheck different from just asking ChatGPT — we force the AI to return a specific format we can parse and display beautifully.
+
+---
+
+### Concept 4: The System Prompt
+
+The system prompt is the most important part of the whole app. It's the set of instructions we send to the AI before your claim. It tells the AI:
+- What its job is (rigorous fact-checker)
+- What format to respond in (JSON with specific fields)
+- How to calibrate confidence (be honest about uncertainty)
+- What "misleading" vs "false" means
+- How to detect political charge
+
+A bad system prompt → a chatbot that gives vague answers.
+A good system prompt → a structured tool that returns consistent, useful verdicts.
+
+This is called **prompt engineering** and it's a real skill.
+
+---
+
+### Concept 5: TypeScript Types
+
+The `types.ts` file defines the **shape** of data. For example, `ClaimAnalysis` says: every analysis result must have a verdict, a confidence score, assertions, sources, etc.
+
+This isn't code that runs — it's a contract. TypeScript checks at build time that you never accidentally pass the wrong kind of data. It catches bugs before they happen.
+
+---
+
+### Concept 6: Async/Await
+
+The AI call takes 5-10 seconds. If the app just waited and froze, that would be a terrible experience. Instead, JavaScript uses `async/await`:
+
+- `async` means "this function does something that takes time"
+- `await` means "wait for this to finish before moving on, but don't freeze the whole app"
+- While waiting, React keeps the UI responsive — the loading animation keeps running, you can still scroll
+
+The streaming is even fancier: instead of waiting for the whole response, we process it chunk by chunk as it arrives — that's why you see the loading steps advance in real time.
+
+---
+
+### Concept 7: localStorage
+
+The history panel remembers your past checks even after you refresh the page. That's because we save it to `localStorage` — a small key-value store built into every browser. It's like a tiny database that lives on your computer.
+
+Every time `history` state changes, we save it to localStorage. When the app loads, we read it back.
+
+---
+
+### What to Say When a Judge Asks "How Does It Work?"
+
+> "The user's claim is sent to Groq's API running Llama 4, along with a system prompt that instructs the model to decompose the claim, evaluate assertions, calibrate confidence honestly, and return structured JSON. The React frontend parses that JSON and renders the result. There's no backend server — the browser talks directly to the AI API, and the whole app is hosted on Vercel."
+
+---
+
 ## What Was Built Tonight (For Reference)
 
 15 iterations, all pushed to GitHub and deployed:
