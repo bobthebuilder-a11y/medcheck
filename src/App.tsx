@@ -338,7 +338,7 @@ export default function App() {
 
             {/* Result */}
             {phase === 'done' && result && (
-              <div className="space-y-4">
+              <div className="space-y-4 result-enter">
                 <ResultCard analysis={result} claim={lastClaim} onReset={handleReset} />
                 <div className="flex gap-3">
                   <button onClick={handleReset}
