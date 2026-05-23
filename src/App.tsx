@@ -177,12 +177,17 @@ export default function App() {
                   ))}
                 </div>
 
-                {/* Pipeline chips */}
-                <div className="flex flex-wrap items-center gap-2">
-                  {['Decompose', 'Synthesize', 'Calibrate', 'Cite'].map((s, i) => (
-                    <div key={s} className="flex items-center gap-2">
-                      {i > 0 && <span className="text-slate-300 text-xs">›</span>}
-                      <span className="text-xs font-semibold text-slate-500 bg-white border border-slate-200 px-2.5 py-1 rounded-md shadow-sm">{s}</span>
+                {/* Pipeline */}
+                <div className="flex flex-wrap items-center gap-1">
+                  {[
+                    { label: 'Decompose claims', color: 'bg-blue-50 text-blue-700 border-blue-200' },
+                    { label: 'Synthesize evidence', color: 'bg-indigo-50 text-indigo-700 border-indigo-200' },
+                    { label: 'Calibrate confidence', color: 'bg-purple-50 text-purple-700 border-purple-200' },
+                    { label: 'Cite sources', color: 'bg-slate-50 text-slate-600 border-slate-200' },
+                  ].map((s, i) => (
+                    <div key={s.label} className="flex items-center gap-1">
+                      {i > 0 && <span className="text-slate-300 text-xs mx-0.5">→</span>}
+                      <span className={`text-xs font-semibold px-2.5 py-1 rounded-md border ${s.color}`}>{s.label}</span>
                     </div>
                   ))}
                 </div>
