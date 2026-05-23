@@ -3,74 +3,75 @@
 ## ⏰ Morning Checklist (Do This First)
 
 1. **Test the app** → https://medcheck-murex.vercel.app
-   - Click "Vaccines cause autism" → should return ❌ FALSE, 95% confidence
-   - Type "Natural immunity is always better than vaccines" → should return ⚠️ MISLEADING + ⚡ political charge flag
-   - Paste the long social media post example → should extract the core claim
+   - Click "Vaccines cause autism" → should return FALSE/SCIENTIFICALLY FALSE with ~99% confidence
+   - Click a trending claim → re-analyzes with fresh results
+   - Click "Batch" → open batch mode, enter 3 claims, watch them analyze live
 
-2. **Submit to ACP** → Form link below
-   - You need: GitHub URL, live app URL, 3 short answers, AI disclosure
-   - See SUBMISSION.md for drafted answers
+2. **Read BASICS.md** → your guide to the app, demo script, Q&A prep
 
-3. **Sign up for presentation slot**
-   - Sign up here (High School group, 4-6 min):
+3. **Open PPTX** → `MedCheck_ACP_2026.pptx` (10 slides, speaker notes)
+
+4. **Submit to ACP** tonight
+   - Form: https://docs.google.com/forms/d/e/1FAIpQLScu7kE1PkZnm1Ca_FR4S-9JMCTzHcWuE42-pj04-YnWO4-u6Q/viewform
+   - Short answers: see SUBMISSION.md
+   - GitHub: https://github.com/bobthebuilder-a11y/medcheck
+   - Live app: https://medcheck-murex.vercel.app
+
+5. **Sign up for presentation slot** (High School group, 4-6 min)
    - https://docs.google.com/spreadsheets/d/1Xuk5otRqGs4T8rEcG_KK7cLWU9E_TLpfso_Mj6OvdhM/edit
-
-4. **Open the PPTX** → `MedCheck_ACP_2026.pptx`
-   - 10 slides, speaker notes on each
-   - Read SLIDES.md for full Q&A prep
-
----
-
-## 📋 Submission Form
-https://docs.google.com/forms/d/e/1FAIpQLScu7kE1PkZnm1Ca_FR4S-9JMCTzHcWuE42-pj04-YnWO4-u6Q/viewform?usp=publish-editor
-
-**What to submit:**
-- **GitHub:** https://github.com/bobthebuilder-a11y/medcheck
-- **Live app:** https://medcheck-murex.vercel.app
-- **Short answers:** See SUBMISSION.md (drafted and ready to copy-paste)
-- **AI disclosure:** See SUBMISSION.md (bottom section)
 
 ---
 
 ## 🆕 New Features Added This Morning
 
-- **Batch Mode** — check up to 5 claims at once (click "Batch" in navbar or button on idle page)
-- **Export Report** — download your session history as a formatted text file
+- **Batch Mode** (⌘+B) — check up to 5 claims at once with live progress and summary
+- **Trending Claims** — pre-verified common misinformation panel
+- **Export Report** — download session history as formatted text
+- **Twitter Share** — share fact-check results directly to Twitter/X
+- **Low-confidence warning** — auto-shows when AI is uncertain
 - **Full UI redesign** — dark navbar, cleaner layout, better mobile
 
-## 🌐 What Was Built Overnight
+---
 
-53 commits. The app went from "basically no styling" to genuinely polished.
+## 📋 Complete Feature List
 
-**Big moments:**
-- **Tailwind CSS fix** — the app had NO styling before this. Critical fix.
-- **Streaming responses** — loading feels alive with step-by-step progress
-- **Social media post support** — paste a full viral post, AI extracts the claim
-- **Animated background** — subtle gradient that shifts slowly
-- **All paper references removed** — app stands alone
-- **PPTX updated** — "Why AI?" slide, URL footer on every slide
-- **Random button** — click to test a random claim (great for demos)
-- **Fade-up animation** — results slide in smoothly
-- **README.md** — professional GitHub landing page
-- **Submission answers drafted** — ready to copy-paste
-- 60+ commits total, all deployed
+| Feature | How to Use |
+|---|---|
+| Single analysis | Type/paste + Analyze button or ⌘+Enter |
+| Batch mode | Click "Batch" in navbar or ⌘+B |
+| Social media post | Paste full post — AI extracts the claim |
+| Trending claims | Click any on home screen |
+| Export history | History panel → Export ↓ |
+| Twitter share | Result card header → X icon |
+| Related claims | Shown after each result |
+| Clear result | "Clear" button or Escape |
 
 ---
 
-## 🎓 Key Things to Know for Presentation
+## 🎯 Key Things to Say During Presentation
 
-**"Why is AI the right tool?"**
-> Scale (millions of claims daily), decomposition (breaks compound claims apart), calibrated uncertainty (expresses degrees of confidence), evidence synthesis (CDC/WHO/PubMed simultaneously in seconds).
+**What makes MedCheck different:**
+> "Most fact-checkers require you to already be skeptical. MedCheck meets people where they are — it works on any claim, any format, in seconds. And it explains WHY, not just WHAT."
 
-**"What happens when it's wrong?"**
-> Confidence score signals uncertainty. Low confidence = be skeptical. Sources provided for independent verification. Medical disclaimer on every result.
+**Why AI specifically:**
+> "Scale, decomposition, and calibrated uncertainty. AI can check millions of claims, break compound claims into individual assertions, and express degrees of confidence — things humans can't do at scale."
 
-**"How is it different from ChatGPT?"**
-> Engineered system prompt for structured fact-checking. Returns JSON with defined fields. Not conversational — it's a tool.
+**On confidence scores:**
+> "The AI is explicitly instructed to say 'I'm not sure' when it isn't. A low-confidence honest answer beats a high-confidence wrong answer. That's not a limitation — it's by design."
 
-**"What's the political charge flag?"**
-> Signals that this topic has political dimensions. AI is less reliable here — treat with extra scrutiny, verify from multiple sources.
+**On MISLEADING vs FALSE:**
+> "Most dangerous health misinformation isn't false — it's selectively true. 'Natural immunity is always better than vaccines' contains real science but the word 'always' makes it dangerous. MISLEADING captures that nuance."
+
+**On scale/SDGs:**
+> "This is free, requires no account, works on any device, and never stores data. The browser extension — our V2 — would automatically flag claims as people browse social media, reaching millions who would never seek out a fact-checker."
 
 ---
 
-*https://medcheck-murex.vercel.app*
+## 🗓️ Timeline Reminder
+
+- **Tonight (May 23, 11:59 PM CST):** Submit preliminary submission
+- **Tomorrow (May 24, 2026):** ACP Competition day — presentation
+
+---
+
+*https://medcheck-murex.vercel.app | github.com/bobthebuilder-a11y/medcheck*
