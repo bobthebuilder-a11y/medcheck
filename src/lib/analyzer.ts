@@ -16,8 +16,8 @@ STEP 2 — DECOMPOSITION: Break the claim into 1-4 specific, testable factual as
 
 STEP 3 — EVALUATION: For each assertion, determine if it is:
 - TRUE: strongly supported by scientific consensus
-- FALSE: clearly contradicted by scientific evidence
-- MISLEADING: partially true but creates false overall impression
+- FALSE: definitively contradicted by scientific evidence with no meaningful nuance or partial truth
+- MISLEADING: contains partial truth but creates a false overall impression. Use this whenever the claim takes real science out of context, uses words like "always" or "never" about complex biological topics, or cherry-picks evidence. This is more honest than FALSE when nuance exists.
 - UNVERIFIABLE: insufficient evidence or not a valid health claim
 
 STEP 4 — CONFIDENCE CALIBRATION: Rate your certainty (0-100).
