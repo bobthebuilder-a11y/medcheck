@@ -4,6 +4,7 @@ import ResultCard from './components/ResultCard';
 import ExampleClaims from './components/ExampleClaims';
 import HistoryPanel from './components/HistoryPanel';
 import StatsBar from './components/StatsBar';
+import SessionStats from './components/SessionStats';
 import type { ClaimAnalysis, HistoryEntry } from './types';
 
 const STORAGE_KEY = 'medcheck_history';
@@ -174,12 +175,14 @@ export default function App() {
               <div className="flex items-center justify-between pt-3 border-t border-gray-100 mt-2">
                 <div className="flex items-center gap-3">
                   {claim.length > 0 && phase !== 'streaming' && (
-                    <span className="text-xs text-gray-400">{claim.length} chars</span>
+                    <span className="text-xs text-gray-400">
+                      {claim.length > 200 ? '📄 Long post detected' : `${claim.length} chars`}
+                    </span>
                   )}
                   {phase === 'streaming' && (
                     <span className="text-xs text-blue-500 font-medium animate-pulse">Analyzing...</span>
                   )}
-                  {phase !== 'streaming' && (
+                  {phase === 'idle' && claim.length === 0 && (
                     <span className="text-xs text-gray-400 hidden sm:inline">⌘+Enter to analyze</span>
                   )}
                 </div>
@@ -277,9 +280,10 @@ export default function App() {
               </div>
             )}
 
-            {/* History */}
-            {phase !== 'streaming' && (
-              <div className="mt-6">
+            {/* Session stats + History */}
+            {phase !== 'streaming' && history.length > 0 && (
+              <div className="mt-6 space-y-4">
+                <SessionStats history={history} />
                 <HistoryPanel history={history} onSelect={handleHistorySelect} onClear={() => setHistory([])} />
               </div>
             )}
