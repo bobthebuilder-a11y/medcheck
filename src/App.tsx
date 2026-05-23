@@ -154,7 +154,7 @@ export default function App() {
                   Verify a Health Claim
                 </h1>
                 <p className="text-lg leading-relaxed" style={{ color: '#3d3d3d' }}>
-                  Powered by AI. Cross-references CDC, WHO, and peer-reviewed science.
+                  Cross-references CDC, WHO, and peer-reviewed science.
                 </p>
               </div>
             )}
@@ -387,7 +387,7 @@ export default function App() {
           <span className="text-sm" style={{ color: '#767676' }}>MedCheck · David Xiao · ACP 2026</span>
           <div className="flex items-center gap-3 text-sm" style={{ color: '#767676' }}>
             <a href="https://github.com/bobthebuilder-a11y/medcheck" target="_blank" rel="noopener noreferrer"
-              className="hover:underline">
+              className="hover:underline" style={{ color: '#767676' }}>
               GitHub ↗
             </a>
             <span>·</span>

@@ -172,14 +172,9 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
       </div>
 
       {/* Warnings */}
-      {(analysis.confidence === 'low' || analysis.politicalCharge === 'high') && (
-        <div className="px-6 pb-2">
-          {analysis.confidence === 'low' && analysis.politicalCharge !== 'high' && (
-            <p className="text-sm" style={{ color: '#767676' }}>ℹ Low confidence — verify independently.</p>
-          )}
-          {analysis.politicalCharge === 'high' && (
-            <p className="text-sm" style={{ color: '#767676' }}>⚡ Politically contested — apply extra scrutiny.</p>
-          )}
+      {analysis.confidence === 'low' && analysis.politicalCharge !== 'high' && (
+        <div className="px-8 pb-2">
+          <p className="text-sm" style={{ color: '#767676' }}>ℹ Low confidence — verify independently.</p>
         </div>
       )}
 
