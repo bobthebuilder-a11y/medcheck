@@ -138,17 +138,29 @@ export default function App() {
             {/* Hero */}
             {phase === 'idle' && (
               <div className="text-center mb-7">
+                <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
+                  <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></span>
+                  ACP Student AI Championship 2026 · SDG 3 & 16
+                </div>
                 <h1 className="text-3xl font-black text-gray-900 tracking-tight mb-2">
                   Is that health claim true?
                 </h1>
                 <p className="text-gray-500 text-base mb-5">
                   AI-powered analysis aligned with CDC, WHO & peer-reviewed science
                 </p>
-                <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-gray-400">
-                  {['Claim decomposition', 'Evidence synthesis', 'Confidence calibration', 'Source citations'].map((step, i) => (
-                    <div key={step} className="flex items-center gap-2">
-                      {i > 0 && <span className="text-gray-300 hidden sm:inline">→</span>}
-                      <span className="bg-white border border-gray-200 px-2.5 py-1 rounded-lg font-medium text-gray-500 shadow-sm">{step}</span>
+                <div className="flex flex-wrap items-center justify-center gap-2">
+                  {[
+                    { icon: '🔍', label: 'Claim decomposition' },
+                    { icon: '📚', label: 'Evidence synthesis' },
+                    { icon: '⚖️', label: 'Confidence calibration' },
+                    { icon: '📎', label: 'Source citations' },
+                  ].map((step, i) => (
+                    <div key={step.label} className="flex items-center gap-2">
+                      {i > 0 && <span className="text-gray-300 text-xs hidden sm:inline">→</span>}
+                      <span className="bg-white border border-gray-200 px-2.5 py-1.5 rounded-xl text-xs font-medium text-gray-600 shadow-sm flex items-center gap-1.5">
+                        <span>{step.icon}</span>
+                        {step.label}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -256,10 +268,17 @@ export default function App() {
             {phase === 'done' && result && (
               <div className="space-y-4">
                 <ResultCard analysis={result} claim={lastClaim} />
-                <button onClick={handleReset}
-                  className="w-full py-3 border-2 border-dashed border-gray-300 rounded-xl text-gray-500 hover:border-blue-400 hover:text-blue-600 text-sm font-semibold transition-colors">
-                  + Check another claim
-                </button>
+                <div className="flex gap-3">
+                  <button onClick={handleReset}
+                    className="flex-1 py-3 border-2 border-dashed border-gray-300 rounded-xl text-gray-500 hover:border-blue-400 hover:text-blue-600 text-sm font-semibold transition-all hover:bg-blue-50">
+                    + Check another claim
+                  </button>
+                  <button onClick={() => { handleReset(); setActiveTab('about'); }}
+                    className="px-4 py-3 border border-gray-200 rounded-xl text-gray-400 hover:text-gray-600 text-sm transition-colors hover:bg-gray-50"
+                    title="Learn about MedCheck">
+                    ℹ️
+                  </button>
+                </div>
               </div>
             )}
 
