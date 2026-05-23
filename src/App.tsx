@@ -129,7 +129,7 @@ export default function App() {
         </div>
       </nav>
 
-      <div className="max-w-2xl mx-auto px-4 py-8">
+      <div className="max-w-2xl mx-auto px-4 pt-8 pb-16">
 
         {activeTab === 'check' && (
           <>
@@ -148,26 +148,26 @@ export default function App() {
                   )}
                 </div>
 
-                <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight leading-[1.08] mb-4">
+                <h1 className="text-4xl sm:text-[52px] font-black text-slate-900 tracking-tight leading-[1.05] mb-4">
                   Is that health claim<br />
                   <span className="text-blue-600">actually true?</span>
                 </h1>
 
                 <p className="text-slate-500 text-base leading-relaxed mb-5 max-w-lg">
-                  Paste any health claim, headline, or viral post.
-                  AI cross-references CDC, WHO & peer-reviewed science — returns a structured verdict in seconds.
+                  Health misinformation kills. Paste any claim, headline, or viral post —
+                  AI cross-references CDC, WHO & peer-reviewed science and returns a structured verdict in seconds.
                 </p>
 
                 {/* Stats row */}
-                <div className="flex items-baseline gap-6 mb-6 flex-wrap">
+                <div className="flex flex-wrap gap-3 mb-6">
                   {[
-                    { val: '6×', label: 'faster than corrections', c: 'text-red-600' },
-                    { val: '30M+', label: 'Americans at risk', c: 'text-orange-500' },
-                    { val: '1 in 3', label: 'acted on bad info', c: 'text-amber-500' },
+                    { val: '6×', label: 'false claims spread vs. corrections', c: 'text-red-600', bg: 'bg-red-50', border: 'border-red-200' },
+                    { val: '30M+', label: 'uninsured Americans at risk', c: 'text-orange-600', bg: 'bg-orange-50', border: 'border-orange-200' },
+                    { val: '1 in 3', label: 'acted on unverified health info', c: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-200' },
                   ].map(s => (
-                    <div key={s.val} className="flex items-baseline gap-1.5">
-                      <span className={`text-xl font-black ${s.c}`}>{s.val}</span>
-                      <span className="text-xs text-slate-400">{s.label}</span>
+                    <div key={s.val} className={`flex items-center gap-2 ${s.bg} border ${s.border} rounded-lg px-3 py-2`}>
+                      <span className={`text-lg font-black ${s.c} leading-none`}>{s.val}</span>
+                      <span className="text-xs text-slate-600 leading-tight">{s.label}</span>
                     </div>
                   ))}
                 </div>
