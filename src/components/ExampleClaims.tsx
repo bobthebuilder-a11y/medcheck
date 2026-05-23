@@ -50,11 +50,14 @@ export default function ExampleClaims({ onSelect, onRandom }: Props) {
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 bg-slate-50">
-        <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">Quick Check</p>
+      <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 bg-slate-50 rounded-t-xl">
+        <div className="flex items-center gap-2">
+          <span className="text-sm">⚡</span>
+          <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">Quick Check</p>
+        </div>
         {onRandom && (
           <button onClick={handleRandom}
-            className="text-xs text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-1">
+            className="text-xs text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-1.5 bg-blue-50 border border-blue-100 px-2 py-1 rounded-lg">
             ⟳ Random
           </button>
         )}
