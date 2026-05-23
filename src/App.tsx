@@ -108,8 +108,8 @@ export default function App() {
       <nav className="bg-slate-900 sticky top-0 z-20 border-b border-slate-800/80">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 bg-blue-600 rounded-md flex items-center justify-center font-black text-white text-sm shadow-sm">
-              M
+            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-sm text-white text-lg leading-none">
+              🔬
             </div>
             <span className="font-black text-white text-base tracking-tight">MedCheck</span>
             <span className="text-[10px] font-bold text-blue-300 bg-blue-500/20 border border-blue-500/30 px-1.5 py-0.5 rounded-full uppercase tracking-wider">Beta</span>
@@ -382,7 +382,7 @@ export default function App() {
             {/* About hero */}
             <div className="bg-slate-900 rounded-xl p-6 text-white">
               <div className="flex items-center gap-2.5 mb-4">
-                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-black text-sm">M</div>
+                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-lg">🔬</div>
                 <span className="font-black text-lg">MedCheck</span>
               </div>
               <h2 className="text-2xl font-black leading-tight mb-2">
@@ -405,6 +405,11 @@ export default function App() {
                 <p className="text-sm text-slate-500 leading-relaxed mt-2">
                   Most fact-checkers require you to already be skeptical. MedCheck meets people where they are —
                   works on any claim, any format, instantly.
+                </p>
+                <p className="text-xs text-slate-400 mt-2 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 leading-relaxed">
+                  💡 <strong className="text-slate-600">Note on MISLEADING:</strong> Most dangerous misinformation isn't false — it's selectively true. 
+                  "Natural immunity is always better than vaccines" contains real science but weaponizes it to reach a dangerous conclusion. 
+                  That's why MISLEADING often matters more than FALSE.
                 </p>
               </div>
 
@@ -517,7 +522,7 @@ export default function App() {
       <footer className="bg-slate-900 mt-16 border-t border-slate-800">
         <div className="max-w-2xl mx-auto px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-blue-600 rounded flex items-center justify-center text-white font-black text-xs">M</div>
+            <div className="w-6 h-6 bg-blue-600 rounded flex items-center justify-center text-sm">🔬</div>
             <div>
               <p className="text-xs font-semibold text-slate-300">MedCheck · David Xiao</p>
               <p className="text-xs text-slate-500">ACP 2026 · SDG 3 & 16</p>
