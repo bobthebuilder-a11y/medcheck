@@ -53,6 +53,11 @@ def add_text(slide, text, l, t, w, h, size=18, bold=False, color=DARK, align=PP_
 def new_slide():
     return prs.slides.add_slide(blank_layout)
 
+def add_footer(slide, text="medcheck-murex.vercel.app", dark=False):
+    color = RGBColor(0x60, 0x6A, 0x7A) if dark else RGBColor(0xFF, 0xFF, 0xFF)
+    opacity = 0.5
+    add_text(slide, f"🔬 {text}", 10.5, 7.15, 2.7, 0.28, size=9, color=color, align=PP_ALIGN.RIGHT)
+
 # ─────────────────────────────────────────────
 # SLIDE 1: Title
 # ─────────────────────────────────────────────
@@ -395,6 +400,29 @@ add_rect(slide, 1.0, 6.7, 5.5, 0.65, fill=BLUE)
 add_text(slide, "🌐  medcheck-murex.vercel.app", 1.15, 6.75, 5.2, 0.55, size=14, bold=True, color=WHITE)
 add_rect(slide, 7.0, 6.7, 5.5, 0.65, fill=RGBColor(0x1e, 0x3a, 0x8a))
 add_text(slide, "💻  github.com/bobthebuilder-a11y/medcheck", 7.15, 6.75, 5.2, 0.55, size=13, color=WHITE)
+
+# Add footer URL to all slides
+for i, slide in enumerate(prs.slides):
+    # Determine if slide has dark background (check first shape)
+    is_dark = False
+    for shape in slide.shapes:
+        if shape.shape_type == 1:  # Rectangle
+            try:
+                fill = shape.fill.fore_color.rgb
+                if fill == DARK or fill == RGBColor(0x1e, 0x3a, 0x8a):
+                    is_dark = True
+                    break
+            except:
+                pass
+    url_color = WHITE if is_dark else RGBColor(0x60, 0x6A, 0x7A)
+    txBox = slide.shapes.add_textbox(Inches(0.3), Inches(7.15), Inches(12.7), Inches(0.28))
+    tf = txBox.text_frame
+    p = tf.paragraphs[0]
+    p.alignment = PP_ALIGN.RIGHT
+    run = p.add_run()
+    run.text = "medcheck-murex.vercel.app"
+    run.font.size = Pt(9)
+    run.font.color.rgb = RGBColor(0x9C, 0xA3, 0xAF)
 
 # Save
 prs.save('/Users/xiaofamily/medcheck/MedCheck_ACP_2026.pptx')
