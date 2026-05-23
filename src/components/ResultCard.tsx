@@ -115,15 +115,14 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
       <div className="px-8 py-6">
         <div className="flex items-start justify-between gap-4 mb-2">
           <div>
-            <div className="flex items-center gap-3 mb-1">
+            <div className="mb-1">
               <span className="text-2xl font-bold leading-none" style={{ color: vc.color }}>
                 {vc.icon} {vc.label}
               </span>
               {analysis.politicalCharge === 'high' && (
-                <span className="text-xs font-semibold px-2 py-0.5 rounded-sm border"
-                  style={{ color: '#5b616b', borderColor: '#d6d7d9', background: '#f5f5f5' }}>
-                  Contested
-                </span>
+                <p className="text-sm mt-2" style={{ color: '#5b616b' }}>
+                  ⚡ Politically contested — apply extra scrutiny.
+                </p>
               )}
             </div>
             <p className="text-sm" style={{ color: '#767676' }}>
