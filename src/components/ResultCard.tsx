@@ -265,25 +265,18 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
         {/* Sources */}
         {analysis.sources?.length > 0 && (
           <div>
-            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
-              Scientific Sources · {analysis.sources.length} cited
+            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+              Sources · {analysis.sources.length} cited
             </h3>
-            <div className="space-y-1.5">
+            <div className="flex flex-wrap gap-1.5">
               {analysis.sources.map((s, i) => (
                 <a key={i} href={s.url} target="_blank" rel="noopener noreferrer"
-                  className="flex items-start gap-3 p-2.5 bg-white/60 hover:bg-white border border-slate-100 hover:border-slate-200 rounded-lg transition-all group">
-                  <div className="w-5 h-5 rounded bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-black shrink-0 mt-0.5 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                    {i + 1}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm text-blue-600 group-hover:text-blue-800 font-semibold flex items-center gap-1">
-                      {s.name}
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 opacity-40 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
-                    </p>
-                    <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">{s.relevance}</p>
-                  </div>
+                  className="inline-flex items-center gap-1 px-2 py-1 bg-white/70 hover:bg-white border border-slate-200 hover:border-blue-300 rounded-md text-xs text-blue-600 hover:text-blue-800 font-medium transition-all">
+                  <span className="text-[10px] text-slate-400 font-bold">{i + 1}</span>
+                  {s.name}
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-2.5 w-2.5 opacity-40 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
                 </a>
               ))}
             </div>
