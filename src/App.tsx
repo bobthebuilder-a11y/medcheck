@@ -106,7 +106,7 @@ export default function App() {
 
       {/* Dark navbar */}
       <nav className="bg-slate-900 sticky top-0 z-20 border-b border-slate-800/80">
-        <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-sm text-white text-lg leading-none">
               🔬
@@ -129,7 +129,7 @@ export default function App() {
         </div>
       </nav>
 
-      <div className="max-w-2xl mx-auto px-4 pt-8 pb-16">
+      <div className="max-w-3xl mx-auto px-4 pt-8 pb-16">
 
         {activeTab === 'check' && (
           <>
@@ -525,7 +525,7 @@ export default function App() {
 
       {/* Footer */}
       <footer className="bg-slate-900 mt-16 border-t border-slate-800">
-        <div className="max-w-2xl mx-auto px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="max-w-3xl mx-auto px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 bg-blue-600 rounded flex items-center justify-center text-sm">🔬</div>
             <div>
