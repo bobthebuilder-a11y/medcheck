@@ -142,4 +142,28 @@ If you need to explain it in one sentence:
 
 ---
 
+## What Was Built Tonight (For Reference)
+
+15 iterations, all pushed to GitHub and deployed:
+1. Initial build — basic claim checker
+2. Major UI overhaul — tabs, history, share button, category tags
+3. Research badge, research callout banner
+4. Polish — focus ring, example chips, paragraph spacing
+5. Streaming responses with animated loading steps
+6. ResultCard redesign — colored verdict header, confidence bar
+7. StatsBar redesign + HistoryPanel improvements
+8. Social media post support — AI extracts core claim from longer posts
+9. Better example chips with divider + footer
+10. Session stats panel
+11. Better hero section with competition badge
+12. Improved system prompt for better AI output quality
+13. Political charge inline explanation box
+14. Premium loading experience with step-by-step checklist
+15. About page example result preview
+
+**Live:** https://medcheck-murex.vercel.app
+**GitHub:** github.com/bobthebuilder-a11y/medcheck
+
+---
+
 *Built for ACP Student AI Championship 2026 | SDG 3 + SDG 16*
