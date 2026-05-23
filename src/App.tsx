@@ -326,17 +326,21 @@ export default function App() {
             {/* Why this matters (idle + no history) */}
             {phase === 'idle' && history.length === 0 && (
               <div className="mt-5 space-y-3">
-                <div className="bg-slate-900 rounded-xl p-4 text-white">
-                  <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Why this matters</p>
-                  <p className="text-sm text-slate-300 leading-relaxed mb-3">
-                    Fake health claims kill. Unverified cancer "cures" delay real treatment.
-                    Vaccine myths cause outbreaks. Dangerous supplements harm people who trust them.
-                    MedCheck gives anyone the ability to verify a claim in seconds.
-                  </p>
-                  <div className="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs text-slate-400 pt-3 border-t border-slate-700">
-                    {['Free forever', 'No account needed', 'No data stored', 'Any device'].map(s => (
-                      <span key={s} className="flex items-center gap-1">
-                        <span className="w-1 h-1 rounded-full bg-blue-500"></span>
+                <div className="bg-slate-900 rounded-xl overflow-hidden">
+                  <div className="p-4">
+                    <p className="text-xs font-bold text-blue-400 uppercase tracking-wider mb-2">Why MedCheck Exists</p>
+                    <p className="text-sm text-slate-300 leading-relaxed mb-2">
+                      Fake cancer "cures" delay real treatment. Vaccine myths cause preventable outbreaks.
+                      False health claims spread <span className="text-white font-bold">6× faster</span> than corrections.
+                    </p>
+                    <p className="text-sm text-slate-400 leading-relaxed">
+                      MedCheck gives anyone the ability to verify before they share — in seconds.
+                    </p>
+                  </div>
+                  <div className="bg-slate-800 px-4 py-2.5 flex flex-wrap gap-x-4 gap-y-1">
+                    {['Free forever', 'No account', 'No data stored', 'Any device'].map(s => (
+                      <span key={s} className="text-xs text-slate-400 flex items-center gap-1">
+                        <span className="text-blue-500">✓</span>
                         {s}
                       </span>
                     ))}
