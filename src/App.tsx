@@ -328,10 +328,17 @@ export default function App() {
             {phase === 'error' && error && (
               <div className="bg-red-50 border border-red-200 rounded-2xl p-4 mb-5">
                 <div className="flex items-start gap-2">
-                  <span className="text-lg">⚠️</span>
-                  <div>
-                    <p className="text-red-700 text-sm font-semibold">Analysis failed</p>
-                    <p className="text-red-600 text-sm mt-0.5">{error}</p>
+                  <span className="text-lg shrink-0">⚠️</span>
+                  <div className="flex-1">
+                    <p className="text-red-700 text-sm font-semibold mb-0.5">Analysis failed</p>
+                    <p className="text-red-600 text-sm">{error}</p>
+                    <button
+                      onClick={() => handleAnalyze()}
+                      disabled={!claim.trim()}
+                      className="mt-2 text-xs text-red-600 hover:text-red-800 font-semibold underline"
+                    >
+                      Try again →
+                    </button>
                   </div>
                 </div>
               </div>
