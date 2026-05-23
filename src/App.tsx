@@ -181,10 +181,22 @@ export default function App() {
                 <h1 className="text-4xl font-black text-gray-900 tracking-tight mb-3 leading-tight">
                   Is that health claim<br className="hidden sm:block" /> actually true?
                 </h1>
-                <p className="text-gray-500 text-base mb-5 max-w-md mx-auto leading-relaxed">
+                <p className="text-gray-500 text-base mb-4 max-w-md mx-auto leading-relaxed">
                   Paste any health claim, headline, or social media post.<br className="hidden sm:block" />
                   Get a structured, sourced verdict in seconds.
                 </p>
+                <div className="flex items-center justify-center gap-4 mb-5 flex-wrap">
+                  {[
+                    { val: '6×', label: 'faster spread' },
+                    { val: '30M+', label: 'at risk' },
+                    { val: '1 in 3', label: 'misled' },
+                  ].map(s => (
+                    <div key={s.val} className="flex items-center gap-1.5 text-xs text-gray-400">
+                      <span className="font-black text-gray-700">{s.val}</span>
+                      <span>{s.label}</span>
+                    </div>
+                  ))}
+                </div>
                 <div className="flex flex-wrap items-center justify-center gap-2 max-w-lg mx-auto">
                   {[
                     { icon: '🔍', label: 'Decompose' },
