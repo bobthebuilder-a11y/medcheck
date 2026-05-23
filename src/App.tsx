@@ -136,6 +136,11 @@ export default function App() {
             {/* Hero — left-aligned, more impactful */}
             {phase === 'idle' && (
               <div className="mb-8">
+                {/* Urgency banner */}
+                <div className="bg-red-600 text-white text-xs font-bold px-3 py-2 rounded-lg mb-5 flex items-center gap-2">
+                  <span>⚠️</span>
+                  <span>Health misinformation kills. Fake cancer cures, vaccine myths, and dangerous treatments spread faster than corrections.</span>
+                </div>
                 <div className="flex items-center gap-2 mb-5 flex-wrap">
                   <span className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 bg-white border border-slate-200 px-3 py-1 rounded-full shadow-sm">
                     <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse shrink-0"></span>
