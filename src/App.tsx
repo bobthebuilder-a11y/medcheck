@@ -166,7 +166,7 @@ export default function App() {
                 onKeyDown={e => {
                   if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) handleAnalyze();
                 }}
-                placeholder="Paste any health claim, headline, or social media post..."
+                placeholder="Paste a health claim, headline, or full social media post — AI will extract and check the claim..."
                 rows={3}
                 disabled={phase === 'streaming'}
                 className="w-full border-0 text-sm text-gray-800 placeholder-gray-400 focus:outline-none resize-none leading-relaxed disabled:opacity-50"

@@ -8,6 +8,7 @@ export interface ClaimAnalysis {
   sources: Source[];
   politicalCharge: 'neutral' | 'low' | 'high';
   category?: string; // e.g. "vaccines", "nutrition", "cancer"
+  extractedClaim?: string; // when input was a social media post
 }
 
 export interface Assertion {

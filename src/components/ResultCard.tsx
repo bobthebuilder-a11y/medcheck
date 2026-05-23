@@ -131,8 +131,19 @@ export default function ResultCard({ analysis, claim }: Props) {
 
         {/* Claim */}
         <div className="bg-white/70 rounded-xl p-3 border border-gray-200/60">
-          <p className="text-xs text-gray-400 font-bold uppercase tracking-widest mb-1">Claim analyzed</p>
-          <p className="text-sm text-gray-800 italic leading-relaxed">"{claim}"</p>
+          {analysis.extractedClaim && analysis.extractedClaim !== claim ? (
+            <>
+              <p className="text-xs text-gray-400 font-bold uppercase tracking-widest mb-1">Core claim extracted</p>
+              <p className="text-sm text-gray-800 italic leading-relaxed mb-2">"{analysis.extractedClaim}"</p>
+              <p className="text-xs text-gray-400 font-bold uppercase tracking-widest mb-1">From your input</p>
+              <p className="text-xs text-gray-500 italic leading-relaxed line-clamp-2">"{claim}"</p>
+            </>
+          ) : (
+            <>
+              <p className="text-xs text-gray-400 font-bold uppercase tracking-widest mb-1">Claim analyzed</p>
+              <p className="text-sm text-gray-800 italic leading-relaxed">"{claim}"</p>
+            </>
+          )}
         </div>
 
         {/* Summary */}
