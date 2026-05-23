@@ -86,7 +86,7 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
             <span className="text-3xl shrink-0">{vc.icon}</span>
             <div className="min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xl font-black tracking-widest text-white">{vc.label}</span>
+                <span className="text-xl font-black tracking-widest text-white" title={`Verdict: ${vc.label} — ${analysis.verdict === 'true' ? 'Scientific evidence supports this claim' : analysis.verdict === 'false' ? 'Scientific evidence contradicts this claim' : analysis.verdict === 'misleading' ? 'Partially true but creates a false overall impression' : 'Insufficient evidence to evaluate definitively'}`}>{vc.label}</span>
                 {analysis.politicalCharge === 'high' && (
                   <span className="px-2 py-0.5 text-xs bg-white/20 text-white border border-white/30 rounded-full font-semibold" title="This topic intersects with political controversy. AI may be less reliable here — treat this verdict with extra scrutiny and verify from multiple sources.">
                     ⚡ Politically Charged
