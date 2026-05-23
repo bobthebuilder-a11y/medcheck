@@ -81,10 +81,10 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
 
       {/* Colored verdict header */}
       <div className={`${vc.headerBg} px-5 py-4`}>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl">{vc.icon}</span>
-            <div>
+        <div className="flex items-start justify-between gap-2">
+          <div className="flex items-center gap-3 min-w-0">
+            <span className="text-3xl shrink-0">{vc.icon}</span>
+            <div className="min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-xl font-black tracking-widest text-white">{vc.label}</span>
                 {analysis.politicalCharge === 'high' && (
