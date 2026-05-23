@@ -199,13 +199,15 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
               {analysis.assertions.map((a, i) => {
                 const ac = VERDICT_CONFIG[a.verdict];
                 return (
-                  <div key={i} className={`rounded-lg p-3 border ${ac.border} ${ac.bg}`}>
-                    <div className="flex items-center gap-1.5 mb-1.5">
-                      <span className="text-sm">{ac.icon}</span>
-                      <span className={`text-xs font-bold uppercase tracking-wide ${ac.text}`}>{ac.label}</span>
+                  <div key={i} className={`rounded-lg border-l-4 border-r border-t border-b ${ac.border} ${ac.bg} p-3`}>
+                    <div className="flex items-start justify-between gap-2">
+                      <p className="text-xs font-semibold text-slate-800 leading-relaxed flex-1">"{a.text}"</p>
+                      <span className={`text-xs font-black uppercase shrink-0 ${ac.text} flex items-center gap-1`}>
+                        <span>{ac.icon}</span>
+                        <span>{ac.label}</span>
+                      </span>
                     </div>
-                    <p className="text-xs font-semibold text-slate-800 mb-1 leading-relaxed">"{a.text}"</p>
-                    <p className="text-xs text-slate-600 leading-relaxed">{a.explanation}</p>
+                    <p className="text-xs text-slate-600 leading-relaxed mt-1.5">{a.explanation}</p>
                   </div>
                 );
               })}
