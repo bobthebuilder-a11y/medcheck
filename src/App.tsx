@@ -131,7 +131,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(160deg, #eef4ff 0%, #f9fafb 45%, #f3f0ff 100%)' }}>
+    <div className="min-h-screen animated-bg">
 
       {/* Sticky navbar */}
       <nav className="border-b border-gray-200/80 bg-white/95 backdrop-blur-md sticky top-0 z-20 shadow-sm">
