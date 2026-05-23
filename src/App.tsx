@@ -46,7 +46,13 @@ export default function App() {
   // Keyboard shortcuts
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && phase === 'done') handleReset();
+      if (e.key === 'Escape' && phase === 'done') {
+        setPhase('idle');
+        setResult(null);
+        setClaim('');
+        setLastClaim('');
+        setError('');
+      }
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
