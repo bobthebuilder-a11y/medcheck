@@ -20,12 +20,12 @@ function saveHistory(h: HistoryEntry[]) {
 type Phase = 'idle' | 'streaming' | 'done' | 'error';
 
 const LOADING_STEPS = [
-  'Decomposing claim into assertions...',
-  'Cross-referencing scientific literature...',
-  'Evaluating against CDC & WHO guidelines...',
+  'Extracting core health claim...',
+  'Decomposing into individual assertions...',
+  'Cross-referencing CDC & WHO guidelines...',
+  'Evaluating scientific evidence...',
   'Calibrating confidence scores...',
-  'Generating citations...',
-  'Finalizing analysis...',
+  'Compiling citations and verdict...',
 ];
 
 export default function App() {
