@@ -205,13 +205,19 @@ export default function App() {
               </div>
             </div>
 
-            {/* Examples */}
+            {/* Examples + Tips */}
             {phase === 'idle' && (
-              <div className="mb-5">
+              <div className="mb-5 space-y-3">
                 <ExampleClaims
                   onSelect={(c) => { setClaim(c); handleAnalyze(c); }}
                   onRandom={(c) => { setClaim(c); handleAnalyze(c); }}
                 />
+                <div className="bg-blue-50 border border-blue-100 rounded-xl px-4 py-3 flex items-start gap-2">
+                  <span className="text-blue-400 shrink-0 mt-0.5">💡</span>
+                  <p className="text-xs text-blue-700 leading-relaxed">
+                    <strong>Tip:</strong> You can paste a full social media post and MedCheck will extract and check the health claim within it. Try the "Check multiple claims at once" button below to analyze several at the same time.
+                  </p>
+                </div>
               </div>
             )}
 
