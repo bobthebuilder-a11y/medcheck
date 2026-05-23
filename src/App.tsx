@@ -105,7 +105,7 @@ export default function App() {
     <div className="min-h-screen page-bg">
 
       {/* Dark navbar */}
-      <nav className="bg-slate-900 sticky top-0 z-20 border-b border-slate-800/80">
+      <nav className="sticky top-0 z-20 border-b border-slate-800/80" style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)' }}>
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-sm text-white text-lg leading-none">
