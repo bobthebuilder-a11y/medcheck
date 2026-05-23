@@ -7,6 +7,7 @@ export interface ClaimAnalysis {
   assertions: Assertion[];
   sources: Source[];
   politicalCharge: 'neutral' | 'low' | 'high';
+  category?: string; // e.g. "vaccines", "nutrition", "cancer"
 }
 
 export interface Assertion {
@@ -19,4 +20,11 @@ export interface Source {
   name: string;
   url: string;
   relevance: string;
+}
+
+export interface HistoryEntry {
+  id: string;
+  claim: string;
+  analysis: ClaimAnalysis;
+  timestamp: number;
 }
