@@ -147,7 +147,7 @@ export default function App() {
               <div className="mb-5">
                 <div className="flex items-start gap-4 mb-3">
                   <div className="flex-1">
-                    <h1 className="text-2xl font-black text-slate-900 mb-1">Is that health claim true?</h1>
+                    <h1 className="text-2xl font-black text-slate-900 mb-1 leading-tight">Is that health claim<br className="hidden sm:block" /> actually true?</h1>
                     <p className="text-sm text-slate-500">Powered by AI · Cross-references CDC, WHO & peer-reviewed science</p>
                   </div>
                   <div className="hidden sm:flex items-center gap-2 shrink-0 mt-1">
