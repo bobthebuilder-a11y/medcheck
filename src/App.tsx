@@ -74,6 +74,7 @@ export default function App() {
             <span className="text-xl">🔬</span>
             <span className="font-black text-gray-900 text-lg tracking-tight">MedCheck</span>
             <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-semibold">BETA</span>
+            <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-semibold hidden sm:inline">Research Project</span>
           </div>
           <div className="flex items-center gap-1">
             {(['check', 'about'] as const).map(tab => (
@@ -192,6 +193,23 @@ export default function App() {
                 >
                   + Check another claim
                 </button>
+              </div>
+            )}
+
+            {/* Research callout */}
+            {!loading && !result && (
+              <div className="mt-6 bg-purple-50 border border-purple-200 rounded-2xl p-4">
+                <div className="flex items-start gap-3">
+                  <span className="text-2xl shrink-0">🔭</span>
+                  <div>
+                    <p className="text-sm font-bold text-purple-900 mb-1">This is more than an app</p>
+                    <p className="text-xs text-purple-700 leading-relaxed">
+                      MedCheck is also the foundation for a research paper investigating whether AI systems
+                      show measurable bias when evaluating politically charged health claims. Built for the
+                      <strong> ACP Student AI Championship 2026</strong>.
+                    </p>
+                  </div>
+                </div>
               </div>
             )}
 

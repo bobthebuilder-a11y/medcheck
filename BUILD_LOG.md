@@ -38,5 +38,20 @@ Deliverables: polished website, slides, process doc, basics guide
 
 ---
 
+### Iteration 2 — Stats & Pipeline (22:15)
+**What changed:**
+- Added StatsBar component with 4 key statistics about health misinformation scope
+- Added pipeline flow display under hero text: Claim decomposition → Evidence synthesis → Confidence calibration → Source citations
+- Stats bar appears on About page for judges to see the problem scale
+
+**Self-review for Iteration 3:**
+- App is functional and looks clean. Need to verify the AI output quality is consistent.
+- Should add a "research" section that's more visible, not buried in About
+- Mobile layout needs verification
+- The claim breakdown section could use better visual hierarchy
+
+### Iteration 3 — BASICS guide written (22:30)
+- BASICS.md created: full guide covering verdicts, confidence scores, political charge flag, architecture explanation, demo sequence, judge Q&A prep, SDG connection, tech stack
+
 ## Planned Iterations
 
