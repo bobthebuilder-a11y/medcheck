@@ -137,9 +137,9 @@ export default function App() {
             {phase === 'idle' && (
               <div className="mb-8">
                 {/* Urgency banner */}
-                <div className="bg-red-600 text-white text-xs font-bold px-3 py-2 rounded-lg mb-5 flex items-center gap-2">
-                  <span>⚠️</span>
-                  <span>Health misinformation kills. Fake cancer cures, vaccine myths, and dangerous treatments spread faster than corrections.</span>
+                <div className="bg-red-50 border border-red-200 text-red-700 text-xs font-semibold px-3 py-2 rounded-lg mb-5 flex items-center gap-2">
+                  <span className="text-red-500 shrink-0">⚠</span>
+                  <span>Health misinformation causes real harm — vaccine hesitancy, delayed diagnoses, dangerous self-treatment. It spreads faster than corrections.</span>
                 </div>
                 <div className="flex items-center gap-2 mb-5 flex-wrap">
                   <span className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 bg-white border border-slate-200 px-3 py-1 rounded-full shadow-sm">
