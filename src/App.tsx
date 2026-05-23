@@ -1,10 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { analyzeClaimStream } from './lib/analyzer';
 import ResultCard from './components/ResultCard';
-import ExampleClaims from './components/ExampleClaims';
 import HistoryPanel from './components/HistoryPanel';
 import SessionStats from './components/SessionStats';
-import RelatedClaims from './components/RelatedClaims';
 import BatchChecker from './components/BatchChecker';
 import TrendingClaims from './components/TrendingClaims';
 import type { ClaimAnalysis, HistoryEntry } from './types';
@@ -28,6 +26,13 @@ const LOADING_STEPS = [
   'Evaluating scientific evidence...',
   'Calibrating confidence scores...',
   'Compiling citations and verdict...',
+];
+
+const EXAMPLE_CLAIMS = [
+  'Vaccines cause autism',
+  'Vitamin C megadoses cure the common cold',
+  'Natural immunity is always better than vaccines',
+  'Eating sugar directly feeds cancer cells',
 ];
 
 export default function App() {
@@ -110,29 +115,26 @@ export default function App() {
       {showBatch && <BatchChecker onClose={() => setShowBatch(false)} />}
 
       {/* Navbar */}
-      <nav className="sticky top-0 z-20 bg-white border-b border-slate-200" style={{ borderTop: '4px solid #003087' }}>
-        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div>
-              <span className="font-black text-base tracking-tight block leading-tight" style={{ color: '#003087' }}>MedCheck</span>
-              <span className="text-[9px] text-slate-400 leading-none hidden sm:block">AI Health Fact-Checker</span>
-            </div>
-            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full uppercase tracking-wider border" style={{ color: '#003087', borderColor: '#003087', background: '#f0f4ff' }}>Beta</span>
+      <nav className="sticky top-0 z-20 bg-white border-b border-[#d6d7d9]" style={{ borderTop: '4px solid #003087' }}>
+        <div className="max-w-4xl mx-auto px-6 py-3 flex items-center justify-between">
+          <div>
+            <span className="font-bold text-base block leading-tight" style={{ color: '#003087' }}>MedCheck</span>
+            <span className="text-xs leading-none hidden sm:block" style={{ color: '#767676' }}>AI Health Fact-Checker</span>
           </div>
-          <div className="flex items-center gap-0.5">
-            <button onClick={() => setShowBatch(true)}
-              className="px-3 py-1.5 text-sm font-semibold text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-all hidden sm:block"
-              title="Check multiple claims at once">
-              Batch
+          <div className="flex items-center gap-5">
+            <button
+              onClick={() => setShowBatch(true)}
+              className="text-sm font-medium hidden sm:block hover:underline"
+              style={{ color: '#0071bc' }}>
+              Batch Check
             </button>
             {(['check', 'about'] as const).map(tab => (
               <button key={tab} onClick={() => setActiveTab(tab)}
-                className={`px-3.5 py-1.5 text-sm font-semibold rounded-lg transition-all ${
-                  activeTab === tab
-                    ? 'text-white shadow-sm'
-                    : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'
-                }`}
-                style={activeTab === tab ? { background: '#003087' } : {}}>
+                className="text-sm font-medium transition-colors pb-0.5"
+                style={{
+                  color: activeTab === tab ? '#0071bc' : '#3d3d3d',
+                  borderBottom: activeTab === tab ? '2px solid #0071bc' : '2px solid transparent',
+                }}>
                 {tab === 'check' ? 'Analyze' : 'About'}
               </button>
             ))}
@@ -140,97 +142,115 @@ export default function App() {
         </div>
       </nav>
 
-      <div className="max-w-3xl mx-auto px-4 pt-6 pb-16">
+      <div className="max-w-4xl mx-auto px-6 pt-8 pb-16">
 
         {activeTab === 'check' && (
           <>
-            {/* Header (idle only) */}
+            {/* Hero (idle only) */}
             {phase === 'idle' && (
-              <div className="mb-6">
-                <h1 className="text-3xl font-black mb-1 leading-tight" style={{ color: '#003087' }}>Verify a health claim.</h1>
-                <p className="text-sm text-slate-500">AI-powered · Cross-references CDC, WHO & peer-reviewed science</p>
+              <div className="mb-8">
+                <h1 className="text-4xl font-bold mb-3 leading-tight" style={{ color: '#003087' }}>
+                  Verify a Health Claim
+                </h1>
+                <p className="text-lg leading-relaxed" style={{ color: '#3d3d3d' }}>
+                  Powered by AI. Cross-references CDC, WHO, and peer-reviewed science.
+                </p>
               </div>
             )}
 
-            {/* Input */}
-            <div className={`bg-white rounded-lg border transition-all duration-150 p-4 mb-4 ${
-              phase === 'streaming' ? 'border-blue-400 shadow-sm' :
-              phase === 'done' ? 'border-slate-200' :
-              'border-slate-300 focus-within:border-blue-400 focus-within:shadow-sm'
-            }`}>
+            {/* Textarea */}
+            <div className="mb-3">
               <textarea
                 ref={textareaRef}
                 value={claim}
                 onChange={e => setClaim(e.target.value)}
                 onKeyDown={e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) handleAnalyze(); }}
                 placeholder="Enter a health claim, headline, or paste a social media post..."
-                rows={3}
+                rows={4}
                 disabled={phase === 'streaming'}
-                className="w-full border-0 text-base text-slate-800 placeholder-slate-400 focus:outline-none resize-none leading-relaxed disabled:opacity-60 bg-transparent"
+                className="w-full text-base placeholder-[#767676] focus:outline-none resize-none leading-relaxed disabled:opacity-60 p-4 rounded-sm"
+                style={{
+                  border: '1px solid #d6d7d9',
+                  color: '#1b1b1b',
+                  background: 'white',
+                  boxShadow: phase === 'streaming' ? `0 0 0 2px #0071bc` : undefined,
+                }}
               />
-              <div className="flex items-center justify-between pt-3 border-t border-slate-100 mt-4">
-                <span className="text-xs text-slate-400 flex items-center gap-1.5">
-                  {phase === 'streaming' ? (
-                    <><span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></span>Analyzing...</>
-                  ) : phase === 'done' ? (
-                    <><span className="text-emerald-500">✓</span> Result ready</>
-                  ) : claim.length > 200 ? (
-                    <>Long post detected — AI will extract the claim</>
-                  ) : claim.length > 0 ? (
-                    `${claim.length} chars`
-                  ) : (
-                    <span className="hidden sm:inline">Cmd+Enter to analyze</span>
-                  )}
-                </span>
-                <div className="flex gap-2">
-                  {(phase === 'done' || phase === 'error') && (
-                    <button onClick={handleReset}
-                      className="px-3 py-1.5 text-xs font-semibold text-slate-500 hover:text-slate-700 border border-slate-200 rounded-lg">
-                      Clear
-                    </button>
-                  )}
-                  <button onClick={() => handleAnalyze()} disabled={phase === 'streaming' || !claim.trim()}
-                    className="px-6 py-2 text-white rounded-lg disabled:opacity-40 font-bold text-sm flex items-center gap-1.5 hover:opacity-90 active:opacity-80"
-                    style={{ background: '#003087' }}>
-                    {phase === 'streaming' ? <>Analyzing...</> : <>Analyze</>}
+            </div>
+
+            {/* Below textarea: hint + button */}
+            <div className="flex items-center justify-between mb-8">
+              <span className="text-sm" style={{ color: '#767676' }}>
+                {phase === 'streaming' ? (
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full animate-pulse inline-block" style={{ background: '#0071bc' }} />
+                    Analyzing...
+                  </span>
+                ) : phase === 'done' ? (
+                  <span style={{ color: '#2e8540' }}>✓ Result ready</span>
+                ) : (
+                  <span className="hidden sm:inline">⌘+Enter to analyze</span>
+                )}
+              </span>
+              <div className="flex items-center gap-2">
+                {(phase === 'done' || phase === 'error') && (
+                  <button onClick={handleReset}
+                    className="px-4 py-2 text-sm font-medium border rounded-sm hover:bg-gray-50"
+                    style={{ color: '#3d3d3d', borderColor: '#d6d7d9' }}>
+                    Clear
                   </button>
-                </div>
+                )}
+                <button
+                  onClick={() => handleAnalyze()}
+                  disabled={phase === 'streaming' || !claim.trim()}
+                  className="px-6 py-2.5 text-white font-semibold rounded-sm text-sm disabled:opacity-40 hover:opacity-90 active:opacity-80"
+                  style={{ background: '#0071bc' }}>
+                  {phase === 'streaming' ? 'Analyzing...' : 'Analyze Claim →'}
+                </button>
               </div>
             </div>
 
-            {/* Examples */}
+            {/* Example claims (idle) */}
             {phase === 'idle' && (
-              <div className="mb-6">
-                <ExampleClaims
-                  onSelect={(c) => { setClaim(c); handleAnalyze(c); }}
-                  onRandom={(c) => { setClaim(c); handleAnalyze(c); }}
-                />
+              <div className="mb-8 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                <span className="text-sm shrink-0" style={{ color: '#767676' }}>Try an example:</span>
+                {EXAMPLE_CLAIMS.map((c, i) => (
+                  <button key={i} onClick={() => { setClaim(c); handleAnalyze(c); }}
+                    className="text-sm hover:underline text-left"
+                    style={{ color: '#0071bc' }}>
+                    {c}
+                  </button>
+                ))}
               </div>
             )}
 
             {/* Loading */}
             {phase === 'streaming' && (
-              <div className="bg-white rounded-lg border border-slate-200 overflow-hidden mb-4">
-                <div className="h-1 bg-slate-100">
-                  <div className="h-1 rounded-r-full transition-all duration-700"
-                    style={{ width: `${Math.round(((loadingStep + 1) / LOADING_STEPS.length) * 100)}%`, background: '#003087' }} />
-                </div>
-                <div className="px-5 py-4 text-center">
-                  <p className="text-sm text-slate-500">{LOADING_STEPS[loadingStep]}</p>
-                  <p className="text-xs text-slate-400 mt-1 font-mono">{Math.round(((loadingStep + 1) / LOADING_STEPS.length) * 100)}%</p>
+              <div className="bg-white border border-[#d6d7d9] rounded-sm overflow-hidden mb-4"
+                style={{ borderTop: '3px solid #003087' }}>
+                <div className="px-6 py-5">
+                  <p className="text-base font-semibold mb-1" style={{ color: '#1b1b1b' }}>Analyzing...</p>
+                  <p className="text-sm mb-4" style={{ color: '#767676' }}>{LOADING_STEPS[loadingStep]}</p>
+                  <div className="h-1.5 rounded-full" style={{ background: '#e8f0fa' }}>
+                    <div className="h-1.5 rounded-full transition-all duration-700"
+                      style={{
+                        width: `${Math.round(((loadingStep + 1) / LOADING_STEPS.length) * 100)}%`,
+                        background: '#0071bc',
+                      }} />
+                  </div>
                 </div>
               </div>
             )}
 
             {/* Error */}
             {phase === 'error' && error && (
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+              <div className="border rounded-sm p-4 mb-4" style={{ background: '#fff5f5', borderColor: '#f5b8b8' }}>
                 <div className="flex items-start gap-2.5">
-                  <span className="text-red-400 shrink-0">⚠</span>
+                  <span style={{ color: '#cd2026' }}>⚠</span>
                   <div>
-                    <p className="text-red-700 text-sm font-semibold">{error}</p>
+                    <p className="text-sm font-semibold" style={{ color: '#cd2026' }}>{error}</p>
                     <button onClick={() => handleAnalyze()} disabled={!claim.trim()}
-                      className="mt-1.5 text-xs text-red-600 hover:text-red-800 font-semibold underline">
+                      className="mt-1.5 text-sm font-medium underline" style={{ color: '#cd2026' }}>
                       Try again →
                     </button>
                   </div>
@@ -240,165 +260,121 @@ export default function App() {
 
             {/* Result */}
             {phase === 'done' && result && (
-              <div className="space-y-3 result-enter">
+              <div className="space-y-4 result-enter">
                 <ResultCard analysis={result} claim={lastClaim} onReset={handleReset} />
-                <button onClick={handleReset}
-                  className="w-full py-2.5 bg-white border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50 text-sm font-semibold flex items-center justify-center gap-2">
-                  + Check another claim
-                </button>
-                <RelatedClaims
-                  category={result.category}
-                  currentClaim={lastClaim}
-                  onSelect={(c) => { setClaim(c); handleAnalyze(c); }}
-                />
+                <div className="text-center pt-2">
+                  <button onClick={handleReset}
+                    className="text-sm font-medium hover:underline"
+                    style={{ color: '#0071bc' }}>
+                    + Check another claim
+                  </button>
+                </div>
               </div>
             )}
 
             {/* Session stats + History */}
             {phase !== 'streaming' && history.length > 0 && (
-              <div className="mt-5 space-y-3">
+              <div className="mt-6 space-y-3">
                 <SessionStats history={history} />
                 <HistoryPanel history={history} onSelect={handleHistorySelect} onClear={() => setHistory([])} />
               </div>
             )}
 
-            {/* Trending + Batch (idle + no history) */}
+            {/* Trending (idle + no history) */}
             {phase === 'idle' && history.length === 0 && (
-              <div className="mt-6 space-y-4">
+              <div className="mt-6">
                 <TrendingClaims onSelect={(c) => { setClaim(c); handleAnalyze(c); }} />
-                <button onClick={() => setShowBatch(true)}
-                  className="w-full py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-500 hover:text-slate-700 hover:bg-slate-50 flex items-center justify-center gap-2">
-                  Check multiple claims at once
-                </button>
               </div>
             )}
           </>
         )}
 
         {activeTab === 'about' && (
-          <div className="space-y-4">
-            <div className="rounded-lg p-6 text-white" style={{ background: '#003087' }}>
-              <div className="flex items-center gap-2.5 mb-4">
-                <span className="font-black text-lg">MedCheck</span>
-                <span className="text-xs text-blue-200 border border-blue-400/50 px-1.5 py-0.5 rounded-full font-semibold">Beta</span>
-              </div>
-              <h2 className="text-2xl font-black leading-tight mb-2">AI-powered health<br />misinformation detection</h2>
-              <p className="text-sm text-blue-200 leading-relaxed mb-4">
+          <div className="space-y-6">
+            <div className="rounded-sm p-8" style={{ background: '#003087' }}>
+              <h2 className="text-3xl font-bold leading-tight mb-3 text-white">
+                AI-powered health misinformation detection
+              </h2>
+              <p className="text-base leading-relaxed mb-6" style={{ color: '#b3c7e6' }}>
                 Built for the ACP Student AI Championship 2026. Addresses SDG 3 (Good Health) and SDG 16 (Strong Institutions).
               </p>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-3 gap-4">
                 {[
-                  { v: '6×', l: 'faster spread', c: 'text-red-300' },
-                  { v: '30M+', l: 'Americans at risk', c: 'text-orange-300' },
-                  { v: '1 in 3', l: 'acted on bad info', c: 'text-amber-300' },
+                  { v: '6×', l: 'faster spread', c: '#f4b942' },
+                  { v: '30M+', l: 'Americans at risk', c: '#e87722' },
+                  { v: '1 in 3', l: 'acted on bad info', c: '#e5c84a' },
                 ].map(s => (
-                  <div key={s.v} className="bg-white/10 rounded-lg p-3 text-center">
-                    <p className={`text-xl font-black ${s.c}`}>{s.v}</p>
-                    <p className="text-xs text-blue-200 mt-0.5">{s.l}</p>
+                  <div key={s.v} className="rounded-sm p-4 text-center" style={{ background: 'rgba(255,255,255,0.1)' }}>
+                    <p className="text-2xl font-bold" style={{ color: s.c }}>{s.v}</p>
+                    <p className="text-sm mt-1" style={{ color: '#b3c7e6' }}>{s.l}</p>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="bg-white rounded-lg border border-slate-200 p-5 space-y-5">
+            <div className="bg-white border border-[#d6d7d9] rounded-sm p-8 space-y-6">
               <div>
-                <h2 className="text-lg font-black text-slate-900 mb-1.5">What is MedCheck?</h2>
-                <p className="text-sm text-slate-600 leading-relaxed">
+                <h2 className="text-xl font-semibold mb-3" style={{ color: '#1b1b1b' }}>What is MedCheck?</h2>
+                <p className="text-base leading-relaxed" style={{ color: '#3d3d3d' }}>
                   MedCheck analyzes any health claim against scientific consensus using AI. It breaks claims into individual assertions, evaluates each, and returns a structured verdict with honest confidence scores and real citations.
                 </p>
-                <div className="mt-3 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
-                  <p className="text-xs text-amber-800 leading-relaxed">
+                <div className="mt-4 pl-4 py-2 border-l-4" style={{ borderColor: '#e5a000', background: '#fffbf0' }}>
+                  <p className="text-sm leading-relaxed" style={{ color: '#5c4a00' }}>
                     <strong>MISLEADING</strong> is often more dangerous than FALSE — it contains real science weaponized to reach a false conclusion. "Natural immunity is always better than vaccines" has truth in it, but "always" makes it dangerous.
                   </p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-3">
                 {[
-                  { label: 'TRUE', desc: 'Evidence supports this', color: 'border-emerald-300 text-emerald-700', left: 'border-l-4 border-l-emerald-500' },
-                  { label: 'FALSE', desc: 'Evidence contradicts this', color: 'border-red-300 text-red-700', left: 'border-l-4 border-l-red-500' },
-                  { label: 'MISLEADING', desc: 'Partial truth, false impression', color: 'border-amber-300 text-amber-700', left: 'border-l-4 border-l-amber-500' },
-                  { label: 'UNVERIFIABLE', desc: 'Insufficient consensus', color: 'border-slate-200 text-slate-600', left: 'border-l-4 border-l-slate-400' },
+                  { label: 'TRUE', desc: 'Evidence supports this', color: '#2e8540' },
+                  { label: 'FALSE', desc: 'Evidence contradicts this', color: '#cd2026' },
+                  { label: 'MISLEADING', desc: 'Partial truth, false impression', color: '#e5a000' },
+                  { label: 'UNVERIFIABLE', desc: 'Insufficient consensus', color: '#5b616b' },
                 ].map(v => (
-                  <div key={v.label} className={`border rounded-lg p-3 bg-white ${v.color} ${v.left}`}>
-                    <p className="font-bold text-xs mb-1">{v.label}</p>
-                    <p className="text-xs opacity-75">{v.desc}</p>
+                  <div key={v.label} className="rounded-sm p-4 border border-[#d6d7d9]"
+                    style={{ borderLeft: `4px solid ${v.color}` }}>
+                    <p className="font-bold text-sm mb-1" style={{ color: v.color }}>{v.label}</p>
+                    <p className="text-sm" style={{ color: '#767676' }}>{v.desc}</p>
                   </div>
                 ))}
               </div>
 
               <div>
-                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">How It Works</h3>
-                <div className="space-y-3">
+                <h3 className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: '#767676' }}>How It Works</h3>
+                <div className="space-y-4">
                   {[
                     { title: 'Claim Decomposition', desc: 'Breaks compound claims into individual testable assertions.' },
                     { title: 'Evidence Synthesis', desc: 'Cross-references CDC, WHO, NIH, PubMed simultaneously.' },
-                    { title: 'Calibrated Confidence', desc: 'Honest uncertainty — 0% confidence means the AI isn\'t sure, which is honest.' },
+                    { title: 'Calibrated Confidence', desc: "Honest uncertainty — 0% confidence means the AI isn't sure, which is honest." },
                     { title: 'Political Charge Detection', desc: 'Flags contested claims so you know when to verify extra carefully.' },
                   ].map(item => (
                     <div key={item.title} className="flex gap-3 items-start">
-                      <div className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style={{ background: '#003087' }}></div>
+                      <div className="w-1.5 h-1.5 rounded-full mt-2 shrink-0" style={{ background: '#003087' }} />
                       <div>
-                        <p className="font-semibold text-sm text-slate-800">{item.title}</p>
-                        <p className="text-xs text-slate-500 mt-0.5">{item.desc}</p>
+                        <p className="font-semibold text-base" style={{ color: '#1b1b1b' }}>{item.title}</p>
+                        <p className="text-sm mt-0.5" style={{ color: '#3d3d3d' }}>{item.desc}</p>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-2">
-                <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xl font-black text-emerald-600">3</span>
-                    <span className="text-xs font-bold text-emerald-800">Good Health & Well-Being</span>
-                  </div>
-                  <p className="text-xs text-emerald-700">Every accurate claim checked = potential harm prevented.</p>
-                </div>
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xl font-black text-blue-600">16</span>
-                    <span className="text-xs font-bold text-blue-800">Strong Institutions</span>
-                  </div>
-                  <p className="text-xs text-blue-700">An informed public enables functional health policy.</p>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Accuracy & Limitations</h3>
-                <div className="space-y-2">
-                  <div className="flex items-start gap-2.5">
-                    <span className="text-emerald-500 mt-0.5 shrink-0">✓</span>
-                    <p className="text-xs text-slate-600">Strong on well-studied topics: vaccine safety, basic nutrition, COVID-19 claims</p>
-                  </div>
-                  <div className="flex items-start gap-2.5">
-                    <span className="text-emerald-500 mt-0.5 shrink-0">✓</span>
-                    <p className="text-xs text-slate-600">Confidence scores honestly reflect AI uncertainty — low confidence = verify extra carefully</p>
-                  </div>
-                  <div className="flex items-start gap-2.5">
-                    <span className="text-amber-500 mt-0.5 shrink-0">⚠</span>
-                    <p className="text-xs text-slate-600">Less reliable on politically charged claims — the Contested flag signals when this is the case</p>
-                  </div>
-                  <div className="flex items-start gap-2.5">
-                    <span className="text-amber-500 mt-0.5 shrink-0">⚠</span>
-                    <p className="text-xs text-slate-600">May not reflect very recent research published after the model's training cutoff</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-slate-50 border border-slate-200 rounded-lg p-3">
-                <p className="text-xs text-slate-600 leading-relaxed">
+              <div className="border-t border-[#d6d7d9] pt-5">
+                <p className="text-sm leading-relaxed" style={{ color: '#3d3d3d' }}>
                   <strong>Medical Disclaimer:</strong> For educational purposes only. Not medical advice. Always verify independently and consult qualified healthcare professionals.
                 </p>
               </div>
 
-              <div className="border-t border-slate-100 pt-4 flex items-center justify-between">
+              <div className="border-t border-[#d6d7d9] pt-5 flex items-center justify-between">
                 <div>
-                  <p className="text-xs font-semibold text-slate-700">Built by David Xiao</p>
-                  <p className="text-xs text-slate-400">ACP Student AI Championship 2026 · SDG 3 & SDG 16</p>
+                  <p className="text-sm font-semibold" style={{ color: '#1b1b1b' }}>Built by David Xiao</p>
+                  <p className="text-sm" style={{ color: '#767676' }}>ACP Student AI Championship 2026 · SDG 3 & SDG 16</p>
                 </div>
                 <a href="https://github.com/bobthebuilder-a11y/medcheck" target="_blank" rel="noopener noreferrer"
-                  className="text-xs text-blue-600 hover:text-blue-800 font-semibold">GitHub →</a>
+                  className="text-sm font-medium hover:underline" style={{ color: '#0071bc' }}>
+                  GitHub →
+                </a>
               </div>
             </div>
           </div>
@@ -406,12 +382,14 @@ export default function App() {
 
       </div>
 
-      <footer className="border-t border-slate-200 bg-white">
-        <div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
-          <span className="text-xs text-slate-400">MedCheck · David Xiao · ACP 2026</span>
-          <div className="flex items-center gap-3 text-xs text-slate-400">
+      <footer className="border-t border-[#d6d7d9] bg-white">
+        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+          <span className="text-sm" style={{ color: '#767676' }}>MedCheck · David Xiao · ACP 2026</span>
+          <div className="flex items-center gap-3 text-sm" style={{ color: '#767676' }}>
             <a href="https://github.com/bobthebuilder-a11y/medcheck" target="_blank" rel="noopener noreferrer"
-              className="hover:text-blue-600">GitHub ↗</a>
+              className="hover:underline" style={{ color: '#0071bc' }}>
+              GitHub ↗
+            </a>
             <span>·</span>
             <span>Llama 4 · Groq</span>
           </div>

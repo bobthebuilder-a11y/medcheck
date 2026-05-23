@@ -1,11 +1,14 @@
 import type { HistoryEntry } from '../types';
 
+const VERDICT_COLORS: Record<string, string> = {
+  true: '#2e8540',
+  false: '#cd2026',
+  misleading: '#e5a000',
+  unverifiable: '#5b616b',
+};
+
 const VERDICT_ICONS: Record<string, string> = {
   true: '✓', false: '✗', misleading: '⚠', unverifiable: '?',
-};
-const VERDICT_COLORS: Record<string, string> = {
-  true: 'text-emerald-600', false: 'text-red-600',
-  misleading: 'text-amber-600', unverifiable: 'text-slate-500',
 };
 
 function exportHistory(history: HistoryEntry[]) {
@@ -40,29 +43,32 @@ interface Props {
 export default function HistoryPanel({ history, onSelect, onClear }: Props) {
   if (history.length === 0) return null;
   return (
-    <div className="bg-white rounded-lg border border-slate-200 overflow-hidden">
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-slate-100">
-        <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest">Recent</h3>
-        <div className="flex items-center gap-3">
-          <button onClick={() => exportHistory(history)} className="text-xs text-blue-600 hover:text-blue-800 transition-colors font-medium">
+    <div className="bg-white border border-[#d6d7d9] rounded-sm overflow-hidden">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-[#d6d7d9]">
+        <h3 className="text-xs font-semibold uppercase tracking-widest" style={{ color: '#767676' }}>Recent Checks</h3>
+        <div className="flex items-center gap-4">
+          <button onClick={() => exportHistory(history)}
+            className="text-sm font-medium hover:underline" style={{ color: '#0071bc' }}>
             Export
           </button>
-          <button onClick={onClear} className="text-xs text-slate-400 hover:text-red-500 transition-colors font-medium">
+          <button onClick={onClear}
+            className="text-sm font-medium hover:underline" style={{ color: '#767676' }}>
             Clear
           </button>
         </div>
       </div>
-      <div className="divide-y divide-slate-50">
+      <div>
         {history.slice(0, 5).map((entry) => (
           <button key={entry.id} onClick={() => onSelect(entry)}
-            className="w-full flex items-center gap-2 px-3 py-1.5 hover:bg-slate-50 text-left transition-colors group">
-            <span className={`text-xs font-bold shrink-0 ${VERDICT_COLORS[entry.analysis.verdict]}`}>
-              {VERDICT_ICONS[entry.analysis.verdict]}
+            className="w-full flex items-center gap-3 px-4 py-2 border-b border-[#d6d7d9] last:border-0 hover:bg-[#f5f7fa] text-left transition-colors">
+            <span className="text-sm font-bold shrink-0"
+              style={{ color: VERDICT_COLORS[entry.analysis.verdict] ?? '#5b616b' }}>
+              {VERDICT_ICONS[entry.analysis.verdict] ?? '?'}
             </span>
-            <p className="text-xs text-slate-600 truncate flex-1 group-hover:text-blue-600 transition-colors">
+            <p className="text-sm flex-1 truncate" style={{ color: '#3d3d3d' }}>
               {entry.claim}
             </p>
-            <span className="text-[10px] font-bold text-slate-400 shrink-0">
+            <span className="text-sm shrink-0" style={{ color: '#767676' }}>
               {entry.analysis.confidenceScore}%
             </span>
           </button>

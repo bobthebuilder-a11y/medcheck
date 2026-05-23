@@ -2,7 +2,6 @@ import type { HistoryEntry } from '../types';
 
 interface Props { history: HistoryEntry[]; }
 
-
 export default function SessionStats({ history }: Props) {
   if (history.length < 2) return null;
 
@@ -16,7 +15,7 @@ export default function SessionStats({ history }: Props) {
   const charged = history.filter(e => e.analysis.politicalCharge === 'high').length;
 
   const parts = [
-    `${total} checked`,
+    `${total} claims checked`,
     counts['false'] ? `${counts['false']} false` : null,
     counts['misleading'] ? `${counts['misleading']} misleading` : null,
     counts['true'] ? `${counts['true']} true` : null,
@@ -26,6 +25,6 @@ export default function SessionStats({ history }: Props) {
   ].filter(Boolean);
 
   return (
-    <p className="text-xs text-slate-400 px-1">{parts.join(' · ')}</p>
+    <p className="text-sm px-1" style={{ color: '#767676' }}>{parts.join(' · ')}</p>
   );
 }
