@@ -116,7 +116,7 @@ export default function App() {
 
       {/* Navbar */}
       <nav className="sticky top-0 z-20 bg-white border-b border-[#d6d7d9]" style={{ borderTop: '4px solid #003087' }}>
-        <div className="max-w-4xl mx-auto px-6 py-3 flex items-center justify-between">
+        <div className="max-w-2xl mx-auto px-8 py-3 flex items-center justify-between">
           <div>
             <span className="font-bold text-base block leading-tight" style={{ color: '#003087' }}>MedCheck</span>
             <span className="text-xs leading-none hidden sm:block" style={{ color: '#767676' }}>AI Health Fact-Checker</span>
@@ -142,7 +142,7 @@ export default function App() {
         </div>
       </nav>
 
-      <div className="max-w-4xl mx-auto px-10 pt-8 pb-16">
+      <div className="max-w-2xl mx-auto px-8 pt-10 pb-16">
 
         {activeTab === 'check' && (
           <>
@@ -186,8 +186,6 @@ export default function App() {
                     <span className="w-1.5 h-1.5 rounded-full animate-pulse inline-block" style={{ background: '#0071bc' }} />
                     Analyzing...
                   </span>
-                ) : phase === 'done' ? (
-                  <span style={{ color: '#2e8540' }}>✓ Result ready</span>
                 ) : (
                   <span className="hidden sm:inline">⌘+Enter to analyze</span>
                 )}
@@ -383,7 +381,7 @@ export default function App() {
       </div>
 
       <footer className="border-t border-[#d6d7d9] bg-white">
-        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-2xl mx-auto px-8 py-4 flex items-center justify-between">
           <span className="text-sm" style={{ color: '#767676' }}>MedCheck · David Xiao · ACP 2026</span>
           <div className="flex items-center gap-3 text-sm" style={{ color: '#767676' }}>
             <a href="https://github.com/bobthebuilder-a11y/medcheck" target="_blank" rel="noopener noreferrer"
