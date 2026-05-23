@@ -447,6 +447,26 @@ export default function App() {
                 </div>
               </div>
 
+              <div>
+                <h3 className="font-bold text-gray-800 mb-3 text-sm uppercase tracking-widest text-gray-500">UN Sustainable Development Goals</h3>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-green-50 border border-green-200 rounded-xl p-3">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <span className="text-2xl font-black text-green-700">3</span>
+                      <span className="text-xs font-bold text-green-800 uppercase tracking-wide">Good Health & Well-Being</span>
+                    </div>
+                    <p className="text-xs text-green-700 leading-relaxed">Reducing health decisions made on false information. Every accurate claim checked = potential harm prevented.</p>
+                  </div>
+                  <div className="bg-blue-50 border border-blue-200 rounded-xl p-3">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <span className="text-2xl font-black text-blue-700">16</span>
+                      <span className="text-xs font-bold text-blue-800 uppercase tracking-wide">Peace, Justice & Strong Institutions</span>
+                    </div>
+                    <p className="text-xs text-blue-700 leading-relaxed">An informed public is necessary for functional health institutions. MedCheck builds media literacy.</p>
+                  </div>
+                </div>
+              </div>
+
               <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
                 <p className="text-xs text-amber-800 leading-relaxed">
                   ⚕️ <strong>Medical Disclaimer:</strong> MedCheck is for educational purposes only and is not a substitute for professional medical advice. Confidence scores reflect AI certainty. Always verify citations independently and consult qualified healthcare professionals for medical decisions.
