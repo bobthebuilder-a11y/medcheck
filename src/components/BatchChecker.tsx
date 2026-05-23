@@ -85,28 +85,35 @@ export default function BatchChecker({ onClose }: Props) {
             {results.map((r, i) => {
               const vc = r.analysis ? VERDICT_CONFIG[r.analysis.verdict] : null;
               return (
-                <div key={i} className={`rounded-xl border p-3.5 ${
-                  r.status === 'done' && vc ? `${vc.bg} ${vc.border}` :
-                  r.status === 'analyzing' ? 'bg-blue-50 border-blue-200' :
-                  r.status === 'error' ? 'bg-red-50 border-red-200' :
-                  'bg-slate-50 border-slate-200'
+                <div key={i} className={`rounded-xl border overflow-hidden transition-all ${
+                  r.status === 'done' && vc ? `${vc.border}` :
+                  r.status === 'analyzing' ? 'border-blue-300' :
+                  r.status === 'error' ? 'border-red-200' :
+                  'border-slate-200'
                 }`}>
-                  <div className="flex items-start justify-between gap-3">
-                    <p className="text-sm text-slate-800 font-medium flex-1 italic">"{r.claim}"</p>
-                    {r.status === 'pending' && <span className="text-xs text-slate-400 shrink-0">Pending...</span>}
-                    {r.status === 'analyzing' && <span className="text-xs text-blue-500 font-medium animate-pulse shrink-0">Analyzing...</span>}
-                    {r.status === 'error' && <span className="text-xs text-red-500 shrink-0">Failed</span>}
-                    {r.status === 'done' && r.analysis && vc && (
-                      <div className="flex items-center gap-2 shrink-0">
-                        <span className="text-sm">{vc.icon}</span>
-                        <span className={`text-xs font-black ${vc.text}`}>{vc.label}</span>
-                        <span className="text-xs text-slate-400">{r.analysis.confidenceScore}%</span>
+                  {r.status === 'done' && vc && (
+                    <div className={`${vc.headerBg} px-3 py-2 flex items-center justify-between`}>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-black text-white">{vc.icon}</span>
+                        <span className="text-xs font-black text-white tracking-wide">{vc.label}</span>
                       </div>
+                      <span className="text-xs text-white/70">{r.analysis?.confidenceScore}% confidence</span>
+                    </div>
+                  )}
+                  {r.status === 'analyzing' && (
+                    <div className="bg-blue-600 px-3 py-2 flex items-center gap-2">
+                      <span className="animate-spin text-white text-sm">⟳</span>
+                      <span className="text-xs font-medium text-white">Analyzing...</span>
+                    </div>
+                  )}
+                  <div className={`p-3 ${r.status === 'done' && vc ? vc.bg : r.status === 'analyzing' ? 'bg-blue-50' : 'bg-white'}`}>
+                    <p className="text-sm text-slate-800 font-medium italic mb-1">"{r.claim.length > 80 ? r.claim.substring(0, 80) + '…' : r.claim}"</p>
+                    {r.status === 'pending' && <p className="text-xs text-slate-400">Waiting...</p>}
+                    {r.status === 'error' && <p className="text-xs text-red-500">Analysis failed</p>}
+                    {r.status === 'done' && r.analysis && (
+                      <p className="text-xs text-slate-600 leading-relaxed">{r.analysis.summary}</p>
                     )}
                   </div>
-                  {r.status === 'done' && r.analysis && (
-                    <p className="text-xs text-slate-600 mt-1.5 leading-relaxed">{r.analysis.summary}</p>
-                  )}
                 </div>
               );
             })}
