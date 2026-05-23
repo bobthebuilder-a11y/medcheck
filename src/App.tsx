@@ -144,32 +144,9 @@ export default function App() {
           <>
             {/* Header (idle only) */}
             {phase === 'idle' && (
-              <div className="mb-5">
-                <div className="flex items-start gap-4 mb-3">
-                  <div className="flex-1">
-                    <h1 className="text-2xl font-black text-slate-900 mb-1 leading-tight">Is that health claim<br className="hidden sm:block" /> actually true?</h1>
-                    <p className="text-sm text-slate-500">Powered by AI · Cross-references CDC, WHO & peer-reviewed science</p>
-                  </div>
-                  <div className="hidden sm:flex items-center gap-2 shrink-0 mt-1">
-                    {[
-                      { v: '6×', l: 'faster spread', c: 'text-red-600 bg-red-50 border-red-100' },
-                      { v: '1 in 3', l: 'Americans misled', c: 'text-amber-600 bg-amber-50 border-amber-100' },
-                    ].map(s => (
-                      <div key={s.v} className={`flex items-center gap-1.5 border rounded-lg px-2.5 py-1.5 ${s.c}`}>
-                        <span className="text-sm font-black leading-none">{s.v}</span>
-                        <span className="text-xs">{s.l}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="bg-red-50 border border-red-200 text-red-700 text-xs px-3 py-2.5 rounded-xl flex items-start gap-2.5">
-                  <span className="shrink-0 mt-0.5 font-black text-red-500">!</span>
-                  <div>
-                    <span className="font-bold">Health misinformation causes real harm.</span>
-                    <span className="text-red-600"> Fake cancer cures delay real treatment. Vaccine myths cause outbreaks. Dangerous supplements harm thousands. </span>
-                    <span className="font-semibold text-red-700">MedCheck helps you verify before you share.</span>
-                  </div>
-                </div>
+              <div className="mb-6">
+                <h1 className="text-3xl font-black text-slate-900 mb-1 leading-tight">Verify a health claim.</h1>
+                <p className="text-sm text-slate-400">AI-powered · Cross-references CDC, WHO & peer-reviewed science</p>
               </div>
             )}
 
@@ -218,19 +195,13 @@ export default function App() {
               </div>
             </div>
 
-            {/* Examples + Tips */}
+            {/* Examples */}
             {phase === 'idle' && (
-              <div className="mb-5 space-y-3">
+              <div className="mb-6">
                 <ExampleClaims
                   onSelect={(c) => { setClaim(c); handleAnalyze(c); }}
                   onRandom={(c) => { setClaim(c); handleAnalyze(c); }}
                 />
-                <div className="bg-blue-50 border border-blue-100 rounded-xl px-4 py-3 flex items-start gap-2">
-                  <span className="text-blue-400 shrink-0 mt-0.5">💡</span>
-                  <p className="text-xs text-blue-700 leading-relaxed">
-                    <strong>Tip:</strong> You can paste a full social media post and MedCheck will extract and check the health claim within it. Try the "Check multiple claims at once" button below to analyze several at the same time.
-                  </p>
-                </div>
               </div>
             )}
 
@@ -323,35 +294,14 @@ export default function App() {
               </div>
             )}
 
-            {/* Why this matters (idle + no history) */}
+            {/* Trending + Batch (idle + no history) */}
             {phase === 'idle' && history.length === 0 && (
-              <div className="mt-5 space-y-3">
-                <div className="bg-slate-900 rounded-xl overflow-hidden">
-                  <div className="p-4">
-                    <p className="text-xs font-bold text-blue-400 uppercase tracking-wider mb-2">Why MedCheck Exists</p>
-                    <p className="text-sm text-slate-300 leading-relaxed mb-2">
-                      Fake cancer "cures" delay real treatment. Vaccine myths cause preventable outbreaks.
-                      False health claims spread <span className="text-white font-bold">6× faster</span> than corrections.
-                    </p>
-                    <p className="text-sm text-slate-400 leading-relaxed">
-                      MedCheck gives anyone the ability to verify before they share — in seconds.
-                    </p>
-                  </div>
-                  <div className="bg-slate-800 px-4 py-2.5 flex flex-wrap gap-x-4 gap-y-1">
-                    {['Free forever', 'No account', 'No data stored', 'Any device'].map(s => (
-                      <span key={s} className="text-xs text-slate-400 flex items-center gap-1">
-                        <span className="text-blue-500">✓</span>
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <button onClick={() => setShowBatch(true)}
-                  className="w-full py-3 bg-white border border-slate-200 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-50 shadow-sm flex items-center justify-center gap-2">
-                  <span>📋</span>
-                  Check multiple claims at once (Batch Mode)
-                </button>
+              <div className="mt-6 space-y-4">
                 <TrendingClaims onSelect={(c) => { setClaim(c); handleAnalyze(c); }} />
+                <button onClick={() => setShowBatch(true)}
+                  className="w-full py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-500 hover:text-slate-700 hover:bg-slate-50 flex items-center justify-center gap-2">
+                  <span>📋</span> Check multiple claims at once
+                </button>
               </div>
             )}
           </>

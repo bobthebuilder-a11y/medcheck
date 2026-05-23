@@ -160,37 +160,26 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
           )}
         </div>
 
-        {/* Low confidence warning */}
+        {/* Warnings */}
         {analysis.confidence === 'low' && analysis.politicalCharge !== 'high' && (
-          <div className="bg-slate-100 border border-slate-200 rounded-lg p-3 flex items-start gap-2">
-            <span className="shrink-0 text-slate-400">ℹ</span>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              <strong className="text-slate-700">Low confidence:</strong> The AI is uncertain about this verdict. This may be due to limited scientific consensus, an ambiguous claim, or a very specific/technical topic. Verify independently.
-            </p>
-          </div>
+          <p className="text-xs text-slate-400 flex items-center gap-1.5">
+            <span>ℹ</span> Low confidence — verify independently.
+          </p>
         )}
-
-        {/* Political charge warning */}
         {analysis.politicalCharge === 'high' && (
-          <div className="bg-purple-50 border border-purple-200 rounded-lg p-3 flex items-center gap-2">
-            <span className="shrink-0 text-purple-500 text-sm leading-none">⚡</span>
-            <p className="text-xs text-purple-700 leading-relaxed">
-              <strong>Politically contested topic.</strong> AI reliability may be lower here — apply extra scrutiny and verify from multiple independent sources.
-            </p>
-          </div>
+          <p className="text-xs text-purple-500 flex items-center gap-1.5">
+            <span>⚡</span> Politically contested — apply extra scrutiny.
+          </p>
         )}
 
         {/* Summary */}
         <div className={`text-sm font-bold ${vc.text} leading-relaxed border-l-4 ${vc.border} pl-3 py-0.5`}>{analysis.summary}</div>
 
         {/* Explanation */}
-        <div className="bg-white/50 rounded-lg p-3.5 border border-slate-200/40">
-          <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Full Analysis</h3>
-          <div className="text-sm text-slate-700 leading-relaxed space-y-2">
-            {analysis.explanation.split('\n').filter(p => p.trim()).map((para, i) => (
-              <p key={i}>{para}</p>
-            ))}
-          </div>
+        <div className="text-sm text-slate-600 leading-relaxed space-y-2">
+          {analysis.explanation.split('\n').filter(p => p.trim()).map((para, i) => (
+            <p key={i}>{para}</p>
+          ))}
         </div>
 
         {/* Assertions */}
@@ -239,11 +228,9 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
         )}
 
         {/* Disclaimer */}
-        <div className="border-t border-slate-200/60 pt-3">
-          <p className="text-xs text-slate-400 leading-relaxed">
-            ⚕️ AI-generated for educational use only · Not medical advice · Verify citations independently · Consult healthcare professionals for medical decisions
-          </p>
-        </div>
+        <p className="text-xs text-slate-300 border-t border-slate-200/60 pt-3">
+          ⚕️ Educational use only · Not medical advice
+        </p>
 
       </div>
     </div>
