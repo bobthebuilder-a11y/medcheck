@@ -370,6 +370,30 @@ export default function App() {
                 </p>
               </div>
 
+              <div>
+                <h3 className="font-bold text-gray-800 mb-3 text-sm uppercase tracking-widest text-gray-500">Example Output</h3>
+                <div className="rounded-xl border-2 border-red-300 overflow-hidden text-sm">
+                  <div className="bg-red-500 px-4 py-3 text-white">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-xl">❌</span>
+                      <span className="font-black tracking-widest">FALSE</span>
+                    </div>
+                    <div className="text-xs text-white/80">High Confidence · 95%</div>
+                    <div className="h-1 bg-white/20 rounded-full mt-2">
+                      <div className="h-1 bg-white/80 rounded-full" style={{ width: '95%' }} />
+                    </div>
+                  </div>
+                  <div className="bg-red-50 px-4 py-3 space-y-2">
+                    <p className="text-xs text-gray-500 italic">"Vaccines cause autism"</p>
+                    <p className="text-xs font-semibold text-red-800">This claim is definitively false — large-scale studies involving millions of children find no link between vaccines and autism.</p>
+                    <div className="flex gap-2 pt-1">
+                      <span className="text-xs bg-white border border-red-200 text-red-700 px-2 py-0.5 rounded-full font-medium">vaccines</span>
+                      <span className="text-xs text-gray-400">2 assertions checked · 3 sources cited</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
                 <p className="text-xs text-amber-800 leading-relaxed">
                   ⚕️ <strong>Medical Disclaimer:</strong> MedCheck is for educational purposes only and is not a substitute for professional medical advice. Confidence scores reflect AI certainty. Always verify citations independently and consult qualified healthcare professionals for medical decisions.
