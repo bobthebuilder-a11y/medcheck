@@ -3,6 +3,23 @@
 
 ---
 
+## ⏰ 5-Minute Morning Prep Checklist
+
+Before the competition, do this in order:
+
+1. **Open the app** → https://medcheck-murex.vercel.app
+2. **Run "Vaccines cause autism"** — confirm it returns ❌ FALSE with high confidence
+3. **Run "Natural immunity is always better than vaccines"** — confirm it returns ⚠️ MISLEADING with ⚡ political charge flag
+4. **Check the About tab** — make sure the 4 verdicts and how-it-works section looks right
+5. **Open SLIDES.md** (or the PPTX) — skim the speaker notes, especially the Q&A section
+6. **Check SUBMISSION.md** — it has drafted short answers for the submission form
+
+That's it. If all 5 work, you're ready.
+
+---
+
+---
+
 ## What Does MedCheck Actually Do?
 
 In plain English: you type a health claim (something like "vaccines cause autism"), and the AI analyzes it and tells you:
