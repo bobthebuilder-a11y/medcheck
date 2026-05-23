@@ -1,4 +1,4 @@
-# 🚨 ACP SUBMISSION DUE TONIGHT 11:59 PM CST
+# 🚨 ACP SUBMISSION DUE TONIGHT (May 23) 11:59 PM CST
 
 ## ⏰ Morning Checklist (Do This First)
 
@@ -37,14 +37,17 @@ https://docs.google.com/forms/d/e/1FAIpQLScu7kE1PkZnm1Ca_FR4S-9JMCTzHcWuE42-pj04
 53 commits. The app went from "basically no styling" to genuinely polished.
 
 **Big moments:**
-- **Tailwind CSS fix** — the app had NO styling before. Critical fix.
+- **Tailwind CSS fix** — the app had NO styling before this. Critical fix.
 - **Streaming responses** — loading feels alive with step-by-step progress
-- **Social media post support** — paste a full post, AI extracts the claim
+- **Social media post support** — paste a full viral post, AI extracts the claim
 - **Animated background** — subtle gradient that shifts slowly
 - **All paper references removed** — app stands alone
-- **PPTX updated** — "Why AI?" slide replaced research paper slide
+- **PPTX updated** — "Why AI?" slide, URL footer on every slide
+- **Random button** — click to test a random claim (great for demos)
+- **Fade-up animation** — results slide in smoothly
 - **README.md** — professional GitHub landing page
 - **Submission answers drafted** — ready to copy-paste
+- 60+ commits total, all deployed
 
 ---
 
