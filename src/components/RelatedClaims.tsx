@@ -22,7 +22,10 @@ export default function RelatedClaims({ category, currentClaim, onSelect }: Prop
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
-      <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Related claims</p>
+      <div className="flex items-center justify-between mb-3">
+        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Related claims to check</p>
+        <span className="text-[10px] text-slate-400">{related.length} suggestions</span>
+      </div>
       <div className="space-y-1.5">
         {related.map(claim => (
           <button key={claim} onClick={() => onSelect(claim)}
