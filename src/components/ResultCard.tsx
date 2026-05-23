@@ -102,7 +102,7 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
             <div className="min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
                 <span
-                  className="text-2xl font-black tracking-wider text-white leading-tight"
+                  className="text-xl font-black tracking-wide text-white leading-tight"
                   title={`Verdict: ${vc.label} — ${
                     analysis.verdict === 'true' ? 'Scientific evidence supports this claim' :
                     analysis.verdict === 'false' ? 'Scientific evidence contradicts this claim' :
