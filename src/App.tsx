@@ -369,6 +369,28 @@ export default function App() {
                 <HistoryPanel history={history} onSelect={handleHistorySelect} onClear={() => setHistory([])} />
               </div>
             )}
+
+            {/* Trust signals when idle and no history */}
+            {phase === 'idle' && history.length === 0 && (
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-xs text-gray-400">
+                <span className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-400"></span>
+                  Free to use
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                  No account required
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+                  Works on any device
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                  Results never stored
+                </span>
+              </div>
+            )}
           </>
         )}
 
