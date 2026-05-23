@@ -142,7 +142,7 @@ export default function App() {
         </div>
       </nav>
 
-      <div className="mx-auto px-16 pt-10 pb-16" style={{ maxWidth: '720px' }}>
+      <div className="mx-auto px-16 pt-10 pb-24" style={{ maxWidth: '720px' }}>
 
         {activeTab === 'check' && (
           <>
