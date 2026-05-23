@@ -93,7 +93,7 @@
 **Tech:** React + TypeScript · Llama 4 via Groq · Vite · Vercel
 
 **Speaker notes:**
-"The architecture is built around structured prompting. We don't just ask the AI 'is this true?' We give it a carefully engineered system prompt that instructs it to decompose the claim, evaluate each assertion separately, calibrate its confidence honestly, return structured JSON, and flag politically charged topics. The political charge flag is directly connected to our research paper — I'll explain that in a moment."
+"The architecture is built around structured prompting. We don't just ask the AI 'is this true?' We give it a carefully engineered system prompt that instructs it to decompose the claim, evaluate each assertion separately, calibrate its confidence honestly, return structured JSON, and flag politically charged topics. The political charge flag tells users when AI reliability may be lower — a signal to verify extra carefully."
 
 ---
 
@@ -106,13 +106,13 @@
 **Demo sequence:**
 1. Click "Vaccines cause autism" → show ❌ FALSE, High Confidence, claim breakdown, CDC citations
 2. Type manually: "Natural immunity is always better than vaccines" → show ⚠️ MISLEADING, ⚡ Politically Charged, nuanced breakdown
-3. Click About tab → show research angle, stats bar
+3. Click About tab → show the 4 verdicts explained, stats bar, how it works
 
 **Key lines during demo:**
 - "Notice it doesn't just say false — it says *why* with specific scientific reasoning"
 - "MISLEADING is more honest than FALSE here — this claim has partial truth in it"
-- "The political charge flag means: treat this verdict with extra skepticism. That's connected to our research."
-- "The About page shows this is also a research project, not just an app"
+- "The political charge flag means: treat this verdict with extra skepticism — AI is less reliable on politically contested topics."
+- "The About page explains how it works and shows the problem scale"
 
 ---
 
@@ -134,26 +134,29 @@
 
 ---
 
-## SLIDE 8: This Is More Than an App
+## SLIDE 8: What Makes This Different
 
-**Title:** 🔭 The Research Layer
+**Title:** 🔑 What Makes MedCheck Different
 
-**Research question:**
-*"Do large language models exhibit higher rates of confident-but-wrong verdicts on politically charged health claims compared to politically neutral ones?"*
+**Three key differentiators:**
 
-**Why it matters:**
-- AI fact-checkers are being deployed at scale by social platforms right now
-- If they're systematically biased on politically charged topics, they may make misinformation *worse*
-- Nobody has measured this specifically for health claims
+**1. Structured output, not conversation**
+- Returns JSON with defined fields: verdict, confidence score, assertions, sources
+- Not a chatbot answer — a machine-readable, displayable result
+- This is the difference between an AI tool and an AI toy
 
-**Research plan:**
-- 150 labeled health claims: neutral vs. politically charged
-- 3 models: Claude, GPT-4, Llama
-- Measure: miscalibration rate (wrong + confident) by political charge
-- Working with professor mentor → target: Journal of Emerging Investigators
+**2. Honest calibration by design**
+- The system prompt explicitly says: "A low-confidence honest answer beats a high-confidence wrong answer"
+- The ⚡ Political Charge flag tells users when to be *more* skeptical of the AI
+- Other fact-checkers give you confidence they haven't earned
+
+**3. Explains WHY, not just WHAT**
+- Most tools say "FALSE" and move on
+- MedCheck explains the science, breaks down each assertion, cites real sources
+- This builds media literacy — users learn, not just get an answer
 
 **Speaker notes:**
-"Building MedCheck raised a deeper question: are AI fact-checkers more confidently wrong on politically charged topics? That's not just academic — it has real implications for platforms deploying AI at scale. This app is the instrument for that research, and the political charge flag is the user-facing expression of that research question."
+"What makes MedCheck more than a wrapper around ChatGPT? Three things. First, we engineered a specific output structure — not a paragraph, but a structured verdict with defined fields. Second, we built honesty into the prompt itself — the AI is explicitly instructed to admit uncertainty, which most AI tools don't do. Third, we explain the reasoning. Most fact-checkers just say true or false. MedCheck teaches you why — and that builds media literacy, not AI dependency."
 
 ---
 
@@ -211,8 +214,8 @@ V1 (now): Web app → V2: Browser extension (claims flagged automatically) → V
 - Model comparison: run same claim through Claude + GPT-4 + Llama
 
 **Research (this year):**
-- Publish paper on AI confidence miscalibration in politically charged health claims
-- Build public dataset of 300+ labeled claims with ground truth
+- Publish analysis of AI accuracy across health claim categories
+- Build public dataset of verified health claims with ground truth
 
 **Long-term:**
 - MediaLens Foundation — open-source nonprofit for media literacy
@@ -220,7 +223,7 @@ V1 (now): Web app → V2: Browser extension (claims flagged automatically) → V
 - API for newsrooms and public health departments
 
 **Speaker notes:**
-"The browser extension is the next step that matters most for impact. It removes all friction — you don't have to seek out the tool, it finds the claims for you. The research paper is the scientific foundation that makes everything more credible. And the nonprofit direction is where I want this to go eventually — free, open, accessible to everyone."
+"The browser extension is the next step that matters most for impact. It removes all friction — you don't have to seek out the tool, it finds the claims for you. And the nonprofit direction is where I want this to go eventually — free, open, accessible to everyone."
 
 ---
 
@@ -234,7 +237,6 @@ V1 (now): Web app → V2: Browser extension (claims flagged automatically) → V
 ✅ Explains *why*, building real media literacy
 ✅ Cites real sources — verifiable, not blind trust
 ✅ Flags politically charged topics for extra scrutiny
-✅ Foundation for original AI bias research
 ✅ Free. Open. Accessible to anyone.
 
 **Links:**
@@ -242,7 +244,7 @@ V1 (now): Web app → V2: Browser extension (claims flagged automatically) → V
 - 💻 github.com/bobthebuilder-a11y/medcheck
 
 **Speaker notes:**
-"Health misinformation is not new. But AI gives us a new tool — one fast enough, accessible enough, and honest enough to help. MedCheck is V1. The research paper is underway. The browser extension is next. The problem won't wait. Thank you."
+"Health misinformation is not new. But AI gives us a new tool — one fast enough, accessible enough, and honest enough to help. MedCheck is V1. The browser extension is next. The problem won't wait. Thank you."
 
 ---
 
@@ -255,10 +257,10 @@ Scale + decomposition + calibrated uncertainty. Humans can't fact-check millions
 The confidence score signals uncertainty by design. Low confidence = treat with skepticism. We cite sources so you can verify independently. The disclaimer is explicit and visible on every result.
 
 **"How is this different from ChatGPT?"**
-Specifically engineered prompt for structured fact-checking. Outputs structured JSON with verdicts, confidence scores, assertions breakdown — not conversational text. Persists history. Flags political charge. Has an About page explaining the research.
+Specifically engineered prompt for structured fact-checking. Outputs structured JSON with verdicts, confidence scores, assertions breakdown — not conversational text. Persists history. Flags political charge. Has an About page explaining how it works.
 
 **"What's the sample size? Who has used it?"**
-Working prototype. The research paper will systematically test 150 labeled claims across 3 AI models. That's the scientific validation phase.
+Working prototype. Next steps: test with more users, collect real feedback, and iterate.
 
 **"Could this be misused?"**
 Any tool can be misused. Our mitigations: confidence scores prevent false authority, explanations build literacy not dependency, medical disclaimer is explicit, political charge flag increases scrutiny on contested topics.
@@ -267,7 +269,7 @@ Any tool can be misused. Our mitigations: confidence scores prevent false author
 The AI model is instructed explicitly to be honest about uncertainty. The system prompt says: "A low confidence honest answer is better than a high confidence wrong answer." The score reflects the AI's certainty, not the claim's truth value.
 
 **"What's the political charge flag for?"**
-It's both a user feature and a research signal. For users: it says "be extra careful here, check multiple sources." For the research: it marks the claims I'm studying for AI bias — whether AI is more confidently wrong on politically charged topics.
+It signals that this topic has political dimensions, which can affect AI reliability. It's a prompt to verify from multiple sources rather than trusting any single verdict.
 
 **"Who are your sources?"**
 The AI references CDC, WHO, NIH, PubMed, and peer-reviewed journals. Citations are provided with every result so users can verify directly.
@@ -276,4 +278,4 @@ The AI references CDC, WHO, NIH, PubMed, and peer-reviewed journals. Citations a
 SDG 3 (Good Health) — reducing harm from health misinformation. SDG 16 (Peace, Justice, Strong Institutions) — supporting an informed public capable of participating in democratic health decisions.
 
 **"Are you planning to publish?"**
-Yes — targeting Journal of Emerging Investigators or similar. Working with a professor mentor. Timeline: paper submitted by January, in time for science fair season.
+Future research is something we're exploring. For now, focused on making the tool as useful as possible.
