@@ -9,6 +9,10 @@ const EXAMPLES = [
   { text: "Eating sugar directly feeds cancer cells", category: "cancer" },
   { text: "Humans only use 10% of their brains", category: "neuroscience" },
   { text: "Drinking bleach cures infections", category: "COVID-19", hot: true },
+  { text: "Cell phones cause brain cancer", category: "cancer" },
+  { text: "Sunscreen causes vitamin D deficiency", category: "nutrition" },
+  { text: "Antibiotics can cure viral infections", category: "medications" },
+  { text: "You can sweat out a fever", category: "general health" },
 ];
 
 const CATEGORY_STYLES: Record<string, string> = {
@@ -18,6 +22,7 @@ const CATEGORY_STYLES: Record<string, string> = {
   nutrition: 'bg-green-50 text-green-700 border-green-200 hover:bg-green-100',
   cancer: 'bg-orange-50 text-orange-700 border-orange-200 hover:bg-orange-100',
   neuroscience: 'bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-100',
+  'general health': 'bg-teal-50 text-teal-700 border-teal-200 hover:bg-teal-100',
 };
 
 interface Props {

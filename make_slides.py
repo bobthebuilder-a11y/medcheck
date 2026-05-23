@@ -215,47 +215,38 @@ add_rect(slide, 0.4, 6.85, 12.5, 0.55, fill=RGBColor(0xFF, 0xF7, 0xE0))
 add_text(slide, '💡  MISLEADING is the most important verdict — most dangerous health misinfo isn\'t false, it\'s selectively true. "Natural immunity is always better than vaccines" — partially true, dangerously misleading overall.', 0.6, 6.88, 12.1, 0.48, size=12, color=AMBER)
 
 # ─────────────────────────────────────────────
-# SLIDE 6: Research Layer
+# SLIDE 6: Why AI Is the Right Tool
 # ─────────────────────────────────────────────
 slide = new_slide()
 add_rect(slide, 0, 0, 13.33, 7.5, fill=DARK)
-add_rect(slide, 0, 0, 13.33, 1.1, fill=PURPLE)
-add_text(slide, "🔭  This Is More Than an App — The Research Layer", 0.5, 0.18, 12, 0.75, size=28, bold=True, color=WHITE)
+add_rect(slide, 0, 0, 13.33, 1.1, fill=BLUE)
+add_text(slide, "🤖  Why AI Is the Right Tool for This Problem", 0.5, 0.18, 12, 0.75, size=30, bold=True, color=WHITE)
 
-# Research question box
-add_rect(slide, 0.4, 1.25, 12.5, 1.1, fill=RGBColor(0x2e, 0x1a, 0x5e))
-add_text(slide, "Research Question:", 0.65, 1.3, 4, 0.35, size=12, bold=True, color=RGBColor(0xC4, 0xB5, 0xFD))
-add_text(slide, '"Do LLMs exhibit higher rates of confident-but-wrong verdicts on politically\ncharged health claims compared to politically neutral ones?"', 0.65, 1.65, 12.0, 0.6, size=15, color=WHITE)
+add_text(slide, "AI is not the point. Impact is. AI is the only tool fast enough and scalable enough to make this work.", 0.5, 1.2, 12.3, 0.5, size=15, color=RGBColor(0x93, 0xC5, 0xFD), align=PP_ALIGN.CENTER)
 
-# Two columns
-# Left: Why it matters
-add_text(slide, "Why It Matters", 0.4, 2.55, 5.8, 0.4, size=16, bold=True, color=PURPLE)
-matters = [
-    "AI fact-checkers are being deployed at scale by major social platforms right now",
-    "If they're systematically wrong on politically charged topics, they may amplify misinformation",
-    "Nobody has measured this specifically for health claims — this is original research",
+reasons = [
+    ("🌍", "Scale", "Millions of new health claims are posted daily. Human fact-checkers can't keep up. AI never sleeps and scales to any volume."),
+    ("🧩", "Decomposition", "AI can break compound claims into individual assertions automatically — \"vaccines cause autism AND damage immunity\" is two claims, not one."),
+    ("⚖️", "Calibrated Uncertainty", "AI can express degrees of confidence — not just true/false. A tool that says \"I'm not sure\" is more trustworthy than one that's always confident."),
+    ("📚", "Evidence Synthesis", "Cross-references CDC, WHO, NIH, and PubMed simultaneously in seconds — a task that takes a human 20+ minutes."),
+    ("🔓", "Accessibility", "No medical background required. Anyone can use it. Free. Works in any browser. Zero installation."),
 ]
-for i, m in enumerate(matters):
-    add_text(slide, f"• {m}", 0.4, 3.05+i*0.65, 6.0, 0.55, size=12, color=RGBColor(0xC4, 0xB5, 0xFD))
 
-# Right: Research plan
-add_text(slide, "Research Plan", 7.0, 2.55, 5.8, 0.4, size=16, bold=True, color=PURPLE)
-plan = [
-    ("150", "labeled health claims\n(neutral + politically charged)"),
-    ("3", "AI models tested\n(Claude · GPT-4 · Llama)"),
-    ("Prof", "mentor collaborating\non methodology"),
-    ("JEI", "target publication\n(Journal of Emerging Investigators)"),
-]
-for i, (num, desc) in enumerate(plan):
-    x = 7.0 + (i % 2) * 3.1
-    y = 3.05 + (i // 2) * 1.35
-    box = add_rect(slide, x, y, 2.9, 1.2, fill=RGBColor(0x2e, 0x1a, 0x5e))
-    add_text(slide, num, x+0.1, y+0.05, 0.9, 0.6, size=28, bold=True, color=PURPLE, align=PP_ALIGN.CENTER)
-    add_text(slide, desc, x+0.1, y+0.6, 2.7, 0.55, size=11, color=RGBColor(0xC4, 0xB5, 0xFD))
+for i, (icon, title, desc) in enumerate(reasons):
+    col = i % 3 if i < 3 else (i - 3)
+    row = 0 if i < 3 else 1
+    x = 0.3 + (col if i < 3 else col + 0.65) * 4.2
+    if i >= 3:
+        x = 0.3 + (i - 3) * 6.35
+    y = 1.9 + row * 2.45
+    w = 4.0 if i < 3 else 6.0
+    box = add_rect(slide, x, y, w, 2.2, fill=RGBColor(0x1f, 0x2a, 0x3d))
+    add_text(slide, icon, x+0.15, y+0.12, 0.8, 0.55, size=22)
+    add_text(slide, title, x+0.15, y+0.65, w-0.3, 0.4, size=14, bold=True, color=WHITE)
+    add_text(slide, desc, x+0.15, y+1.1, w-0.3, 1.0, size=11, color=GRAY)
 
-# Connection to app
-add_rect(slide, 0.4, 6.65, 12.5, 0.75, fill=RGBColor(0x1e, 0x0a, 0x40))
-add_text(slide, "⚡  The Political Charge Flag in MedCheck is the user-facing expression of this research question — it tells users when AI reliability may be lower and marks claims for our dataset.", 0.65, 6.72, 12.0, 0.6, size=12, color=RGBColor(0xC4, 0xB5, 0xFD))
+add_rect(slide, 0.3, 6.8, 12.7, 0.55, fill=RGBColor(0x1e, 0x3a, 0x8a))
+add_text(slide, '💡  Key insight: The cognitive task of fact-checking — finding evidence, weighing it, synthesizing a verdict — is exactly what LLMs are trained to do. MedCheck harnesses that for public health.', 0.5, 6.85, 12.3, 0.45, size=12, color=WHITE, align=PP_ALIGN.CENTER)
 
 # ─────────────────────────────────────────────
 # SLIDE 7: Impact & SDGs
