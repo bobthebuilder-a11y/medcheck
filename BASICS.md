@@ -151,6 +151,25 @@ Browser extension → anyone browsing sees flags automatically. Then open-source
 
 ---
 
+## What to Do If Something Goes Wrong During the Demo
+
+**If the app is slow:**
+- Groq's free tier sometimes has rate limits — if it spins for >20 seconds, try again
+- Have 1-2 backup claims ready that you've already seen the results for (from history)
+- The history panel shows your last 20 checks — you can reload any of them instantly
+
+**If the app throws an error:**
+- Click "Clear" and try a different claim
+- If it keeps failing, the Groq API key might need rotation — contact me
+
+**If you want to show a result without waiting:**
+- Open the app ahead of time and run a few claims
+- They'll all be in the history panel for instant recall during presentation
+
+**Backup plan:** Screenshot the result card for "Vaccines cause autism" ❌ FALSE (95%) and have it ready as an image if the live demo fails.
+
+---
+
 ## One-Sentence Version
 
 If you need to explain it in one sentence:
