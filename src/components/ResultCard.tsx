@@ -136,7 +136,11 @@ export default function ResultCard({ analysis, claim }: Props) {
         {/* Explanation */}
         <div>
           <h3 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Full Analysis</h3>
-          <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">{analysis.explanation}</p>
+          <div className="text-sm text-gray-700 leading-relaxed space-y-2">
+          {analysis.explanation.split('\n').filter(p => p.trim()).map((para, i) => (
+            <p key={i}>{para}</p>
+          ))}
+        </div>
         </div>
 
         {/* Assertions */}

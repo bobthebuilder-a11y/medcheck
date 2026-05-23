@@ -107,11 +107,11 @@ export default function App() {
                 <p className="text-gray-500 mb-6">
                   AI-powered analysis aligned with CDC, WHO & peer-reviewed science
                 </p>
-                <div className="flex items-center justify-center gap-4 text-xs text-gray-400">
+                <div className="flex items-center justify-center gap-2 flex-wrap text-xs text-gray-400">
                   {['Claim decomposition', 'Evidence synthesis', 'Confidence calibration', 'Source citations'].map((step, i) => (
                     <div key={step} className="flex items-center gap-2">
-                      {i > 0 && <span className="text-gray-300">→</span>}
-                      <span className="font-medium">{step}</span>
+                      {i > 0 && <span className="text-gray-300 hidden sm:inline">→</span>}
+                      <span className="bg-white border border-gray-200 px-2 py-1 rounded-lg font-medium text-gray-500">{step}</span>
                     </div>
                   ))}
                 </div>
@@ -119,7 +119,7 @@ export default function App() {
             )}
 
             {/* Input card */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 mb-5">
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 mb-5 focus-within:border-blue-400 focus-within:shadow-md transition-all">
               <textarea
                 value={claim}
                 onChange={e => setClaim(e.target.value)}
@@ -128,7 +128,7 @@ export default function App() {
                 }}
                 placeholder="Paste any health claim, headline, or social media post..."
                 rows={3}
-                className="w-full px-0 py-0 border-0 text-sm text-gray-800 placeholder-gray-400 focus:outline-none resize-none"
+                className="w-full px-0 py-0 border-0 text-sm text-gray-800 placeholder-gray-400 focus:outline-none resize-none leading-relaxed"
               />
               <div className="flex items-center justify-between pt-3 border-t border-gray-100 mt-3">
                 <span className="text-xs text-gray-400">
@@ -154,7 +154,7 @@ export default function App() {
             {/* Examples */}
             {!result && !loading && (
               <div className="mb-6">
-                <ExampleClaims onSelect={(c) => { setClaim(c); handleAnalyze(c); }} />
+                <ExampleClaims onSelect={(c) => { setClaim(c); }} />
               </div>
             )}
 
