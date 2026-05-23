@@ -102,84 +102,42 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
     <div className={`rounded-xl border-2 ${vc.border} overflow-hidden shadow-sm`}>
 
       {/* Header */}
-      <div className={`${vc.headerBg} px-5 py-5`}>
-        <div className="flex items-start justify-between gap-2">
-          <div className="flex items-start gap-3 min-w-0">
-            <div className="w-10 h-10 rounded-xl bg-white/15 border border-white/20 flex items-center justify-center shrink-0 mt-0.5">
-              <span className="text-xl font-black text-white leading-none">{vc.icon}</span>
-            </div>
-            <div className="min-w-0">
-              <div className="flex items-center gap-2 flex-wrap">
-                <span
-                  className="text-xl font-black tracking-wide text-white leading-tight"
-                  title={`Verdict: ${vc.label} — ${
-                    analysis.verdict === 'true' ? 'Scientific evidence supports this claim' :
-                    analysis.verdict === 'false' ? 'Scientific evidence contradicts this claim' :
-                    analysis.verdict === 'misleading' ? 'Partially true but creates a false overall impression' :
-                    'Insufficient evidence to evaluate definitively'
-                  }`}
-                >
-                  {vc.label}
-                </span>
-                {analysis.politicalCharge === 'high' && (
-                  <span className="px-2 py-0.5 text-xs bg-white/20 text-white border border-white/30 rounded-full font-semibold"
-                    title="Politically contested — AI may be less reliable. Verify independently.">
-                    ⚡ Contested
-                  </span>
-                )}
-                {analysis.category && (
-                  <span className="px-2 py-0.5 text-xs bg-black/20 text-white/80 rounded-full font-medium capitalize hidden sm:inline">
-                    {analysis.category}
-                  </span>
-                )}
-              </div>
-              <div className="flex items-center gap-2 mt-1">
-                <span className={`text-xs font-semibold text-white/80`}>
-                  {cc.label} · {analysis.confidenceScore}%
-                </span>
-              </div>
-            </div>
+      <div className={`${vc.headerBg} px-4 py-4`}>
+        {/* Row 1: verdict + actions */}
+        <div className="flex items-center justify-between gap-2 mb-1">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="text-lg font-black text-white tracking-wide leading-none">{vc.icon} {vc.label}</span>
+            {analysis.politicalCharge === 'high' && (
+              <span className="text-[10px] font-bold text-white/80 bg-white/15 border border-white/25 px-1.5 py-0.5 rounded shrink-0">
+                ⚡ Contested
+              </span>
+            )}
           </div>
-          <div className="flex items-center gap-1.5 shrink-0">
+          <div className="flex items-center gap-1 shrink-0">
             <button onClick={handleTweet}
-              className="p-1.5 rounded-lg bg-black/20 hover:bg-black/30 text-white/80 transition-colors hidden sm:flex items-center"
-              title="Share on Twitter/X">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-              </svg>
-            </button>
+              className="px-2 py-1 rounded bg-black/20 hover:bg-black/30 text-white/70 text-xs transition-colors hidden sm:block"
+              title="Share on X">X</button>
+            <button onClick={handleShare}
+              className="px-2 py-1 rounded bg-black/20 hover:bg-black/30 text-white/70 text-xs transition-colors"
+              title="Share">Share</button>
             {onReset && (
               <button onClick={onReset}
-                className="p-1.5 rounded-lg bg-black/20 hover:bg-black/30 text-white/80 transition-colors"
-                title="Check another claim">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
-              </button>
+                className="px-2 py-1 rounded bg-black/20 hover:bg-black/30 text-white/70 text-xs transition-colors"
+                title="New check">New</button>
             )}
-            <button onClick={handleShare}
-              className="p-1.5 rounded-lg bg-black/20 hover:bg-black/30 text-white/80 transition-colors"
-              title="Share result">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-              </svg>
-            </button>
           </div>
         </div>
 
+        {/* Row 2: confidence */}
+        <p className="text-xs text-white/60 mb-3">
+          {cc.label} · {analysis.confidenceScore}%
+          {analysis.category ? <span className="ml-2 capitalize text-white/40">· {analysis.category}</span> : null}
+        </p>
+
         {/* Confidence bar */}
-        <div className="mt-3">
-          <div className="flex items-center justify-between mb-1.5">
-            <span className="text-xs text-white/70">
-              AI Certainty &nbsp;<span className="font-black text-white/90">{analysis.confidenceScore}%</span>
-              &nbsp;<span className="text-white/50">{analysis.confidence === 'high' ? '· strong' : analysis.confidence === 'medium' ? '· moderate' : '· uncertain'}</span>
-            </span>
-            <span className="text-[10px] text-white/40 cursor-help" title="How confident the AI is in this verdict. Lower scores mean you should verify more carefully.">ℹ</span>
-          </div>
-          <div className="h-2 bg-black/20 rounded-full">
-            <div className="h-2 bg-white/75 rounded-full transition-all duration-700"
-              style={{ width: `${analysis.confidenceScore}%` }} />
-          </div>
+        <div className="h-1.5 bg-black/20 rounded-full">
+          <div className="h-1.5 bg-white/70 rounded-full transition-all duration-700"
+            style={{ width: `${analysis.confidenceScore}%` }} />
         </div>
       </div>
 
