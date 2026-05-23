@@ -351,6 +351,22 @@ export default function App() {
         )}
 
       </div>
+
+      {/* Footer */}
+      <footer className="border-t border-gray-200 bg-white/60 mt-12">
+        <div className="max-w-2xl mx-auto px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="text-center sm:text-left">
+            <p className="text-xs font-semibold text-gray-600">🔬 MedCheck · Built by David Xiao</p>
+            <p className="text-xs text-gray-400 mt-0.5">ACP Student AI Championship 2026 · SDG 3 & SDG 16</p>
+          </div>
+          <div className="flex items-center gap-4 text-xs text-gray-400">
+            <a href="https://github.com/bobthebuilder-a11y/medcheck" target="_blank" rel="noopener noreferrer"
+              className="hover:text-blue-600 transition-colors font-medium">GitHub</a>
+            <span>·</span>
+            <span>Powered by Llama 4 via Groq</span>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
