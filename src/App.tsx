@@ -102,7 +102,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen page-bg">
 
       {/* Dark navbar */}
       <nav className="bg-slate-900 sticky top-0 z-20 border-b border-slate-800/80">
