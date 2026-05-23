@@ -44,25 +44,18 @@ export default function App() {
 
   useEffect(() => { saveHistory(history); }, [history]);
 
-  // Track total checks in sessionStorage for fun counter
   const totalChecked = history.length;
 
-  // Keyboard shortcuts
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && phase === 'done') {
-        setPhase('idle');
-        setResult(null);
-        setClaim('');
-        setLastClaim('');
-        setError('');
+        setPhase('idle'); setResult(null); setClaim(''); setLastClaim(''); setError('');
       }
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
   }, [phase]);
 
-  // Cycle through loading steps during streaming
   useEffect(() => {
     if (phase === 'streaming') {
       setLoadingStep(0);
@@ -78,93 +71,58 @@ export default function App() {
   const handleAnalyze = async (claimText?: string) => {
     const target = (claimText ?? claim).trim();
     if (!target || phase === 'streaming') return;
+    if (target.length < 5) { setError('Please enter a full health claim.'); setPhase('error'); return; }
+    if (/^https?:\/\//i.test(target)) { setError('Please paste the claim text, not a URL.'); setPhase('error'); return; }
 
-    // Minimum length guard
-    if (target.length < 5) {
-      setError('Please enter a full health claim (at least a few words).');
-      setPhase('error');
-      return;
-    }
-
-    // URL detection
-    if (/^https?:\/\//i.test(target)) {
-      setError('Please paste the text of the claim, not a URL. Copy the actual health claim text and paste it here.');
-      setPhase('error');
-      return;
-    }
-
-    setPhase('streaming');
-    setError('');
-    setResult(null);
-    setLastClaim(target);
-    setStreamText('');
+    setPhase('streaming'); setError(''); setResult(null); setLastClaim(target); setStreamText('');
 
     try {
-      const analysis = await analyzeClaimStream(target, (partial) => {
-        setStreamText(partial);
-      });
-
-      setResult(analysis);
-      setPhase('done');
-
-      const entry: HistoryEntry = {
-        id: `${Date.now()}`,
-        claim: target,
-        analysis,
-        timestamp: Date.now(),
-      };
+      const analysis = await analyzeClaimStream(target, (p) => setStreamText(p));
+      setResult(analysis); setPhase('done');
+      const entry: HistoryEntry = { id: `${Date.now()}`, claim: target, analysis, timestamp: Date.now() };
       setHistory(prev => [entry, ...prev.filter(e => e.claim !== target)]);
     } catch (e) {
       const msg = e instanceof Error ? e.message : 'Something went wrong.';
-      // Make error messages more user-friendly
-      if (msg.includes('parse') || msg.includes('JSON')) {
-        setError('The AI returned an unexpected response. Please try again.');
-      } else if (msg.includes('network') || msg.includes('fetch')) {
-        setError('Network error. Please check your connection and try again.');
-      } else {
-        setError(msg + ' Please try again.');
-      }
+      setError(msg.includes('parse') || msg.includes('JSON') ? 'Unexpected AI response. Please try again.' :
+               msg.includes('network') || msg.includes('fetch') ? 'Network error. Check your connection.' :
+               msg + ' Please try again.');
       setPhase('error');
     }
   };
 
   const handleReset = () => {
-    setPhase('idle');
-    setResult(null);
-    setClaim('');
-    setLastClaim('');
-    setError('');
-    setStreamText('');
+    setPhase('idle'); setResult(null); setClaim(''); setLastClaim(''); setError(''); setStreamText('');
     setTimeout(() => textareaRef.current?.focus(), 100);
   };
 
   const handleHistorySelect = (entry: HistoryEntry) => {
-    setClaim(entry.claim);
-    setLastClaim(entry.claim);
-    setResult(entry.analysis);
-    setPhase('done');
-    setError('');
+    setClaim(entry.claim); setLastClaim(entry.claim); setResult(entry.analysis);
+    setPhase('done'); setError('');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <div className="min-h-screen animated-bg">
+    <div className="min-h-screen bg-slate-50">
 
-      {/* Sticky navbar */}
-      <nav className="border-b border-gray-200/80 bg-white/95 backdrop-blur-md sticky top-0 z-20 shadow-sm">
+      {/* Dark navbar */}
+      <nav className="bg-slate-900 sticky top-0 z-20 border-b border-slate-800/80">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-xl">🔬</span>
-            <span className="font-black text-lg tracking-tight" style={{ background: 'linear-gradient(135deg, #1d4ed8, #7c3aed)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>MedCheck</span>
-            <span className="text-xs bg-blue-600 text-white px-2 py-0.5 rounded-full font-bold">BETA</span>
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 bg-blue-600 rounded-md flex items-center justify-center font-black text-white text-sm shadow-sm">
+              M
+            </div>
+            <span className="font-black text-white text-base tracking-tight">MedCheck</span>
+            <span className="text-[10px] font-bold text-blue-300 bg-blue-500/20 border border-blue-500/30 px-1.5 py-0.5 rounded-full uppercase tracking-wider">Beta</span>
           </div>
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-0.5">
             {(['check', 'about'] as const).map(tab => (
               <button key={tab} onClick={() => setActiveTab(tab)}
-                className={`px-3 py-1.5 text-sm rounded-lg font-semibold capitalize transition-all ${
-                  activeTab === tab ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
+                className={`px-3.5 py-1.5 text-sm font-semibold rounded-lg transition-all ${
+                  activeTab === tab
+                    ? 'bg-blue-600 text-white shadow-sm'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
                 }`}>
-                {tab === 'check' ? '🔍 Analyze' : 'ℹ️ About'}
+                {tab === 'check' ? 'Analyze' : 'About'}
               </button>
             ))}
           </div>
@@ -175,52 +133,51 @@ export default function App() {
 
         {activeTab === 'check' && (
           <>
-            {/* Hero */}
+            {/* Hero — left-aligned, more impactful */}
             {phase === 'idle' && (
-              <div className="text-center mb-7 hero-grid rounded-2xl py-8 px-4 -mx-2">
-                <div className="flex items-center justify-center gap-3 mb-4">
-                  <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold px-3 py-1.5 rounded-full">
-                    <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></span>
-                    ACP Student AI Championship 2026 · SDG 3 & 16
-                  </div>
+              <div className="mb-8">
+                <div className="flex items-center gap-2 mb-5 flex-wrap">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 bg-white border border-slate-200 px-3 py-1 rounded-full shadow-sm">
+                    <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse shrink-0"></span>
+                    ACP 2026 · SDG 3 & 16
+                  </span>
                   {totalChecked > 0 && (
-                    <div className="inline-flex items-center gap-1.5 bg-green-50 border border-green-200 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-full">
-                      ✅ {totalChecked} checked this session
-                    </div>
+                    <span className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
+                      ✓ {totalChecked} analyzed this session
+                    </span>
                   )}
                 </div>
-                <h1 className="text-4xl sm:text-5xl font-black text-gray-900 tracking-tight mb-3 leading-tight">
-                  Is that health claim<br className="hidden sm:block" /> actually true?
+
+                <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight leading-[1.08] mb-4">
+                  Is that health claim<br />
+                  <span className="text-blue-600">actually true?</span>
                 </h1>
-                <p className="text-gray-500 text-base mb-4 max-w-md mx-auto leading-relaxed">
-                  Paste any health claim, headline, or social media post.<br className="hidden sm:block" />
-                  Get a structured, sourced verdict in seconds.
+
+                <p className="text-slate-500 text-base leading-relaxed mb-5 max-w-lg">
+                  Paste any health claim, headline, or viral post.
+                  AI cross-references CDC, WHO & peer-reviewed science — returns a structured verdict in seconds.
                 </p>
-                <div className="flex items-center justify-center gap-4 mb-5 flex-wrap">
+
+                {/* Stats row */}
+                <div className="flex items-baseline gap-6 mb-6 flex-wrap">
                   {[
-                    { val: '6×', label: 'faster spread' },
-                    { val: '30M+', label: 'at risk' },
-                    { val: '1 in 3', label: 'misled' },
+                    { val: '6×', label: 'faster than corrections', c: 'text-red-600' },
+                    { val: '30M+', label: 'Americans at risk', c: 'text-orange-500' },
+                    { val: '1 in 3', label: 'acted on bad info', c: 'text-amber-500' },
                   ].map(s => (
-                    <div key={s.val} className="flex items-center gap-1.5 text-xs text-gray-400">
-                      <span className="font-black text-gray-700">{s.val}</span>
-                      <span>{s.label}</span>
+                    <div key={s.val} className="flex items-baseline gap-1.5">
+                      <span className={`text-xl font-black ${s.c}`}>{s.val}</span>
+                      <span className="text-xs text-slate-400">{s.label}</span>
                     </div>
                   ))}
                 </div>
-                <div className="flex flex-wrap items-center justify-center gap-2 max-w-lg mx-auto">
-                  {[
-                    { icon: '🔍', label: 'Decompose' },
-                    { icon: '📚', label: 'Synthesize' },
-                    { icon: '⚖️', label: 'Calibrate' },
-                    { icon: '📎', label: 'Cite Sources' },
-                  ].map((step, i) => (
-                    <div key={step.label} className="flex items-center gap-2">
-                      {i > 0 && <span className="text-blue-200 font-bold hidden sm:inline">→</span>}
-                      <span className="bg-white border border-blue-100 px-3 py-1.5 rounded-full text-xs font-semibold text-blue-700 shadow-sm flex items-center gap-1.5 hover:shadow-md transition-shadow">
-                        <span>{step.icon}</span>
-                        {step.label}
-                      </span>
+
+                {/* Pipeline chips */}
+                <div className="flex flex-wrap items-center gap-2">
+                  {['Decompose', 'Synthesize', 'Calibrate', 'Cite'].map((s, i) => (
+                    <div key={s} className="flex items-center gap-2">
+                      {i > 0 && <span className="text-slate-300 text-xs">›</span>}
+                      <span className="text-xs font-semibold text-slate-500 bg-white border border-slate-200 px-2.5 py-1 rounded-md shadow-sm">{s}</span>
                     </div>
                   ))}
                 </div>
@@ -228,60 +185,57 @@ export default function App() {
             )}
 
             {/* Input card */}
-            <div className={`bg-white rounded-2xl shadow-sm border-2 transition-all duration-200 p-5 mb-5 ${
-              phase === 'streaming' ? 'border-blue-400 shadow-blue-100 shadow-md' :
-              phase === 'done' ? 'border-gray-200' :
-              'border-gray-200 focus-within:border-blue-500 focus-within:shadow-md focus-within:shadow-blue-50'
+            <div className={`bg-white rounded-xl border transition-all duration-150 p-4 mb-4 ${
+              phase === 'streaming' ? 'border-blue-400 ring-2 ring-blue-100 shadow-sm' :
+              phase === 'done' ? 'border-slate-200 shadow-sm' :
+              'border-slate-200 shadow-sm focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-50'
             }`}>
               <textarea
                 ref={textareaRef}
                 value={claim}
                 onChange={e => setClaim(e.target.value)}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) handleAnalyze();
-                }}
-                placeholder="Paste a health claim, headline, or full social media post — AI will extract and check the claim..."
+                onKeyDown={e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) handleAnalyze(); }}
+                placeholder="Paste a health claim, headline, or social media post..."
                 rows={3}
                 disabled={phase === 'streaming'}
-                className="w-full border-0 text-sm text-gray-800 placeholder-gray-400 focus:outline-none resize-none leading-relaxed disabled:opacity-50"
+                className="w-full border-0 text-sm text-slate-800 placeholder-slate-400 focus:outline-none resize-none leading-relaxed disabled:opacity-60 bg-transparent"
               />
-              <div className="flex items-center justify-between pt-3 border-t border-gray-100 mt-2">
-                <div className="flex items-center gap-3">
+              <div className="flex items-center justify-between pt-3 border-t border-slate-100 mt-1">
+                <div className="flex items-center gap-2">
                   {claim.length > 0 && phase !== 'streaming' && (
-                    <span className="text-xs text-gray-400">
-                      {claim.length > 200 ? '📄 Long post detected' : phase === 'done' ? '✓ Analyzed' : `${claim.length} chars`}
+                    <span className="text-xs text-slate-400">
+                      {claim.length > 200 ? '📄 Long post' : phase === 'done' ? '✓ Analyzed' : `${claim.length} chars`}
                     </span>
                   )}
                   {phase === 'streaming' && (
-                    <span className="text-xs text-blue-500 font-medium animate-pulse">Analyzing...</span>
+                    <span className="text-xs text-blue-500 font-medium">Analyzing...</span>
                   )}
-                  {phase === 'idle' && claim.length === 0 && (
-                    <span className="text-xs text-gray-400 hidden sm:inline">⌘+Enter to analyze</span>
+                  {phase === 'idle' && !claim && (
+                    <span className="text-xs text-slate-400 hidden sm:inline">⌘+Enter</span>
                   )}
                 </div>
                 <div className="flex gap-2">
                   {(phase === 'done' || phase === 'error') && (
                     <button onClick={handleReset}
-                      className="px-4 py-2 border border-gray-200 text-gray-500 hover:text-gray-700 hover:border-gray-300 rounded-xl text-sm font-medium transition-colors">
+                      className="px-3 py-1.5 text-xs font-semibold text-slate-500 hover:text-slate-700 border border-slate-200 rounded-lg transition-colors">
                       Clear
                     </button>
                   )}
                   <button
                     onClick={() => handleAnalyze()}
                     disabled={phase === 'streaming' || !claim.trim()}
-                    className="px-6 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 active:bg-blue-800 disabled:opacity-40 font-bold text-sm transition-all flex items-center gap-2 shadow-sm hover:shadow-md"
+                    className="px-5 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 active:bg-blue-800 disabled:opacity-40 font-bold text-sm transition-colors flex items-center gap-1.5 shadow-sm"
                   >
-                    {phase === 'streaming' ? (
-                      <><span className="inline-block animate-spin">⟳</span> Analyzing</>
-                    ) : (
-                      <><span>Analyze</span><span className="opacity-70">→</span></>
-                    )}
+                    {phase === 'streaming'
+                      ? <><span className="animate-spin inline-block">⟳</span> Analyzing</>
+                      : <>Analyze <span className="opacity-60">→</span></>
+                    }
                   </button>
                 </div>
               </div>
             </div>
 
-            {/* Examples (only when idle) */}
+            {/* Examples */}
             {phase === 'idle' && (
               <div className="mb-6">
                 <ExampleClaims
@@ -291,40 +245,45 @@ export default function App() {
               </div>
             )}
 
-            {/* Loading state */}
+            {/* Loading */}
             {phase === 'streaming' && (
-              <div className="bg-white rounded-2xl border border-blue-200 shadow-sm overflow-hidden mb-5">
-                <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-4 text-white">
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="text-2xl animate-bounce">🔬</span>
-                    <div>
-                      <p className="font-bold text-sm">Analyzing your claim</p>
-                      <p className="text-xs text-blue-200">Cross-referencing scientific literature...</p>
+              <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden mb-4">
+                <div className="bg-slate-900 px-5 py-4 text-white">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <span className="text-sm animate-pulse">🔬</span>
+                      </div>
+                      <div>
+                        <p className="font-bold text-sm">Analyzing claim</p>
+                        <p className="text-xs text-slate-400">AI-powered fact verification</p>
+                      </div>
                     </div>
+                    <span className="text-xs text-slate-500 font-mono">
+                      {Math.round(((loadingStep + 1) / LOADING_STEPS.length) * 100)}%
+                    </span>
                   </div>
-                  <div className="h-1.5 bg-white/20 rounded-full">
-                    <div
-                      className="h-1.5 bg-white rounded-full transition-all duration-700"
-                      style={{ width: `${Math.round(((loadingStep + 1) / LOADING_STEPS.length) * 100)}%` }}
-                    />
+                  <div className="h-1 bg-slate-700 rounded-full">
+                    <div className="h-1 bg-blue-500 rounded-full transition-all duration-700"
+                      style={{ width: `${Math.round(((loadingStep + 1) / LOADING_STEPS.length) * 100)}%` }} />
                   </div>
                 </div>
-                <div className="p-5">
-                  <div className="space-y-2.5">
+                <div className="px-5 py-4">
+                  <div className="space-y-2">
                     {LOADING_STEPS.map((step, i) => (
-                      <div key={step} className={`flex items-center gap-3 transition-all duration-300 ${
-                        i < loadingStep ? 'opacity-50' :
-                        i === loadingStep ? 'opacity-100' :
-                        'opacity-30'
+                      <div key={step} className={`flex items-center gap-3 transition-all duration-200 ${
+                        i < loadingStep ? 'opacity-40' : i === loadingStep ? 'opacity-100' : 'opacity-20'
                       }`}>
-                        <div className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-xs ${
-                          i < loadingStep ? 'bg-blue-500 text-white' :
+                        <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold ${
+                          i < loadingStep ? 'bg-emerald-500 text-white' :
                           i === loadingStep ? 'bg-blue-100 border-2 border-blue-500' :
-                          'bg-gray-100 border border-gray-200'
+                          'bg-slate-100 border border-slate-200'
                         }`}>
-                          {i < loadingStep ? '✓' : i === loadingStep ? <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse block" /> : ''}
+                          {i < loadingStep ? '✓' : i === loadingStep
+                            ? <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse block" />
+                            : ''}
                         </div>
-                        <span className={`text-sm ${i === loadingStep ? 'text-blue-700 font-semibold' : 'text-gray-500'}`}>
+                        <span className={`text-xs ${i === loadingStep ? 'text-slate-800 font-semibold' : 'text-slate-500'}`}>
                           {step}
                         </span>
                       </div>
@@ -336,17 +295,14 @@ export default function App() {
 
             {/* Error */}
             {phase === 'error' && error && (
-              <div className="bg-red-50 border border-red-200 rounded-2xl p-4 mb-5">
-                <div className="flex items-start gap-2">
-                  <span className="text-lg shrink-0">⚠️</span>
-                  <div className="flex-1">
-                    <p className="text-red-700 text-sm font-semibold mb-0.5">Analysis failed</p>
-                    <p className="text-red-600 text-sm">{error}</p>
-                    <button
-                      onClick={() => handleAnalyze()}
-                      disabled={!claim.trim()}
-                      className="mt-2 text-xs text-red-600 hover:text-red-800 font-semibold underline"
-                    >
+              <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-4">
+                <div className="flex items-start gap-2.5">
+                  <span className="text-red-500 shrink-0 mt-0.5">⚠</span>
+                  <div>
+                    <p className="text-red-700 text-sm font-semibold">Analysis failed</p>
+                    <p className="text-red-600 text-xs mt-0.5">{error}</p>
+                    <button onClick={() => handleAnalyze()} disabled={!claim.trim()}
+                      className="mt-2 text-xs text-red-600 hover:text-red-800 font-semibold underline">
                       Try again →
                     </button>
                   </div>
@@ -356,17 +312,17 @@ export default function App() {
 
             {/* Result */}
             {phase === 'done' && result && (
-              <div className="space-y-4 result-enter">
+              <div className="space-y-3 result-enter">
                 <ResultCard analysis={result} claim={lastClaim} onReset={handleReset} />
-                <div className="flex gap-3">
+                <div className="flex gap-2">
                   <button onClick={handleReset}
-                    className="flex-1 py-3 border-2 border-dashed border-gray-300 rounded-xl text-gray-500 hover:border-blue-400 hover:text-blue-600 text-sm font-semibold transition-all hover:bg-blue-50">
-                    + Check another claim
+                    className="flex-1 py-2.5 border-2 border-dashed border-slate-300 rounded-xl text-slate-500 hover:border-blue-400 hover:text-blue-600 text-sm font-semibold transition-all">
+                    + Check another
                   </button>
                   <button onClick={() => { handleReset(); setActiveTab('about'); }}
-                    className="px-4 py-3 border border-gray-200 rounded-xl text-gray-400 hover:text-gray-600 text-sm transition-colors hover:bg-gray-50"
-                    title="Learn about MedCheck">
-                    ℹ️
+                    className="px-3.5 py-2.5 border border-slate-200 rounded-xl text-slate-400 hover:text-slate-600 text-sm transition-colors"
+                    title="About MedCheck">
+                    ℹ
                   </button>
                 </div>
                 <RelatedClaims
@@ -377,154 +333,141 @@ export default function App() {
               </div>
             )}
 
-
-
             {/* Session stats + History */}
             {phase !== 'streaming' && history.length > 0 && (
-              <div className="mt-6 space-y-4">
+              <div className="mt-6 space-y-3">
                 <SessionStats history={history} />
                 <HistoryPanel history={history} onSelect={handleHistorySelect} onClear={() => setHistory([])} />
               </div>
             )}
 
-            {/* Trust signals when idle and no history */}
+            {/* Trust signals */}
             {phase === 'idle' && history.length === 0 && (
-              <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-xs text-gray-400">
-                <span className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-400"></span>
-                  Free to use
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
-                  No account required
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
-                  Works on any device
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-                  Results never stored
-                </span>
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-slate-400">
+                {['Free to use', 'No account required', 'Works on any device', 'No data stored'].map(s => (
+                  <span key={s} className="flex items-center gap-1.5">
+                    <span className="w-1 h-1 rounded-full bg-slate-300"></span>
+                    {s}
+                  </span>
+                ))}
               </div>
             )}
           </>
         )}
 
         {activeTab === 'about' && (
-          <div className="space-y-5">
+          <div className="space-y-4">
             <StatsBar />
-
-            <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-6">
+            <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 space-y-6">
               <div>
-                <h2 className="text-xl font-black text-gray-900 mb-2">What is MedCheck?</h2>
-                <p className="text-sm text-gray-600 leading-relaxed">
+                <h2 className="text-xl font-black text-slate-900 mb-2">What is MedCheck?</h2>
+                <p className="text-sm text-slate-600 leading-relaxed">
                   MedCheck is an AI-powered health misinformation detector. It analyzes any health claim,
-                  breaks it into individual assertions, checks each against scientific consensus, and returns
+                  breaks it into individual assertions, evaluates each against scientific consensus, and returns
                   a structured verdict with honest confidence scores and real source citations — in seconds.
                 </p>
-                <p className="text-sm text-gray-500 leading-relaxed mt-2">
-                  Built to address a real problem: false health claims spread 6× faster than corrections,
-                  and most fact-checkers require you to already be skeptical. MedCheck meets people where they are.
+                <p className="text-sm text-slate-500 leading-relaxed mt-2">
+                  Most fact-checkers require you to already be skeptical. MedCheck meets people where they are —
+                  works on any claim, any format, instantly.
                 </p>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2">
                 {[
-                  { icon: '✅', label: 'TRUE', desc: 'Supported by evidence', color: 'border-emerald-200 bg-emerald-50 text-emerald-700' },
-                  { icon: '❌', label: 'FALSE', desc: 'Contradicted by evidence', color: 'border-red-200 bg-red-50 text-red-700' },
+                  { icon: '✅', label: 'TRUE', desc: 'Evidence supports this', color: 'border-emerald-200 bg-emerald-50 text-emerald-700' },
+                  { icon: '❌', label: 'FALSE', desc: 'Evidence contradicts this', color: 'border-red-200 bg-red-50 text-red-700' },
                   { icon: '⚠️', label: 'MISLEADING', desc: 'Partial truth, false impression', color: 'border-amber-200 bg-amber-50 text-amber-700' },
-                  { icon: '❓', label: 'UNVERIFIABLE', desc: 'Insufficient consensus', color: 'border-gray-200 bg-gray-50 text-gray-600' },
+                  { icon: '❓', label: 'UNVERIFIABLE', desc: 'Insufficient consensus', color: 'border-slate-200 bg-slate-50 text-slate-600' },
                 ].map(v => (
-                  <div key={v.label} className={`border rounded-xl p-3 ${v.color}`}>
-                    <div className="flex items-center gap-2 mb-1">
-                      <span>{v.icon}</span>
+                  <div key={v.label} className={`border rounded-lg p-3 ${v.color}`}>
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <span className="text-sm">{v.icon}</span>
                       <span className="font-bold text-xs tracking-wide">{v.label}</span>
                     </div>
-                    <p className="text-xs opacity-80">{v.desc}</p>
+                    <p className="text-xs opacity-75">{v.desc}</p>
                   </div>
                 ))}
               </div>
 
               <div>
-                <h3 className="font-bold text-gray-800 mb-3 text-sm uppercase tracking-widest text-gray-500">How It Works</h3>
-                <div className="space-y-4">
+                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">How It Works</h3>
+                <div className="space-y-3">
                   {[
-                    { icon: '🔍', title: 'Claim Decomposition', desc: 'Breaks compound claims into individual factual assertions — each evaluated separately.' },
-                    { icon: '📚', title: 'Evidence Synthesis', desc: 'Cross-references CDC, WHO, NIH, PubMed, and peer-reviewed literature simultaneously.' },
-                    { icon: '⚖️', title: 'Calibrated Confidence', desc: 'Honest uncertainty quantification. The AI says "I\'m not sure" when it isn\'t — a 0% confidence is a feature, not a bug.' },
-                    { icon: '⚡', title: 'Political Charge Detection', desc: 'Flags claims where science intersects with political controversy — a signal to apply extra scrutiny and verify independently.' },
+                    { icon: '🔍', title: 'Claim Decomposition', desc: 'Breaks compound claims into individual testable assertions.' },
+                    { icon: '📚', title: 'Evidence Synthesis', desc: 'Cross-references CDC, WHO, NIH, PubMed simultaneously.' },
+                    { icon: '⚖️', title: 'Calibrated Confidence', desc: 'Honest uncertainty quantification — 0% confidence is a feature, not a bug.' },
+                    { icon: '⚡', title: 'Political Charge Detection', desc: 'Flags politically contested claims, signaling when AI reliability may be lower.' },
                   ].map(item => (
-                    <div key={item.title} className="flex gap-3">
-                      <span className="text-2xl shrink-0">{item.icon}</span>
+                    <div key={item.title} className="flex gap-3 items-start">
+                      <span className="text-xl shrink-0 mt-0.5">{item.icon}</span>
                       <div>
-                        <p className="font-semibold text-sm text-gray-800">{item.title}</p>
-                        <p className="text-sm text-gray-500 mt-0.5">{item.desc}</p>
+                        <p className="font-semibold text-sm text-slate-800">{item.title}</p>
+                        <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">{item.desc}</p>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-
-
+              {/* Example output */}
               <div>
-                <h3 className="font-bold text-gray-800 mb-3 text-sm uppercase tracking-widest text-gray-500">Example Output</h3>
-                <div className="rounded-xl border-2 border-red-300 overflow-hidden text-sm">
+                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Example Output</h3>
+                <div className="rounded-lg border-2 border-red-300 overflow-hidden text-sm">
                   <div className="bg-red-500 px-4 py-3 text-white">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xl">❌</span>
-                      <span className="font-black tracking-widest">FALSE</span>
+                      <span>❌</span>
+                      <span className="font-black tracking-widest text-sm">FALSE</span>
+                      <span className="ml-auto text-xs text-red-200">95% confidence</span>
                     </div>
-                    <div className="text-xs text-white/80">High Confidence · 95%</div>
-                    <div className="h-1 bg-white/20 rounded-full mt-2">
-                      <div className="h-1 bg-white/80 rounded-full" style={{ width: '95%' }} />
+                    <div className="h-1 bg-red-400 rounded-full">
+                      <div className="h-1 bg-white/80 rounded-full w-[95%]" />
                     </div>
                   </div>
-                  <div className="bg-red-50 px-4 py-3 space-y-2">
-                    <p className="text-xs text-gray-500 italic">"Vaccines cause autism"</p>
-                    <p className="text-xs font-semibold text-red-800">This claim is definitively false — large-scale studies involving millions of children find no link between vaccines and autism.</p>
-                    <div className="flex gap-2 pt-1">
+                  <div className="bg-red-50 px-4 py-3">
+                    <p className="text-xs text-slate-500 italic mb-1">"Vaccines cause autism"</p>
+                    <p className="text-xs font-semibold text-red-800">Definitively false — large-scale studies of millions of children find zero link between vaccines and autism.</p>
+                    <div className="flex gap-2 mt-2">
                       <span className="text-xs bg-white border border-red-200 text-red-700 px-2 py-0.5 rounded-full font-medium">vaccines</span>
-                      <span className="text-xs text-gray-400">2 assertions checked · 3 sources cited</span>
+                      <span className="text-xs text-slate-400">2 assertions · 3 sources</span>
                     </div>
                   </div>
                 </div>
               </div>
 
+              {/* SDG cards */}
               <div>
-                <h3 className="font-bold text-gray-800 mb-3 text-sm uppercase tracking-widest text-gray-500">UN Sustainable Development Goals</h3>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-green-50 border border-green-200 rounded-xl p-3">
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <span className="text-2xl font-black text-green-700">3</span>
-                      <span className="text-xs font-bold text-green-800 uppercase tracking-wide">Good Health & Well-Being</span>
+                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">UN SDG Alignment</h3>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-lg font-black text-emerald-600">3</span>
+                      <span className="text-xs font-bold text-emerald-800">Good Health</span>
                     </div>
-                    <p className="text-xs text-green-700 leading-relaxed">Reducing health decisions made on false information. Every accurate claim checked = potential harm prevented.</p>
+                    <p className="text-xs text-emerald-700 leading-relaxed">Reducing health decisions made on false information.</p>
                   </div>
-                  <div className="bg-blue-50 border border-blue-200 rounded-xl p-3">
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <span className="text-2xl font-black text-blue-700">16</span>
-                      <span className="text-xs font-bold text-blue-800 uppercase tracking-wide">Peace, Justice & Strong Institutions</span>
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-lg font-black text-blue-600">16</span>
+                      <span className="text-xs font-bold text-blue-800">Strong Institutions</span>
                     </div>
-                    <p className="text-xs text-blue-700 leading-relaxed">An informed public is necessary for functional health institutions. MedCheck builds media literacy.</p>
+                    <p className="text-xs text-blue-700 leading-relaxed">An informed public enables functional health policy.</p>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
                 <p className="text-xs text-amber-800 leading-relaxed">
-                  ⚕️ <strong>Medical Disclaimer:</strong> MedCheck is for educational purposes only and is not a substitute for professional medical advice. Confidence scores reflect AI certainty. Always verify citations independently and consult qualified healthcare professionals for medical decisions.
+                  ⚕️ <strong>Disclaimer:</strong> For educational purposes only. Not medical advice. Always consult qualified healthcare professionals.
                 </p>
               </div>
 
-              <div className="border-t border-gray-100 pt-4 flex items-center justify-between">
+              <div className="border-t border-slate-100 pt-4 flex items-center justify-between">
                 <div>
-                  <p className="text-xs text-gray-600 font-medium">Built by David Xiao</p>
-                  <p className="text-xs text-gray-400">ACP Student AI Championship 2026 · SDG 3 & SDG 16</p>
+                  <p className="text-xs font-semibold text-slate-700">Built by David Xiao</p>
+                  <p className="text-xs text-slate-400">ACP Student AI Championship 2026</p>
                 </div>
                 <a href="https://github.com/bobthebuilder-a11y/medcheck" target="_blank" rel="noopener noreferrer"
-                  className="text-xs text-blue-600 hover:underline font-semibold">
+                  className="text-xs text-blue-600 hover:text-blue-800 font-semibold transition-colors">
                   GitHub →
                 </a>
               </div>
@@ -535,22 +478,20 @@ export default function App() {
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-gray-200 bg-white/70 mt-16">
-        <div className="max-w-2xl mx-auto px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2 text-center sm:text-left">
-            <span className="text-base">🔬</span>
+      <footer className="bg-slate-900 mt-16 border-t border-slate-800">
+        <div className="max-w-2xl mx-auto px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 bg-blue-600 rounded flex items-center justify-center text-white font-black text-xs">M</div>
             <div>
-              <p className="text-xs font-bold text-gray-700">MedCheck · Built by David Xiao</p>
-              <p className="text-xs text-gray-400 mt-0.5">ACP Student AI Championship 2026 · SDG 3 & SDG 16</p>
+              <p className="text-xs font-semibold text-slate-300">MedCheck · David Xiao</p>
+              <p className="text-xs text-slate-500">ACP 2026 · SDG 3 & 16</p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 text-xs text-slate-500">
             <a href="https://github.com/bobthebuilder-a11y/medcheck" target="_blank" rel="noopener noreferrer"
-              className="text-xs text-gray-400 hover:text-blue-600 transition-colors font-semibold flex items-center gap-1">
-              <span>⌥</span> GitHub
-            </a>
-            <span className="text-gray-200">·</span>
-            <span className="text-xs text-gray-400">Llama 4 via Groq</span>
+              className="hover:text-blue-400 transition-colors font-medium">GitHub ↗</a>
+            <span className="text-slate-700">·</span>
+            <span>Llama 4 · Groq</span>
           </div>
         </div>
       </footer>

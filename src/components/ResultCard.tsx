@@ -4,53 +4,49 @@ export const VERDICT_CONFIG = {
   true: {
     bg: 'bg-emerald-50',
     border: 'border-emerald-300',
-    headerBg: 'bg-emerald-500',
+    headerBg: 'bg-emerald-600',
     text: 'text-emerald-800',
     icon: '✅',
     label: 'TRUE',
-    barColor: 'bg-emerald-500',
-    lightBg: 'bg-emerald-50',
+    barColor: 'bg-emerald-400',
     dot: 'bg-emerald-500',
   },
   false: {
     bg: 'bg-red-50',
     border: 'border-red-300',
-    headerBg: 'bg-red-500',
+    headerBg: 'bg-red-600',
     text: 'text-red-800',
     icon: '❌',
     label: 'FALSE',
-    barColor: 'bg-red-500',
-    lightBg: 'bg-red-50',
+    barColor: 'bg-red-400',
     dot: 'bg-red-500',
   },
   misleading: {
     bg: 'bg-amber-50',
     border: 'border-amber-300',
-    headerBg: 'bg-amber-500',
+    headerBg: 'bg-amber-600',
     text: 'text-amber-800',
     icon: '⚠️',
     label: 'MISLEADING',
-    barColor: 'bg-amber-500',
-    lightBg: 'bg-amber-50',
+    barColor: 'bg-amber-400',
     dot: 'bg-amber-500',
   },
   unverifiable: {
     bg: 'bg-slate-50',
     border: 'border-slate-300',
-    headerBg: 'bg-slate-500',
+    headerBg: 'bg-slate-600',
     text: 'text-slate-700',
     icon: '❓',
     label: 'UNVERIFIABLE',
     barColor: 'bg-slate-400',
-    lightBg: 'bg-slate-50',
     dot: 'bg-slate-400',
   },
 } as const;
 
-export const CONFIDENCE_CONFIG = {
-  high: { label: 'High Confidence', color: 'text-emerald-600', bg: 'bg-emerald-100', dot: 'bg-emerald-500' },
-  medium: { label: 'Medium Confidence', color: 'text-amber-600', bg: 'bg-amber-100', dot: 'bg-amber-500' },
-  low: { label: 'Low Confidence', color: 'text-red-500', bg: 'bg-red-100', dot: 'bg-red-500' },
+const CONFIDENCE_CONFIG = {
+  high: { label: 'High Confidence', color: 'text-emerald-600' },
+  medium: { label: 'Medium Confidence', color: 'text-amber-500' },
+  low: { label: 'Low Confidence', color: 'text-red-500' },
 } as const;
 
 interface Props {
@@ -67,64 +63,68 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
     const sourcesText = analysis.sources?.length
       ? '\n\nSources:\n' + analysis.sources.map((s, i) => `${i+1}. ${s.name}: ${s.url}`).join('\n')
       : '';
-    const text = `MedCheck verdict on: "${claim}"\n\n${vc.icon} ${vc.label} (${analysis.confidenceScore}% confidence)\n\n${analysis.summary}\n\n${analysis.explanation}${sourcesText}\n\nVerify more claims at: https://medcheck-murex.vercel.app`;
+    const text = `MedCheck verdict on: "${claim}"\n\n${vc.icon} ${vc.label} (${analysis.confidenceScore}% confidence)\n\n${analysis.summary}\n\n${analysis.explanation}${sourcesText}\n\nhttps://medcheck-murex.vercel.app`;
     if (navigator.share) {
       try { await navigator.share({ title: 'MedCheck Result', text }); } catch { /* cancelled */ }
     } else {
       await navigator.clipboard.writeText(text);
-      // Brief feedback
     }
   };
 
   return (
-    <div className={`rounded-2xl border-2 ${vc.border} overflow-hidden shadow-sm`}>
+    <div className={`rounded-xl border-2 ${vc.border} overflow-hidden shadow-sm`}>
 
-      {/* Colored verdict header */}
+      {/* Header */}
       <div className={`${vc.headerBg} px-5 py-4`}>
         <div className="flex items-start justify-between gap-2">
           <div className="flex items-center gap-3 min-w-0">
-            <span className="text-3xl shrink-0">{vc.icon}</span>
+            <span className="text-2xl shrink-0">{vc.icon}</span>
             <div className="min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xl font-black tracking-widest text-white" title={`Verdict: ${vc.label} — ${analysis.verdict === 'true' ? 'Scientific evidence supports this claim' : analysis.verdict === 'false' ? 'Scientific evidence contradicts this claim' : analysis.verdict === 'misleading' ? 'Partially true but creates a false overall impression' : 'Insufficient evidence to evaluate definitively'}`}>{vc.label}</span>
+                <span
+                  className="text-lg font-black tracking-widest text-white"
+                  title={`Verdict: ${vc.label} — ${
+                    analysis.verdict === 'true' ? 'Scientific evidence supports this claim' :
+                    analysis.verdict === 'false' ? 'Scientific evidence contradicts this claim' :
+                    analysis.verdict === 'misleading' ? 'Partially true but creates a false overall impression' :
+                    'Insufficient evidence to evaluate definitively'
+                  }`}
+                >
+                  {vc.label}
+                </span>
                 {analysis.politicalCharge === 'high' && (
-                  <span className="px-2 py-0.5 text-xs bg-white/20 text-white border border-white/30 rounded-full font-semibold" title="This topic intersects with political controversy. AI may be less reliable here — treat this verdict with extra scrutiny and verify from multiple sources.">
-                    ⚡ Politically Charged
+                  <span className="px-2 py-0.5 text-xs bg-white/20 text-white border border-white/30 rounded-full font-semibold"
+                    title="Politically contested — AI may be less reliable. Verify independently.">
+                    ⚡ Contested
                   </span>
                 )}
-                {analysis.politicalCharge === 'low' && (
-                  <span className="px-2 py-0.5 text-xs bg-white/15 text-white/80 border border-white/20 rounded-full font-medium" title="Some political context exists around this topic. Verify independently.">
-                    ⚡ Some political context
+                {analysis.category && (
+                  <span className="px-2 py-0.5 text-xs bg-black/20 text-white/80 rounded-full font-medium capitalize hidden sm:inline">
+                    {analysis.category}
                   </span>
                 )}
               </div>
               <div className="flex items-center gap-2 mt-1">
-                <span className={`w-2 h-2 rounded-full bg-white/60`}></span>
-                <span className="text-sm text-white/85 font-medium" title="Confidence reflects how certain the AI is in this verdict — not whether the claim is definitely true or false.">
+                <span className={`text-xs font-semibold text-white/80`}>
                   {cc.label} · {analysis.confidenceScore}%
                 </span>
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            {analysis.category && (
-              <span className="px-2.5 py-1 text-xs bg-white/20 text-white border border-white/25 rounded-full font-medium capitalize hidden sm:inline-block">
-                {analysis.category}
-              </span>
-            )}
+          <div className="flex items-center gap-1.5 shrink-0">
             {onReset && (
               <button onClick={onReset}
-                className="p-2 rounded-xl bg-white/20 hover:bg-white/30 text-white transition-colors"
+                className="p-1.5 rounded-lg bg-black/20 hover:bg-black/30 text-white/80 transition-colors"
                 title="Check another claim">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                 </svg>
               </button>
             )}
             <button onClick={handleShare}
-              className="p-2 rounded-xl bg-white/20 hover:bg-white/30 text-white transition-colors"
+              className="p-1.5 rounded-lg bg-black/20 hover:bg-black/30 text-white/80 transition-colors"
               title="Share result">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
               </svg>
             </button>
@@ -135,42 +135,41 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
         <div className="mt-3">
           <div className="flex items-center justify-between mb-1">
             <span className="text-xs text-white/60">AI Certainty</span>
-            <span className="text-xs text-white/60" title="How confident the AI is in this verdict. Lower = more uncertain. Always verify from sources.">What is this? ↑</span>
+            <span className="text-xs text-white/50 cursor-help" title="How confident the AI is. Lower = verify more carefully.">What's this?</span>
           </div>
-          <div className="h-1.5 bg-white/25 rounded-full">
-            <div className="h-1.5 bg-white/80 rounded-full transition-all duration-700"
+          <div className="h-1 bg-black/20 rounded-full">
+            <div className="h-1 bg-white/70 rounded-full transition-all duration-700"
               style={{ width: `${analysis.confidenceScore}%` }} />
           </div>
         </div>
       </div>
 
       {/* Body */}
-      <div className={`${vc.bg} px-5 py-5 space-y-5`}>
+      <div className={`${vc.bg} px-5 py-5 space-y-4`}>
 
         {/* Claim */}
-        <div className="bg-white/70 rounded-xl p-3 border border-gray-200/60">
+        <div className="bg-white/70 rounded-lg p-3 border border-slate-200/60">
           {analysis.extractedClaim && analysis.extractedClaim !== claim ? (
             <>
-              <p className="text-xs text-gray-400 font-bold uppercase tracking-widest mb-1">Core claim extracted</p>
-              <p className="text-sm text-gray-800 italic leading-relaxed mb-2">"{analysis.extractedClaim}"</p>
-              <p className="text-xs text-gray-400 font-bold uppercase tracking-widest mb-1">From your input</p>
-              <p className="text-xs text-gray-500 italic leading-relaxed line-clamp-2">"{claim}"</p>
+              <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mb-1">Core claim extracted</p>
+              <p className="text-sm text-slate-800 italic leading-relaxed mb-2">"{analysis.extractedClaim}"</p>
+              <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mb-1">From input</p>
+              <p className="text-xs text-slate-500 italic line-clamp-2">"{claim}"</p>
             </>
           ) : (
             <>
-              <p className="text-xs text-gray-400 font-bold uppercase tracking-widest mb-1">Claim analyzed</p>
-              <p className="text-sm text-gray-800 italic leading-relaxed">"{claim}"</p>
+              <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mb-1">Claim analyzed</p>
+              <p className="text-sm text-slate-800 italic leading-relaxed">"{claim}"</p>
             </>
           )}
         </div>
 
         {/* Political charge warning */}
         {analysis.politicalCharge === 'high' && (
-          <div className="bg-purple-50 border border-purple-200 rounded-xl p-3 flex items-start gap-2">
-            <span className="shrink-0">⚡</span>
+          <div className="bg-purple-50 border border-purple-200 rounded-lg p-3 flex items-start gap-2">
+            <span className="shrink-0 text-purple-500">⚡</span>
             <p className="text-xs text-purple-700 leading-relaxed">
-              <strong>Politically charged topic:</strong> This claim intersects with active political controversy.
-              AI reliability may be lower here — treat this verdict with extra scrutiny and verify from multiple independent sources.
+              <strong>Politically contested topic.</strong> AI reliability may be lower here — apply extra scrutiny and verify from multiple independent sources.
             </p>
           </div>
         )}
@@ -180,8 +179,8 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
 
         {/* Explanation */}
         <div>
-          <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Full Analysis</h3>
-          <div className="text-sm text-gray-700 leading-relaxed space-y-2">
+          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Analysis</h3>
+          <div className="text-sm text-slate-700 leading-relaxed space-y-2">
             {analysis.explanation.split('\n').filter(p => p.trim()).map((para, i) => (
               <p key={i}>{para}</p>
             ))}
@@ -191,20 +190,20 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
         {/* Assertions */}
         {analysis.assertions?.length > 0 && (
           <div>
-            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
-              Claim Breakdown · {analysis.assertions.length} Assertion{analysis.assertions.length !== 1 ? 's' : ''}
+            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+              Claim Breakdown · {analysis.assertions.length} assertion{analysis.assertions.length !== 1 ? 's' : ''}
             </h3>
             <div className="space-y-2">
               {analysis.assertions.map((a, i) => {
                 const ac = VERDICT_CONFIG[a.verdict];
                 return (
-                  <div key={i} className={`rounded-xl p-3.5 border ${ac.border} ${ac.bg}`}>
+                  <div key={i} className={`rounded-lg p-3 border ${ac.border} ${ac.bg}`}>
                     <div className="flex items-center gap-1.5 mb-1.5">
                       <span className="text-sm">{ac.icon}</span>
                       <span className={`text-xs font-bold uppercase tracking-wide ${ac.text}`}>{ac.label}</span>
                     </div>
-                    <p className="text-xs font-semibold text-gray-800 mb-1.5 leading-relaxed">"{a.text}"</p>
-                    <p className="text-xs text-gray-600 leading-relaxed">{a.explanation}</p>
+                    <p className="text-xs font-semibold text-slate-800 mb-1 leading-relaxed">"{a.text}"</p>
+                    <p className="text-xs text-slate-600 leading-relaxed">{a.explanation}</p>
                   </div>
                 );
               })}
@@ -215,24 +214,24 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
         {/* Sources */}
         {analysis.sources?.length > 0 && (
           <div>
-            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
-              Sources & References · {analysis.sources.length} cited
+            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+              Sources · {analysis.sources.length} cited
             </h3>
-            <div className="bg-white/60 rounded-xl border border-gray-200/60 divide-y divide-gray-100">
+            <div className="bg-white/60 rounded-lg border border-slate-200/60 divide-y divide-slate-100">
               {analysis.sources.map((s, i) => (
                 <div key={i} className="flex items-start gap-3 p-3 hover:bg-white/80 transition-colors">
-                  <div className="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-black shrink-0 mt-0.5">
+                  <div className="w-5 h-5 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-black shrink-0 mt-0.5">
                     {i + 1}
                   </div>
                   <div className="min-w-0 flex-1">
                     <a href={s.url} target="_blank" rel="noopener noreferrer"
                       className="text-sm text-blue-600 hover:text-blue-800 hover:underline font-semibold flex items-center gap-1">
                       {s.name}
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 opacity-60 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 opacity-50 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                       </svg>
                     </a>
-                    <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">{s.relevance}</p>
+                    <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">{s.relevance}</p>
                   </div>
                 </div>
               ))}
@@ -241,11 +240,9 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
         )}
 
         {/* Disclaimer */}
-        <div className="bg-white/50 rounded-xl p-3 border border-gray-200/60">
-          <p className="text-xs text-gray-400 leading-relaxed">
-            ⚕️ <strong className="text-gray-500">Medical Disclaimer:</strong> AI-generated for educational purposes only.
-            Not a substitute for medical advice. Confidence scores reflect AI certainty.
-            Always verify citations and consult qualified healthcare professionals.
+        <div className="bg-white/40 rounded-lg p-3 border border-slate-200/60">
+          <p className="text-xs text-slate-400 leading-relaxed">
+            ⚕️ AI-generated analysis for educational purposes only. Not medical advice. Confidence scores reflect AI certainty. Verify citations independently.
           </p>
         </div>
 

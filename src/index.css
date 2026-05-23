@@ -27,43 +27,38 @@
 }
 
 .animated-bg {
-  background: linear-gradient(-45deg, #eef4ff, #f9fafb, #f3f0ff, #f0f7ff);
-  background-size: 400% 400%;
-  animation: gradient-shift 15s ease infinite;
+  background: #f1f5f9;
 }
 
 @keyframes fade-up {
-  from { 
-    opacity: 0; 
-    transform: translateY(12px);
+  from {
+    opacity: 0;
+    transform: translateY(16px);
   }
-  to { 
-    opacity: 1; 
+  to {
+    opacity: 1;
     transform: translateY(0);
   }
 }
 
 .result-enter {
-  animation: fade-up 0.4s ease-out;
+  animation: fade-up 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Subtle dot grid for hero area */
+/* Dot grid for hero */
 .hero-grid {
-  background-image: radial-gradient(circle, #94a3b820 1px, transparent 1px);
-  background-size: 24px 24px;
+  background-image: radial-gradient(circle, #94a3b830 1px, transparent 1px);
+  background-size: 20px 20px;
 }
 
-@layer utilities {
-  .line-clamp-1 {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-  }
-  .line-clamp-2 {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-  }
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
 }
