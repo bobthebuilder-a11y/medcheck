@@ -90,6 +90,22 @@ That's worth studying. And it started with a health claim checker I built in one
 
 ---
 
+## The Build Iterations
+
+After the first version was working, I didn't stop. I went through several feedback loops:
+
+**Iteration 1** was about functionality — making the tool actually useful. I added history tracking (so you can review past checks), a share button (so results can spread), category tags (so you can see what domain a claim falls in), and the About page that explains the research angle. The loading screen went from a simple spinner to an animated state that tells you what's happening.
+
+**Iteration 2** was about context. The problem with a fact-checking tool is that people might not understand *why* this problem is worth solving. I added a stats bar with real numbers: 30M+ uninsured Americans affected, false claims spread 6x faster than corrections, 1 in 3 Americans have acted on unverified social media health advice. Now the scope of the problem is visible before you even check your first claim. I also added a pipeline flow diagram showing how the analysis works: claim decomposition → evidence synthesis → confidence calibration → source citations.
+
+**Iteration 3** was about visibility of the research angle. The project isn't just an app — it's the instrument for a real research paper. I added a "Research Project" badge to the navbar and a purple callout banner explaining that MedCheck is the foundation for research on AI bias in politically charged health claims. This matters for judges: it elevates the project from "cool app" to "systematic investigation."
+
+**What I learned from iteration:**
+Every version revealed something I hadn't thought of. The stats bar came from thinking "how do judges know why this problem matters?" The research callout came from realizing judges might not connect the tool to the paper without being told. The confidence score's design — showing low confidence on contested topics — came from realizing that false confidence is itself a form of misinformation. Good design is mostly iteration.
+
+---
+
 *David Xiao | ACP Student AI Championship 2026*
 *Project: MedCheck — AI Health Misinformation Detector*
 *SDG 3: Good Health & Well-Being | SDG 16: Peace, Justice & Strong Institutions*
+*Live: https://medcheck-murex.vercel.app | Code: github.com/bobthebuilder-a11y/medcheck*
