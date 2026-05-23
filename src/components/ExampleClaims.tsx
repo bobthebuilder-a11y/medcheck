@@ -28,14 +28,29 @@ const CATEGORY_STYLES: Record<string, string> = {
 
 interface Props {
   onSelect: (claim: string) => void;
+  onRandom?: (claim: string) => void;
 }
 
-export default function ExampleClaims({ onSelect }: Props) {
+export default function ExampleClaims({ onSelect, onRandom }: Props) {
+  const handleRandom = () => {
+    const nonSocial = EXAMPLES.filter(e => !e.text.startsWith('🧵'));
+    const random = nonSocial[Math.floor(Math.random() * nonSocial.length)];
+    onRandom?.(random.text);
+  };
+
   return (
     <div className="bg-white rounded-2xl border border-gray-200 p-4 shadow-sm">
-      <div className="flex items-center gap-2 mb-3">
-        <span className="text-sm">⚡</span>
-        <p className="text-xs font-bold text-gray-600 uppercase tracking-widest">Quick Check — Try an Example</p>
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2">
+          <span className="text-sm">⚡</span>
+          <p className="text-xs font-bold text-gray-600 uppercase tracking-widest">Quick Check — Try an Example</p>
+        </div>
+        {onRandom && (
+          <button onClick={handleRandom}
+            className="text-xs text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-1 transition-colors">
+            🎲 Random
+          </button>
+        )}
       </div>
       <div className="flex flex-wrap gap-2">
         {EXAMPLES.map((ex) => (

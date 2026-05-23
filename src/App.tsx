@@ -273,7 +273,10 @@ export default function App() {
             {/* Examples (only when idle) */}
             {phase === 'idle' && (
               <div className="mb-6">
-                <ExampleClaims onSelect={(c) => { setClaim(c); handleAnalyze(c); }} />
+                <ExampleClaims
+                  onSelect={(c) => { setClaim(c); handleAnalyze(c); }}
+                  onRandom={(c) => { setClaim(c); handleAnalyze(c); }}
+                />
               </div>
             )}
 
