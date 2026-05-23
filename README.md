@@ -10,55 +10,53 @@ Built for the **ACP Student AI Championship 2026** | SDG 3 (Good Health) + SDG 1
 
 ## What It Does
 
-MedCheck analyzes health claims against scientific consensus using AI. For any claim you enter:
+MedCheck analyzes health claims against scientific consensus using AI:
 
-- **Verdict** — TRUE / FALSE / MISLEADING / UNVERIFIABLE  
-- **Confidence Score** — 0-100% honest calibration  
-- **Claim Breakdown** — each assertion evaluated separately  
-- **Plain-language explanation** — *why* it's wrong, not just *that* it is  
-- **Real citations** — CDC, WHO, NIH, PubMed links  
-- **Political Charge Flag** — warns when AI reliability may be lower  
-
-## The Problem It Solves
-
-| | The Problem |
+| Feature | Description |
 |---|---|
-| 📊 **6×** | False health claims spread faster than corrections on social media |
-| 🏥 **30M+** | Americans making health decisions from unverified social media |
-| 😟 **1 in 3** | Americans have acted on unverified health advice online |
-| ⏱️ **3s vs 20min** | Time to read a false claim vs. manually fact-check it |
-
-Existing fact-checkers require you to already be skeptical. MedCheck meets people where they are.
-
-## Why AI Is the Right Tool
-
-AI is the only tool fast enough and scalable enough to make this work:
-
-- **Scale** — Millions of health claims posted daily. Humans can't keep up.
-- **Decomposition** — Automatically breaks compound claims into individual assertions
-- **Calibrated uncertainty** — Can express degrees of confidence, not just binary verdicts  
-- **Evidence synthesis** — Cross-references CDC, WHO, NIH, PubMed simultaneously in seconds
-
-## Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Frontend | React + TypeScript |
-| AI Engine | Llama 4 (Groq API) |
-| Styling | Tailwind CSS |
-| Build | Vite |
-| Deploy | Vercel |
+| 🔍 **Single Claim Analysis** | Paste any claim → structured verdict with confidence, assertions, citations |
+| 📋 **Batch Mode** | Check up to 5 claims simultaneously (⌘+B) |
+| 📱 **Social Media Posts** | Paste a full viral post → AI extracts and checks the core health claim |
+| 🔥 **Trending Claims** | Pre-verified common misinformation with instant re-analysis |
+| 📊 **Session Stats** | Verdict distribution and confidence averages across your session |
+| 📥 **Export Reports** | Download your session as a formatted fact-check report |
+| 🐦 **Twitter Share** | Share fact-checks directly to Twitter/X |
 
 ## The Four Verdicts
 
 | Verdict | Meaning |
 |---|---|
-| ✅ TRUE | Scientific evidence supports this claim |
-| ❌ FALSE | Scientific evidence clearly contradicts this claim |
-| ⚠️ MISLEADING | Partial truth, creates false overall impression |
-| ❓ UNVERIFIABLE | Insufficient scientific consensus |
+| ✓ **SCIENTIFICALLY SUPPORTED** | Scientific evidence supports this claim |
+| ✗ **FALSE** | Scientific evidence clearly contradicts this claim |
+| ⚠ **MISLEADING** | Partial truth, creates false overall impression |
+| ? **UNVERIFIABLE** | Insufficient scientific consensus |
 
-**MISLEADING is the most important verdict.** Most dangerous health misinformation isn't false — it's selectively true.
+**MISLEADING is the most important verdict.** Most dangerous misinformation isn't false — it's selectively true.
+
+## The Problem
+
+| Stat | Detail |
+|---|---|
+| **6×** | False health claims spread 6× faster than corrections |
+| **30M+** | Americans making health decisions from unverified social media |
+| **1 in 3** | Americans have acted on unverified health advice |
+
+## Tech Stack
+
+| | |
+|---|---|
+| Frontend | React + TypeScript + Vite |
+| AI Engine | Llama 4 via Groq API |
+| Styling | Tailwind CSS |
+| Hosting | Vercel |
+
+## Key Design Decisions
+
+**Honest confidence calibration** — The AI is explicitly instructed: *"A low-confidence honest answer is better than a high-confidence wrong answer."*
+
+**Structured output** — Returns JSON with defined fields, not freeform text. This is what makes MedCheck a tool rather than a chatbot.
+
+**Political charge detection** — Flags claims where science intersects with political controversy, signaling when extra scrutiny is needed.
 
 ## Running Locally
 
@@ -66,32 +64,19 @@ AI is the only tool fast enough and scalable enough to make this work:
 git clone https://github.com/bobthebuilder-a11y/medcheck
 cd medcheck
 npm install
-```
-
-Create `.env.local`:
-```
-VITE_GROQ_API_KEY=your_groq_api_key_here
-```
-
-```bash
+echo "VITE_GROQ_API_KEY=your_key" > .env.local
 npm run dev
 ```
 
 Get a free Groq API key at [console.groq.com](https://console.groq.com)
 
-## SDG Alignment
+## Keyboard Shortcuts
 
-**SDG 3 — Good Health & Well-Being:** Health misinformation causes measurable harm — vaccine hesitancy, delayed diagnoses, dangerous self-treatment. Every accurate claim checked is a potential harm prevented.
-
-**SDG 16 — Peace, Justice & Strong Institutions:** An informed public is necessary for functional health institutions. MedCheck builds media literacy rather than AI dependency — by explaining *why* a claim is false, users develop critical thinking skills.
-
-## Key Design Decisions
-
-**Honest confidence calibration** — The system prompt explicitly tells the AI: *"A low-confidence honest answer is better than a high-confidence wrong answer."* Low confidence verdicts are a feature, not a bug.
-
-**Structured output** — The AI returns JSON with defined fields, not freeform text. This is what makes MedCheck a tool rather than a chatbot.
-
-**Political charge detection** — Flags claims where science intersects with political controversy, signaling when AI reliability may be lower.
+| Key | Action |
+|---|---|
+| ⌘+Enter | Analyze current claim |
+| Escape | Clear result |
+| ⌘+B | Open Batch Mode |
 
 ---
 
