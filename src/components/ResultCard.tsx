@@ -267,15 +267,13 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
             <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">
               Sources · {analysis.sources.length} cited
             </h3>
-            <div className="flex flex-wrap gap-1.5">
+            <div className="space-y-1">
               {analysis.sources.map((s, i) => (
                 <a key={i} href={s.url} target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 px-2 py-1 bg-white/70 hover:bg-white border border-slate-200 hover:border-blue-300 rounded-md text-xs text-blue-600 hover:text-blue-800 font-medium transition-all">
-                  <span className="text-[10px] text-slate-400 font-bold">{i + 1}</span>
-                  {s.name}
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-2.5 w-2.5 opacity-40 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
+                  className="flex items-center gap-1.5 text-xs text-blue-600 hover:text-blue-800 hover:underline transition-colors">
+                  <span className="text-[10px] font-bold text-slate-400 w-4 shrink-0">{i + 1}.</span>
+                  <span className="truncate">{s.name}</span>
+                  <span className="text-slate-300 shrink-0">↗</span>
                 </a>
               ))}
             </div>
