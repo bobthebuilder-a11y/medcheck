@@ -107,9 +107,8 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
   const hasMore = paras.length > 1;
 
   return (
-    <div
-      className="bg-white border border-[#d6d7d9] rounded-sm overflow-hidden"
-      style={{ borderLeft: `4px solid ${vc.color}` }}>
+    <div className="bg-white border border-[#d6d7d9] rounded-sm overflow-hidden">
+      <div style={{ height: '4px', background: vc.color }} />
 
       {/* Header */}
       <div className="px-8 py-6">
@@ -186,11 +185,9 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
 
       {/* Summary */}
       <div className="px-8 py-5 border-t border-[#d6d7d9]">
-        <div className="pl-4 py-1 border-l-4" style={{ borderColor: vc.color }}>
-          <p className="text-base font-semibold leading-relaxed" style={{ color: vc.color }}>
-            {analysis.summary}
-          </p>
-        </div>
+        <p className="text-base font-semibold leading-relaxed" style={{ color: vc.color }}>
+          {analysis.summary}
+        </p>
       </div>
 
       {/* Analysis */}
