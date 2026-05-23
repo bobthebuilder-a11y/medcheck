@@ -258,11 +258,13 @@ export default function App() {
                   <button
                     onClick={() => handleAnalyze()}
                     disabled={phase === 'streaming' || !claim.trim()}
-                    className="px-5 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 active:bg-blue-800 disabled:opacity-40 font-semibold text-sm transition-all flex items-center gap-2 shadow-sm"
+                    className="px-6 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 active:bg-blue-800 disabled:opacity-40 font-bold text-sm transition-all flex items-center gap-2 shadow-sm hover:shadow-md"
                   >
                     {phase === 'streaming' ? (
                       <><span className="inline-block animate-spin">⟳</span> Analyzing</>
-                    ) : 'Analyze →'}
+                    ) : (
+                      <><span>Analyze</span><span className="opacity-70">→</span></>
+                    )}
                   </button>
                 </div>
               </div>
