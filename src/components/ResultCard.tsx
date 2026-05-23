@@ -152,9 +152,7 @@ export default function ResultCard({ analysis, claim }: Props) {
             <span className="shrink-0">⚡</span>
             <p className="text-xs text-purple-700 leading-relaxed">
               <strong>Politically charged topic:</strong> This claim intersects with active political controversy.
-              AI reliability may be lower here. This is part of our{' '}
-              <span className="font-semibold">ongoing research on AI bias in politically charged health claims</span>.
-              Verify from multiple independent sources.
+              AI reliability may be lower here — treat this verdict with extra scrutiny and verify from multiple independent sources.
             </p>
           </div>
         )}

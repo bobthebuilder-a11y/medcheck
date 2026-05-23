@@ -116,7 +116,7 @@ export default function App() {
             <span className="text-xl">🔬</span>
             <span className="font-black text-gray-900 text-lg tracking-tight">MedCheck</span>
             <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-bold">BETA</span>
-            <span className="hidden sm:inline text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-semibold">Research Project</span>
+
           </div>
           <div className="flex items-center gap-1">
             {(['check', 'about'] as const).map(tab => (
@@ -299,22 +299,7 @@ export default function App() {
               </div>
             )}
 
-            {/* Research callout (idle only) */}
-            {phase === 'idle' && (
-              <div className="mt-6 bg-purple-50 border border-purple-200 rounded-2xl p-4">
-                <div className="flex items-start gap-3">
-                  <span className="text-2xl shrink-0">🔭</span>
-                  <div>
-                    <p className="text-sm font-bold text-purple-900 mb-1">This is more than an app</p>
-                    <p className="text-xs text-purple-700 leading-relaxed">
-                      MedCheck is the foundation for a research paper investigating whether AI systems
-                      exhibit measurable bias when evaluating politically charged health claims.
-                      Built for <strong>ACP Student AI Championship 2026</strong>.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
+
 
             {/* Session stats + History */}
             {phase !== 'streaming' && history.length > 0 && (
@@ -347,7 +332,7 @@ export default function App() {
                     { icon: '🔍', title: 'Claim Decomposition', desc: 'Breaks compound claims into individual factual assertions — each evaluated separately.' },
                     { icon: '📚', title: 'Evidence Synthesis', desc: 'Cross-references CDC, WHO, NIH, PubMed, and peer-reviewed literature simultaneously.' },
                     { icon: '⚖️', title: 'Calibrated Confidence', desc: 'Honest uncertainty quantification. The AI says "I\'m not sure" when it isn\'t — a 0% confidence is a feature, not a bug.' },
-                    { icon: '⚡', title: 'Political Charge Detection', desc: 'Flags claims where science intersects with political controversy. Connected to our ongoing research on AI bias.' },
+                    { icon: '⚡', title: 'Political Charge Detection', desc: 'Flags claims where science intersects with political controversy — a signal to apply extra scrutiny and verify independently.' },
                   ].map(item => (
                     <div key={item.title} className="flex gap-3">
                       <span className="text-2xl shrink-0">{item.icon}</span>
@@ -360,15 +345,7 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="bg-purple-50 border border-purple-200 rounded-xl p-4">
-                <h3 className="font-bold text-purple-900 mb-2 text-sm">🔭 The Research Layer</h3>
-                <p className="text-sm text-purple-700 leading-relaxed">
-                  <strong>Research question:</strong> Do LLMs exhibit higher rates of confident-but-wrong verdicts on politically charged health claims compared to neutral ones?
-                </p>
-                <p className="text-xs text-purple-600 mt-2">
-                  150 labeled claims · 3 AI models (Claude, GPT-4, Llama) · Professor mentorship · Target: Journal of Emerging Investigators
-                </p>
-              </div>
+
 
               <div>
                 <h3 className="font-bold text-gray-800 mb-3 text-sm uppercase tracking-widest text-gray-500">Example Output</h3>
