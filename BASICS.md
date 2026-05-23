@@ -3,6 +3,23 @@
 
 ---
 
+## 🆕 New Features Added This Morning
+
+### Batch Mode
+Click **"Batch"** in the navbar (or the "Check multiple claims at once" button). Enter up to 5 claims, one per line. The AI checks them all sequentially and shows live status as each one completes.
+
+**Perfect for judges:** "Here, watch me check 5 viral misinformation claims at once."
+
+### Trending Claims
+On the home screen, you'll see a "Most Checked Claims" panel with pre-verified verdicts. Click any to re-analyze it fresh.
+
+**Perfect for judges:** Shows the tool handles the most common misinformation circulating right now.
+
+### Export Report
+In the Recent history panel, click **"Export ↓"** to download a formatted text report of all claims you've checked this session.
+
+---
+
 ## ⏰ 5-Minute Morning Prep Checklist
 
 Before the competition, do this in order:
