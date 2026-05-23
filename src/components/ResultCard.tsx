@@ -83,12 +83,12 @@ export default function ResultCard({ analysis, claim }: Props) {
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-xl font-black tracking-widest text-white">{vc.label}</span>
                 {analysis.politicalCharge === 'high' && (
-                  <span className="px-2 py-0.5 text-xs bg-white/20 text-white border border-white/30 rounded-full font-semibold">
+                  <span className="px-2 py-0.5 text-xs bg-white/20 text-white border border-white/30 rounded-full font-semibold" title="This topic intersects with political controversy. AI may be less reliable here — treat this verdict with extra scrutiny and verify from multiple sources.">
                     ⚡ Politically Charged
                   </span>
                 )}
                 {analysis.politicalCharge === 'low' && (
-                  <span className="px-2 py-0.5 text-xs bg-white/15 text-white/80 border border-white/20 rounded-full font-medium">
+                  <span className="px-2 py-0.5 text-xs bg-white/15 text-white/80 border border-white/20 rounded-full font-medium" title="Some political context exists around this topic. Verify independently.">
                     ⚡ Some political context
                   </span>
                 )}
@@ -145,6 +145,19 @@ export default function ResultCard({ analysis, claim }: Props) {
             </>
           )}
         </div>
+
+        {/* Political charge warning */}
+        {analysis.politicalCharge === 'high' && (
+          <div className="bg-purple-50 border border-purple-200 rounded-xl p-3 flex items-start gap-2">
+            <span className="shrink-0">⚡</span>
+            <p className="text-xs text-purple-700 leading-relaxed">
+              <strong>Politically charged topic:</strong> This claim intersects with active political controversy.
+              AI reliability may be lower here. This is part of our{' '}
+              <span className="font-semibold">ongoing research on AI bias in politically charged health claims</span>.
+              Verify from multiple independent sources.
+            </p>
+          </div>
+        )}
 
         {/* Summary */}
         <p className={`text-sm font-semibold ${vc.text} leading-relaxed`}>{analysis.summary}</p>
