@@ -5,6 +5,7 @@ import ExampleClaims from './components/ExampleClaims';
 import HistoryPanel from './components/HistoryPanel';
 import SessionStats from './components/SessionStats';
 import RelatedClaims from './components/RelatedClaims';
+import BatchChecker from './components/BatchChecker';
 import type { ClaimAnalysis, HistoryEntry } from './types';
 
 const STORAGE_KEY = 'medcheck_history';
@@ -36,6 +37,7 @@ export default function App() {
   const [lastClaim, setLastClaim] = useState('');
   const [history, setHistory] = useState<HistoryEntry[]>(loadHistory);
   const [activeTab, setActiveTab] = useState<'check' | 'about'>('check');
+  const [showBatch, setShowBatch] = useState(false);
   const [loadingStep, setLoadingStep] = useState(0);
   const [, setStreamText] = useState('');
   const stepTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -100,6 +102,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50">
+      {showBatch && <BatchChecker onClose={() => setShowBatch(false)} />}
 
       {/* Navbar */}
       <nav className="sticky top-0 z-20 border-b border-slate-800" style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)' }}>
@@ -113,6 +116,11 @@ export default function App() {
             <span className="text-[10px] font-bold text-blue-300 bg-blue-500/20 border border-blue-500/30 px-1.5 py-0.5 rounded-full uppercase tracking-wider">Beta</span>
           </div>
           <div className="flex items-center gap-0.5">
+            <button onClick={() => setShowBatch(true)}
+              className="px-3 py-1.5 text-sm font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800 rounded-lg transition-all hidden sm:block"
+              title="Check multiple claims at once">
+              Batch
+            </button>
             {(['check', 'about'] as const).map(tab => (
               <button key={tab} onClick={() => setActiveTab(tab)}
                 className={`px-3.5 py-1.5 text-sm font-semibold rounded-lg transition-all ${
