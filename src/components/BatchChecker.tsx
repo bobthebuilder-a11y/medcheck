@@ -44,14 +44,17 @@ export default function BatchChecker({ onClose }: Props) {
   const claims = input.split('\n').map(c => c.trim()).filter(c => c.length > 4);
 
   return (
-    <div className="fixed inset-0 bg-black/50 z-50 flex items-start justify-center p-4 pt-16 overflow-auto">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl">
-        <div className="flex items-center justify-between p-5 border-b border-slate-100">
-          <div>
-            <h2 className="font-black text-slate-900 text-lg">Batch Fact-Check</h2>
-            <p className="text-xs text-slate-500 mt-0.5">Check up to 5 claims at once</p>
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-start justify-center p-4 pt-12 overflow-auto">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl border border-slate-200">
+        <div className="flex items-center justify-between p-5 border-b border-slate-100 bg-slate-50 rounded-t-2xl">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white text-sm font-bold">B</div>
+            <div>
+              <h2 className="font-black text-slate-900 text-base">Batch Fact-Checker</h2>
+              <p className="text-xs text-slate-500">Check up to 5 claims at once · ⌘+B</p>
+            </div>
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-600 text-2xl leading-none">×</button>
+          <button onClick={onClose} className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-slate-100 text-xl leading-none">×</button>
         </div>
 
         {results.length === 0 ? (
