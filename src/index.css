@@ -47,6 +47,12 @@
   animation: fade-up 0.4s ease-out;
 }
 
+/* Subtle dot grid for hero area */
+.hero-grid {
+  background-image: radial-gradient(circle, #94a3b820 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
 @layer utilities {
   .line-clamp-1 {
     overflow: hidden;
