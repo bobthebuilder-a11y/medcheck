@@ -190,12 +190,18 @@ export default function App() {
                 className="w-full border-0 text-base text-slate-800 placeholder-slate-300 focus:outline-none resize-none leading-relaxed disabled:opacity-60 bg-transparent"
               />
               <div className="flex items-center justify-between pt-3 border-t border-slate-100 mt-1">
-                <span className="text-xs text-slate-400">
-                  {phase === 'streaming' ? 'Analyzing...' :
-                   phase === 'done' ? '✓ Result ready' :
-                   claim.length > 200 ? '📄 Long post detected' :
-                   claim.length > 0 ? `${claim.length} chars` :
-                   <span className="hidden sm:inline">⌘+Enter to analyze</span>}
+                <span className="text-xs text-slate-400 flex items-center gap-1.5">
+                  {phase === 'streaming' ? (
+                    <><span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></span>Analyzing...</>
+                  ) : phase === 'done' ? (
+                    <><span className="text-emerald-500">✓</span> Result ready</>
+                  ) : claim.length > 200 ? (
+                    <><span>📄</span>Long post detected — AI will extract the claim</>
+                  ) : claim.length > 0 ? (
+                    `${claim.length} chars`
+                  ) : (
+                    <span className="hidden sm:inline">⌘+Enter to analyze</span>
+                  )}
                 </span>
                 <div className="flex gap-2">
                   {(phase === 'done' || phase === 'error') && (
