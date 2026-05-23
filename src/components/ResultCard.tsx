@@ -243,9 +243,9 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
         )}
 
         {/* Disclaimer */}
-        <div className="bg-white/40 rounded-lg p-3 border border-slate-200/60">
+        <div className="border-t border-slate-200/60 pt-3">
           <p className="text-xs text-slate-400 leading-relaxed">
-            ⚕️ AI-generated analysis for educational purposes only. Not medical advice. Confidence scores reflect AI certainty. Verify citations independently.
+            ⚕️ AI-generated for educational use only · Not medical advice · Verify citations independently · Consult healthcare professionals for medical decisions
           </p>
         </div>
 
