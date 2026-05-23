@@ -112,7 +112,7 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
       style={{ borderLeft: `4px solid ${vc.color}` }}>
 
       {/* Header */}
-      <div className="px-6 py-5">
+      <div className="px-8 py-6">
         <div className="flex items-start justify-between gap-4 mb-2">
           <div>
             <div className="flex items-center gap-3 mb-1">
@@ -157,7 +157,7 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
       </div>
 
       {/* Claim */}
-      <div className="px-6 py-4 border-t border-[#d6d7d9]">
+      <div className="px-8 py-5 border-t border-[#d6d7d9]">
         <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: '#767676' }}>
           {analysis.extractedClaim && analysis.extractedClaim !== claim ? 'Core Claim Extracted' : 'Claim Analyzed'}
         </p>
@@ -186,7 +186,7 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
       )}
 
       {/* Summary */}
-      <div className="px-6 py-4 border-t border-[#d6d7d9]">
+      <div className="px-8 py-5 border-t border-[#d6d7d9]">
         <div className="pl-4 py-1 border-l-4" style={{ borderColor: vc.color }}>
           <p className="text-base font-semibold leading-relaxed" style={{ color: vc.color }}>
             {analysis.summary}
@@ -195,50 +195,27 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
       </div>
 
       {/* Analysis */}
-      <div className="px-6 py-4 border-t border-[#d6d7d9]">
-        <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: '#767676' }}>Analysis</p>
-        <div className="space-y-3">
-          <p className="text-base leading-relaxed" style={{ color: '#3d3d3d' }}>{paras[0]}</p>
+      <div className="px-8 py-6 border-t border-[#d6d7d9]">
+        <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: '#767676' }}>Analysis</p>
+        <div className="space-y-4">
+          <p className="text-base leading-loose" style={{ color: '#3d3d3d' }}>{paras[0]}</p>
           {hasMore && showFullExplanation && paras.slice(1).map((para, i) => (
-            <p key={i} className="text-base leading-relaxed" style={{ color: '#3d3d3d' }}>{para}</p>
+            <p key={i} className="text-base leading-loose" style={{ color: '#3d3d3d' }}>{para}</p>
           ))}
           {hasMore && (
             <button
               onClick={() => setShowFullExplanation(v => !v)}
               className="text-sm font-medium hover:underline"
               style={{ color: '#0071bc' }}>
-              {showFullExplanation ? 'Show less' : 'Read more'}
+              {showFullExplanation ? 'Show less ↑' : 'Read more ↓'}
             </button>
           )}
         </div>
       </div>
 
-      {/* Assertions */}
-      {analysis.assertions?.length > 0 && (
-        <div className="px-6 py-4 border-t border-[#d6d7d9]">
-          <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: '#767676' }}>
-            Breakdown · {analysis.assertions.length} assertion{analysis.assertions.length !== 1 ? 's' : ''}
-          </p>
-          <div>
-            {analysis.assertions.map((a, i) => {
-              const ac = VERDICT_CONFIG[a.verdict];
-              return (
-                <div key={i} className="flex items-center gap-3 py-2 border-b border-[#d6d7d9] last:border-0">
-                  <span className="w-2 h-2 rounded-full shrink-0" style={{ background: ac.color }} />
-                  <p className="text-sm flex-1 leading-snug" style={{ color: '#3d3d3d' }}>"{a.text}"</p>
-                  <span className="text-xs font-semibold uppercase shrink-0" style={{ color: ac.color }}>
-                    {ac.icon} {ac.label}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
       {/* Sources */}
       {analysis.sources?.length > 0 && (
-        <div className="px-6 py-4 border-t border-[#d6d7d9]">
+        <div className="px-8 py-5 border-t border-[#d6d7d9]">
           <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: '#767676' }}>
             Sources · {analysis.sources.length} cited
           </p>

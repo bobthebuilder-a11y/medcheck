@@ -142,7 +142,7 @@ export default function App() {
         </div>
       </nav>
 
-      <div className="max-w-4xl mx-auto px-6 pt-8 pb-16">
+      <div className="max-w-4xl mx-auto px-10 pt-8 pb-16">
 
         {activeTab === 'check' && (
           <>
