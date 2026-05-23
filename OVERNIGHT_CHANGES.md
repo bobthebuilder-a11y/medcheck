@@ -1,58 +1,72 @@
-# Overnight UI Changes — May 22-23, 2026
+# Overnight UI Changes & Morning Work — May 22-23, 2026
 
 ## Summary
 
-15 UI iterations performed after David's 11:40 PM request.
-All changes deployed to https://medcheck-murex.vercel.app
+Overnight: ~25 UI iterations after David's original request
+Morning additions: 3 major new features + additional polish
 
-## What Changed
+**Total:** 143+ commits since work began
+**Live:** https://medcheck-murex.vercel.app
 
-### Core Design Language
-- **Color system:** Moved from light blue/gray to slate/blue professional palette
-- **Navbar:** Now dark (slate-900) with white text — more authoritative
-- **Background:** Subtle grid pattern (page-bg) for technical feel
-- **Typography:** Heavier weights, better hierarchy throughout
+---
 
-### Hero Section
-- Left-aligned layout (more modern than centered)
-- Larger headline (text-5xl on desktop)
-- "Is that health claim actually true?" with blue color accent
-- Red urgency banner: "Health misinformation kills"
-- Stats as color-coded pill badges (red/orange/amber)
-- Simplified pipeline: text chips in a row
+## What Changed — Major Items
 
-### Input Card
-- Stronger border (border-2), cleaner focus state
-- Larger text (text-base instead of text-sm)
-- Better placeholder
+### Core Design Overhaul (Overnight)
+- **Navbar:** Dark slate-900 with gradient, 🔬 emoji icon, "AI Health Fact-Checker" subtitle
+- **Background:** Subtle 32px grid pattern for technical feel
+- **Color system:** Slate-based palette (not light blue/gray)
+- **Typography:** Heavier weights, better hierarchy
+- **Input card:** border-2, cleaner focus state
+- **Loading state:** Full dark (slate-900) card with step checklist
+- **Result card:** Colored verdict headers with confidence bar
 
-### Result Card
-- Deeper header colors (emerald-700/red-700/amber-600/slate-700)
-- Icon in white-bordered box
-- Larger verdict text (2xl)
-- Summary with left border accent and bold font
-- Assertions with left-border accent instead of plain boxes
-- Inline verdict label on assertions
+### New Features (Morning)
+1. **Batch Mode** (⌘+B) — Check up to 5 claims simultaneously
+   - Live status updates as each claim processes
+   - Colored verdict headers matching main result card
+   - Summary breakdown at the end
+   
+2. **Trending Claims Panel** — Pre-verified common misinformation
+   - Shows verdicts, usage counts, summaries
+   - Click to re-analyze fresh
+   - "NEW" badge
+   
+3. **Export Session Report** — Download history as formatted text file
 
-### Loading State
-- Dark (slate-900) header instead of blue gradient
-- Progress percentage shown
-- Emerald checkmarks for completed steps
+4. **Twitter/X Share** — Share fact-checks to Twitter directly from result card
 
-### About Page
-- Dark hero banner with MedCheck branding
-- MISLEADING explanation callout
+5. **Low-confidence warning** — Auto-shown when AI confidence < medium
 
-### Impact Callout
-- Dark slate-900 "Why this matters" card
-- Inline stats for free/no account/no data/any device
+### Visual Improvements
+- Red urgency banner with specific harms
+- Stats as colored pill badges (red/orange/amber)
+- Colorized pipeline steps (decompose → synthesize → calibrate → cite)
+- Example claims grouped by category
+- Tips callout explaining social media support
+- "Why this matters" dark card with feature bullets
+- Batch mode visible button on homepage
+- Confidence bar: thicker (h-2), with inline score and qualifier
 
-### Other
-- All components use consistent slate color scale
-- Better focus styles globally
-- Smooth transitions globally
+### Documentation Updated
+- MORNING_BRIEF.md: full checklist, features, key talking points
+- BASICS.md: demo script, new features, keyboard shortcuts
+- SUBMISSION.md: updated Q2 and tech architecture
+- README.md: complete feature table
 
-## Current State
-- Live: https://medcheck-murex.vercel.app
-- GitHub: github.com/bobthebuilder-a11y/medcheck
-- 91 total commits
+---
+
+## Current App Features
+
+| Feature | Notes |
+|---|---|
+| Single claim analysis | Streaming, full structured result |
+| Batch mode | 5 claims, live status, summary |
+| Social media extraction | Paste full post → claim extracted |
+| Trending claims | Pre-verified with fresh re-analysis |
+| Related claims | By category, shown after result |
+| Session history | Last 20, with export |
+| Session stats | Verdict distribution bar |
+| Twitter share | Direct from result card |
+| Export report | Formatted text download |
+| Keyboard shortcuts | ⌘+Enter, Escape, ⌘+B |
