@@ -170,11 +170,10 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
         {/* Confidence bar */}
         <div className="mt-3">
           <div className="flex items-center justify-between mb-1.5">
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-white/70 font-medium">AI Certainty</span>
-              <span className="text-xs font-black text-white/90">{analysis.confidenceScore}%</span>
-              <span className={`text-xs text-white/60`}>{analysis.confidence === 'high' ? '— strong' : analysis.confidence === 'medium' ? '— moderate' : '— uncertain'}</span>
-            </div>
+            <span className="text-xs text-white/70">
+              AI Certainty &nbsp;<span className="font-black text-white/90">{analysis.confidenceScore}%</span>
+              &nbsp;<span className="text-white/50">{analysis.confidence === 'high' ? '· strong' : analysis.confidence === 'medium' ? '· moderate' : '· uncertain'}</span>
+            </span>
             <span className="text-[10px] text-white/40 cursor-help" title="How confident the AI is in this verdict. Lower scores mean you should verify more carefully.">ℹ</span>
           </div>
           <div className="h-2 bg-black/20 rounded-full">
