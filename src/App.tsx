@@ -371,7 +371,7 @@ export default function App() {
                   <p className="text-sm" style={{ color: '#767676' }}>ACP Student AI Championship 2026 · SDG 3 & SDG 16</p>
                 </div>
                 <a href="https://github.com/bobthebuilder-a11y/medcheck" target="_blank" rel="noopener noreferrer"
-                  className="text-sm font-medium hover:underline" style={{ color: '#0071bc' }}>
+                  className="text-sm font-medium hover:underline" style={{ color: '#767676' }}>
                   GitHub →
                 </a>
               </div>
