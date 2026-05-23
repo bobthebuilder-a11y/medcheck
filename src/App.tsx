@@ -3,7 +3,6 @@ import { analyzeClaimStream } from './lib/analyzer';
 import ResultCard from './components/ResultCard';
 import ExampleClaims from './components/ExampleClaims';
 import HistoryPanel from './components/HistoryPanel';
-import StatsBar from './components/StatsBar';
 import SessionStats from './components/SessionStats';
 import RelatedClaims from './components/RelatedClaims';
 import type { ClaimAnalysis, HistoryEntry } from './types';
@@ -44,8 +43,6 @@ export default function App() {
 
   useEffect(() => { saveHistory(history); }, [history]);
 
-  // const totalChecked = history.length; // used when hero section is shown
-
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && phase === 'done') {
@@ -85,7 +82,7 @@ export default function App() {
       const msg = e instanceof Error ? e.message : 'Something went wrong.';
       setError(msg.includes('parse') || msg.includes('JSON') ? 'Unexpected AI response. Please try again.' :
                msg.includes('network') || msg.includes('fetch') ? 'Network error. Check your connection.' :
-               msg + ' Please try again.');
+               'Analysis failed. Please try again.');
       setPhase('error');
     }
   };
@@ -102,15 +99,13 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen page-bg">
+    <div className="min-h-screen bg-slate-50">
 
-      {/* Dark navbar */}
-      <nav className="sticky top-0 z-20 border-b border-slate-800/80" style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)' }}>
+      {/* Navbar */}
+      <nav className="sticky top-0 z-20 border-b border-slate-800" style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)' }}>
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-sm text-white text-lg leading-none">
-              🔬
-            </div>
+            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-sm text-white text-lg">🔬</div>
             <div>
               <span className="font-black text-white text-base tracking-tight block leading-tight">MedCheck</span>
               <span className="text-[9px] text-slate-500 leading-none hidden sm:block">AI Health Fact-Checker</span>
@@ -121,9 +116,7 @@ export default function App() {
             {(['check', 'about'] as const).map(tab => (
               <button key={tab} onClick={() => setActiveTab(tab)}
                 className={`px-3.5 py-1.5 text-sm font-semibold rounded-lg transition-all ${
-                  activeTab === tab
-                    ? 'bg-blue-600 text-white shadow-sm'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                  activeTab === tab ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
                 }`}>
                 {tab === 'check' ? 'Analyze' : 'About'}
               </button>
@@ -132,87 +125,73 @@ export default function App() {
         </div>
       </nav>
 
-      <div className="max-w-3xl mx-auto px-4 pt-8 pb-16">
+      <div className="max-w-3xl mx-auto px-4 pt-6 pb-16">
 
         {activeTab === 'check' && (
           <>
-            {/* Compact header for idle state */}
+            {/* Header (idle only) */}
             {phase === 'idle' && (
               <div className="mb-5">
-                <div className="flex items-start justify-between gap-4 mb-3">
-                  <div>
-                    <h1 className="text-2xl font-black text-slate-900 leading-tight mb-1">
-                      AI Health Fact-Checker
-                    </h1>
-                    <p className="text-sm text-slate-500 leading-relaxed">
-                      Paste any health claim to check it against CDC, WHO & peer-reviewed science.
-                    </p>
+                <div className="flex items-start gap-4 mb-3">
+                  <div className="flex-1">
+                    <h1 className="text-2xl font-black text-slate-900 mb-1">Is that health claim true?</h1>
+                    <p className="text-sm text-slate-500">Powered by AI · Cross-references CDC, WHO & peer-reviewed science</p>
                   </div>
-                  <div className="hidden sm:flex flex-wrap gap-2 shrink-0">
+                  <div className="hidden sm:flex items-center gap-2 shrink-0 mt-1">
                     {[
-                      { val: '6×', label: 'faster spread', c: 'text-red-600', bg: 'bg-red-50 border-red-200' },
-                      { val: '1 in 3', label: 'misled', c: 'text-amber-600', bg: 'bg-amber-50 border-amber-200' },
+                      { v: '6×', l: 'faster spread', c: 'text-red-600 bg-red-50 border-red-100' },
+                      { v: '1 in 3', l: 'Americans misled', c: 'text-amber-600 bg-amber-50 border-amber-100' },
                     ].map(s => (
-                      <div key={s.val} className={`flex items-center gap-1.5 ${s.bg} border rounded-lg px-2.5 py-1.5`}>
-                        <span className={`text-sm font-black ${s.c}`}>{s.val}</span>
-                        <span className="text-xs text-slate-500">{s.label}</span>
+                      <div key={s.v} className={`flex items-center gap-1.5 border rounded-lg px-2.5 py-1.5 ${s.c}`}>
+                        <span className="text-sm font-black leading-none">{s.v}</span>
+                        <span className="text-xs">{s.l}</span>
                       </div>
                     ))}
                   </div>
                 </div>
-                <div className="bg-red-50 border border-red-200 text-red-700 text-xs font-medium px-3 py-2 rounded-lg flex items-center gap-2">
-                  <span className="text-red-400 shrink-0">⚠</span>
-                  <span>Health misinformation causes real harm — vaccine hesitancy, delayed diagnoses, dangerous self-treatment.</span>
+                <div className="bg-red-50 border border-red-200 text-red-700 text-xs px-3 py-2 rounded-lg flex items-center gap-2">
+                  <span className="shrink-0">⚠️</span>
+                  <span className="font-medium">Health misinformation causes real harm</span>
+                  <span className="text-red-500">—</span>
+                  <span>vaccine hesitancy, delayed diagnoses, dangerous self-treatment.</span>
                 </div>
               </div>
             )}
 
-            {/* Input card */}
+            {/* Input */}
             <div className={`bg-white rounded-xl border-2 transition-all duration-150 p-4 mb-4 ${
-              phase === 'streaming' ? 'border-blue-500 shadow-md shadow-blue-50' :
+              phase === 'streaming' ? 'border-blue-500 shadow-md shadow-blue-50/50' :
               phase === 'done' ? 'border-slate-200 shadow-sm' :
-              'border-slate-200 shadow-sm focus-within:border-blue-500 focus-within:shadow-md focus-within:shadow-blue-50'
+              'border-slate-200 shadow-sm focus-within:border-blue-500 focus-within:shadow-md focus-within:shadow-blue-50/50'
             }`}>
               <textarea
                 ref={textareaRef}
                 value={claim}
                 onChange={e => setClaim(e.target.value)}
                 onKeyDown={e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) handleAnalyze(); }}
-                placeholder="Enter a health claim to fact-check..."
+                placeholder="Enter a health claim, headline, or paste a social media post..."
                 rows={3}
                 disabled={phase === 'streaming'}
                 className="w-full border-0 text-base text-slate-800 placeholder-slate-300 focus:outline-none resize-none leading-relaxed disabled:opacity-60 bg-transparent"
               />
               <div className="flex items-center justify-between pt-3 border-t border-slate-100 mt-1">
-                <div className="flex items-center gap-2">
-                  {claim.length > 0 && phase !== 'streaming' && (
-                    <span className="text-xs text-slate-400">
-                      {claim.length > 200 ? '📄 Long post' : phase === 'done' ? '✓ Analyzed' : `${claim.length} chars`}
-                    </span>
-                  )}
-                  {phase === 'streaming' && (
-                    <span className="text-xs text-blue-500 font-medium">Analyzing...</span>
-                  )}
-                  {phase === 'idle' && !claim && (
-                    <span className="text-xs text-slate-400 hidden sm:inline">⌘+Enter</span>
-                  )}
-                </div>
+                <span className="text-xs text-slate-400">
+                  {phase === 'streaming' ? 'Analyzing...' :
+                   phase === 'done' ? '✓ Result ready' :
+                   claim.length > 200 ? '📄 Long post detected' :
+                   claim.length > 0 ? `${claim.length} chars` :
+                   <span className="hidden sm:inline">⌘+Enter to analyze</span>}
+                </span>
                 <div className="flex gap-2">
                   {(phase === 'done' || phase === 'error') && (
                     <button onClick={handleReset}
-                      className="px-3 py-1.5 text-xs font-semibold text-slate-500 hover:text-slate-700 border border-slate-200 rounded-lg transition-colors">
+                      className="px-3 py-1.5 text-xs font-semibold text-slate-500 hover:text-slate-700 border border-slate-200 rounded-lg">
                       Clear
                     </button>
                   )}
-                  <button
-                    onClick={() => handleAnalyze()}
-                    disabled={phase === 'streaming' || !claim.trim()}
-                    className="px-5 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 active:bg-blue-800 disabled:opacity-40 font-bold text-sm transition-colors flex items-center gap-1.5 shadow-sm"
-                  >
-                    {phase === 'streaming'
-                      ? <><span className="animate-spin inline-block">⟳</span> Analyzing</>
-                      : <>Analyze <span className="opacity-60">→</span></>
-                    }
+                  <button onClick={() => handleAnalyze()} disabled={phase === 'streaming' || !claim.trim()}
+                    className="px-5 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-40 font-bold text-sm flex items-center gap-1.5 shadow-sm">
+                    {phase === 'streaming' ? <><span className="animate-spin">⟳</span> Analyzing</> : <>Analyze →</>}
                   </button>
                 </div>
               </div>
@@ -220,7 +199,7 @@ export default function App() {
 
             {/* Examples */}
             {phase === 'idle' && (
-              <div className="mb-6">
+              <div className="mb-5">
                 <ExampleClaims
                   onSelect={(c) => { setClaim(c); handleAnalyze(c); }}
                   onRandom={(c) => { setClaim(c); handleAnalyze(c); }}
@@ -234,29 +213,23 @@ export default function App() {
                 <div className="px-5 py-5">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center shadow-sm">
-                        <span className="text-base">🔬</span>
-                      </div>
+                      <div className="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center">🔬</div>
                       <div>
                         <p className="font-bold text-sm text-white">Analyzing claim</p>
-                        <p className="text-xs text-slate-500">Cross-referencing scientific literature</p>
+                        <p className="text-xs text-slate-400">Cross-referencing scientific literature</p>
                       </div>
                     </div>
                     <span className="text-sm font-black text-blue-400 font-mono">
                       {Math.round(((loadingStep + 1) / LOADING_STEPS.length) * 100)}%
                     </span>
                   </div>
-
-                  {/* Progress bar */}
                   <div className="h-1.5 bg-slate-700 rounded-full mb-5">
                     <div className="h-1.5 bg-blue-500 rounded-full transition-all duration-700"
                       style={{ width: `${Math.round(((loadingStep + 1) / LOADING_STEPS.length) * 100)}%` }} />
                   </div>
-
-                  {/* Steps */}
                   <div className="space-y-2.5">
                     {LOADING_STEPS.map((step, i) => (
-                      <div key={step} className={`flex items-center gap-3 transition-all duration-200 ${
+                      <div key={step} className={`flex items-center gap-3 transition-all ${
                         i < loadingStep ? 'opacity-40' : i === loadingStep ? 'opacity-100' : 'opacity-20'
                       }`}>
                         <div className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 text-xs font-bold ${
@@ -282,12 +255,11 @@ export default function App() {
             {phase === 'error' && error && (
               <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-4">
                 <div className="flex items-start gap-2.5">
-                  <span className="text-red-500 shrink-0 mt-0.5">⚠</span>
+                  <span className="text-red-400 shrink-0">⚠</span>
                   <div>
-                    <p className="text-red-700 text-sm font-semibold">Analysis failed</p>
-                    <p className="text-red-600 text-xs mt-0.5">{error}</p>
+                    <p className="text-red-700 text-sm font-semibold">{error}</p>
                     <button onClick={() => handleAnalyze()} disabled={!claim.trim()}
-                      className="mt-2 text-xs text-red-600 hover:text-red-800 font-semibold underline">
+                      className="mt-1.5 text-xs text-red-600 hover:text-red-800 font-semibold underline">
                       Try again →
                     </button>
                   </div>
@@ -301,15 +273,12 @@ export default function App() {
                 <ResultCard analysis={result} claim={lastClaim} onReset={handleReset} />
                 <div className="flex gap-2">
                   <button onClick={handleReset}
-                    className="flex-1 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-600 hover:bg-slate-50 hover:border-slate-300 text-sm font-semibold transition-all shadow-sm flex items-center justify-center gap-2">
-                    <span className="text-base">+</span>
-                    Check another claim
+                    className="flex-1 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-600 hover:bg-slate-50 text-sm font-semibold shadow-sm flex items-center justify-center gap-2">
+                    + Check another claim
                   </button>
                   <button onClick={() => { handleReset(); setActiveTab('about'); }}
-                    className="px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-50 text-sm transition-colors shadow-sm"
-                    title="About MedCheck">
-                    ℹ️
-                  </button>
+                    className="px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-400 hover:text-slate-600 text-sm shadow-sm"
+                    title="About MedCheck">ℹ️</button>
                 </div>
                 <RelatedClaims
                   category={result.category}
@@ -321,42 +290,28 @@ export default function App() {
 
             {/* Session stats + History */}
             {phase !== 'streaming' && history.length > 0 && (
-              <div className="mt-6 space-y-3">
+              <div className="mt-5 space-y-3">
                 <SessionStats history={history} />
                 <HistoryPanel history={history} onSelect={handleHistorySelect} onClear={() => setHistory([])} />
               </div>
             )}
 
-            {/* Impact callout + trust signals */}
+            {/* Why this matters (idle + no history) */}
             {phase === 'idle' && history.length === 0 && (
-              <div className="mt-6 space-y-3">
-                <div className="bg-slate-900 rounded-xl p-4 text-white">
-                  <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Why this matters</p>
-                  <p className="text-sm text-slate-200 leading-relaxed">
-                    False health claims cause real harm — vaccine hesitancy, delayed diagnoses, dangerous self-treatment.
-                    MedCheck gives anyone the ability to verify a claim in the same time it takes to read it.
-                  </p>
-                  <div className="flex items-center gap-3 mt-3 pt-3 border-t border-slate-700">
-                    <div className="text-center">
-                      <p className="text-xs font-black text-blue-400">Free</p>
-                      <p className="text-[10px] text-slate-500 mt-0.5">Always</p>
-                    </div>
-                    <div className="w-px h-6 bg-slate-700"></div>
-                    <div className="text-center">
-                      <p className="text-xs font-black text-blue-400">No account</p>
-                      <p className="text-[10px] text-slate-500 mt-0.5">Required</p>
-                    </div>
-                    <div className="w-px h-6 bg-slate-700"></div>
-                    <div className="text-center">
-                      <p className="text-xs font-black text-blue-400">No data</p>
-                      <p className="text-[10px] text-slate-500 mt-0.5">Stored</p>
-                    </div>
-                    <div className="w-px h-6 bg-slate-700"></div>
-                    <div className="text-center">
-                      <p className="text-xs font-black text-blue-400">Any device</p>
-                      <p className="text-[10px] text-slate-500 mt-0.5">Works everywhere</p>
-                    </div>
-                  </div>
+              <div className="mt-5 bg-slate-900 rounded-xl p-4 text-white">
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Why this matters</p>
+                <p className="text-sm text-slate-300 leading-relaxed mb-3">
+                  Fake health claims kill. Unverified cancer "cures" delay real treatment.
+                  Vaccine myths cause outbreaks. Dangerous supplements harm people who trust them.
+                  MedCheck gives anyone the ability to verify a claim in seconds.
+                </p>
+                <div className="flex items-center gap-5 text-xs text-slate-400 pt-3 border-t border-slate-700">
+                  {['Free forever', 'No account needed', 'No data stored', 'Any device'].map(s => (
+                    <span key={s} className="flex items-center gap-1">
+                      <span className="w-1 h-1 rounded-full bg-blue-500"></span>
+                      {s}
+                    </span>
+                  ))}
                 </div>
               </div>
             )}
@@ -365,38 +320,41 @@ export default function App() {
 
         {activeTab === 'about' && (
           <div className="space-y-4">
-            {/* About hero */}
             <div className="bg-slate-900 rounded-xl p-6 text-white">
               <div className="flex items-center gap-2.5 mb-4">
                 <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-lg">🔬</div>
                 <span className="font-black text-lg">MedCheck</span>
+                <span className="text-xs text-blue-300 bg-blue-500/20 border border-blue-500/30 px-1.5 py-0.5 rounded-full font-semibold">Beta</span>
               </div>
-              <h2 className="text-2xl font-black leading-tight mb-2">
-                AI-powered health<br />misinformation detection
-              </h2>
-              <p className="text-sm text-slate-400 leading-relaxed">
-                Built for the ACP Student AI Championship 2026.
-                Addresses SDG 3 (Good Health) and SDG 16 (Strong Institutions).
+              <h2 className="text-2xl font-black leading-tight mb-2">AI-powered health<br />misinformation detection</h2>
+              <p className="text-sm text-slate-400 leading-relaxed mb-4">
+                Built for the ACP Student AI Championship 2026. Addresses SDG 3 (Good Health) and SDG 16 (Strong Institutions).
               </p>
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  { v: '6×', l: 'faster spread', c: 'text-red-400' },
+                  { v: '30M+', l: 'Americans at risk', c: 'text-orange-400' },
+                  { v: '1 in 3', l: 'acted on bad info', c: 'text-amber-400' },
+                ].map(s => (
+                  <div key={s.v} className="bg-slate-800 rounded-lg p-3 text-center">
+                    <p className={`text-xl font-black ${s.c}`}>{s.v}</p>
+                    <p className="text-xs text-slate-500 mt-0.5">{s.l}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-            <StatsBar />
-            <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 space-y-6">
+
+            <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-5">
               <div>
-                <h2 className="text-xl font-black text-slate-900 mb-2">What is MedCheck?</h2>
+                <h2 className="text-lg font-black text-slate-900 mb-1.5">What is MedCheck?</h2>
                 <p className="text-sm text-slate-600 leading-relaxed">
-                  MedCheck is an AI-powered health misinformation detector. It analyzes any health claim,
-                  breaks it into individual assertions, evaluates each against scientific consensus, and returns
-                  a structured verdict with honest confidence scores and real source citations — in seconds.
+                  MedCheck analyzes any health claim against scientific consensus using AI. It breaks claims into individual assertions, evaluates each, and returns a structured verdict with honest confidence scores and real citations.
                 </p>
-                <p className="text-sm text-slate-500 leading-relaxed mt-2">
-                  Most fact-checkers require you to already be skeptical. MedCheck meets people where they are —
-                  works on any claim, any format, instantly.
-                </p>
-                <p className="text-xs text-slate-400 mt-2 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 leading-relaxed">
-                  💡 <strong className="text-slate-600">Note on MISLEADING:</strong> Most dangerous misinformation isn't false — it's selectively true. 
-                  "Natural immunity is always better than vaccines" contains real science but weaponizes it to reach a dangerous conclusion. 
-                  That's why MISLEADING often matters more than FALSE.
-                </p>
+                <div className="mt-3 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+                  <p className="text-xs text-amber-800 leading-relaxed">
+                    💡 <strong>MISLEADING</strong> is often more dangerous than FALSE — it contains real science weaponized to reach a false conclusion. "Natural immunity is always better than vaccines" has truth in it, but "always" makes it dangerous.
+                  </p>
+                </div>
               </div>
 
               <div className="grid grid-cols-2 gap-2">
@@ -408,8 +366,8 @@ export default function App() {
                 ].map(v => (
                   <div key={v.label} className={`border rounded-lg p-3 ${v.color}`}>
                     <div className="flex items-center gap-1.5 mb-1">
-                      <span className="text-sm">{v.icon}</span>
-                      <span className="font-bold text-xs tracking-wide">{v.label}</span>
+                      <span>{v.icon}</span>
+                      <span className="font-bold text-xs">{v.label}</span>
                     </div>
                     <p className="text-xs opacity-75">{v.desc}</p>
                   </div>
@@ -422,81 +380,50 @@ export default function App() {
                   {[
                     { icon: '🔍', title: 'Claim Decomposition', desc: 'Breaks compound claims into individual testable assertions.' },
                     { icon: '📚', title: 'Evidence Synthesis', desc: 'Cross-references CDC, WHO, NIH, PubMed simultaneously.' },
-                    { icon: '⚖️', title: 'Calibrated Confidence', desc: 'Honest uncertainty quantification — 0% confidence is a feature, not a bug.' },
-                    { icon: '⚡', title: 'Political Charge Detection', desc: 'Flags politically contested claims, signaling when AI reliability may be lower.' },
+                    { icon: '⚖️', title: 'Calibrated Confidence', desc: 'Honest uncertainty — 0% confidence means the AI isn\'t sure, which is honest.' },
+                    { icon: '⚡', title: 'Political Charge Detection', desc: 'Flags contested claims so you know when to verify extra carefully.' },
                   ].map(item => (
                     <div key={item.title} className="flex gap-3 items-start">
-                      <span className="text-xl shrink-0 mt-0.5">{item.icon}</span>
+                      <span className="text-xl shrink-0">{item.icon}</span>
                       <div>
                         <p className="font-semibold text-sm text-slate-800">{item.title}</p>
-                        <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">{item.desc}</p>
+                        <p className="text-xs text-slate-500 mt-0.5">{item.desc}</p>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Example output */}
-              <div>
-                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Example Output</h3>
-                <div className="rounded-lg border-2 border-red-300 overflow-hidden text-sm">
-                  <div className="bg-red-500 px-4 py-3 text-white">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span>❌</span>
-                      <span className="font-black tracking-widest text-sm">FALSE</span>
-                      <span className="ml-auto text-xs text-red-200">95% confidence</span>
-                    </div>
-                    <div className="h-1 bg-red-400 rounded-full">
-                      <div className="h-1 bg-white/80 rounded-full w-[95%]" />
-                    </div>
+              <div className="grid grid-cols-2 gap-2">
+                <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-xl font-black text-emerald-600">3</span>
+                    <span className="text-xs font-bold text-emerald-800">Good Health & Well-Being</span>
                   </div>
-                  <div className="bg-red-50 px-4 py-3">
-                    <p className="text-xs text-slate-500 italic mb-1">"Vaccines cause autism"</p>
-                    <p className="text-xs font-semibold text-red-800">Definitively false — large-scale studies of millions of children find zero link between vaccines and autism.</p>
-                    <div className="flex gap-2 mt-2">
-                      <span className="text-xs bg-white border border-red-200 text-red-700 px-2 py-0.5 rounded-full font-medium">vaccines</span>
-                      <span className="text-xs text-slate-400">2 assertions · 3 sources</span>
-                    </div>
-                  </div>
+                  <p className="text-xs text-emerald-700">Every accurate claim checked = potential harm prevented.</p>
                 </div>
-              </div>
-
-              {/* SDG cards */}
-              <div>
-                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">UN SDG Alignment</h3>
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-lg font-black text-emerald-600">3</span>
-                      <span className="text-xs font-bold text-emerald-800">Good Health</span>
-                    </div>
-                    <p className="text-xs text-emerald-700 leading-relaxed">Reducing health decisions made on false information.</p>
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-xl font-black text-blue-600">16</span>
+                    <span className="text-xs font-bold text-blue-800">Strong Institutions</span>
                   </div>
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-lg font-black text-blue-600">16</span>
-                      <span className="text-xs font-bold text-blue-800">Strong Institutions</span>
-                    </div>
-                    <p className="text-xs text-blue-700 leading-relaxed">An informed public enables functional health policy.</p>
-                  </div>
+                  <p className="text-xs text-blue-700">An informed public enables functional health policy.</p>
                 </div>
               </div>
 
               <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
                 <p className="text-xs text-amber-800 leading-relaxed">
-                  ⚕️ <strong>Disclaimer:</strong> For educational purposes only. Not medical advice. Always consult qualified healthcare professionals.
+                  ⚕️ <strong>Medical Disclaimer:</strong> For educational purposes only. Not medical advice. Always verify independently and consult qualified healthcare professionals.
                 </p>
               </div>
 
               <div className="border-t border-slate-100 pt-4 flex items-center justify-between">
                 <div>
                   <p className="text-xs font-semibold text-slate-700">Built by David Xiao</p>
-                  <p className="text-xs text-slate-400">ACP Student AI Championship 2026</p>
+                  <p className="text-xs text-slate-400">ACP Student AI Championship 2026 · SDG 3 & SDG 16</p>
                 </div>
                 <a href="https://github.com/bobthebuilder-a11y/medcheck" target="_blank" rel="noopener noreferrer"
-                  className="text-xs text-blue-600 hover:text-blue-800 font-semibold transition-colors">
-                  GitHub →
-                </a>
+                  className="text-xs text-blue-600 hover:text-blue-800 font-semibold">GitHub →</a>
               </div>
             </div>
           </div>
@@ -504,8 +431,7 @@ export default function App() {
 
       </div>
 
-      {/* Footer */}
-      <footer className="bg-slate-900 mt-16 border-t border-slate-800">
+      <footer className="border-t border-slate-800" style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)' }}>
         <div className="max-w-3xl mx-auto px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 bg-blue-600 rounded flex items-center justify-center text-sm">🔬</div>
@@ -516,8 +442,8 @@ export default function App() {
           </div>
           <div className="flex items-center gap-3 text-xs text-slate-500">
             <a href="https://github.com/bobthebuilder-a11y/medcheck" target="_blank" rel="noopener noreferrer"
-              className="hover:text-blue-400 transition-colors font-medium">GitHub ↗</a>
-            <span className="text-slate-700">·</span>
+              className="hover:text-blue-400 font-medium">GitHub ↗</a>
+            <span>·</span>
             <span>Llama 4 · Groq</span>
           </div>
         </div>
