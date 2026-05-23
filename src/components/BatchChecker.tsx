@@ -118,17 +118,38 @@ export default function BatchChecker({ onClose }: Props) {
               );
             })}
 
-            {!running && (
-              <div className="flex gap-2 pt-2">
-                <button onClick={() => { setResults([]); setInput(''); }}
-                  className="flex-1 py-2.5 text-sm font-semibold text-slate-500 border border-slate-200 rounded-xl hover:bg-slate-50">
-                  Check more
-                </button>
-                <button onClick={onClose}
-                  className="flex-1 py-2.5 text-sm font-semibold text-white bg-slate-900 rounded-xl hover:bg-slate-800">
-                  Done
-                </button>
-              </div>
+            {!running && results.length > 0 && (
+              <>
+                {/* Summary */}
+                <div className="bg-slate-900 rounded-xl p-3.5">
+                  <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Batch Summary</p>
+                  <div className="flex items-center gap-4">
+                    {(['false', 'misleading', 'true', 'unverifiable'] as const).map(v => {
+                      const count = results.filter(r => r.analysis?.verdict === v).length;
+                      if (count === 0) return null;
+                      const cfg = { false: '❌', misleading: '⚠️', true: '✓', unverifiable: '❓' };
+                      const col = { false: 'text-red-400', misleading: 'text-amber-400', true: 'text-emerald-400', unverifiable: 'text-slate-400' };
+                      return (
+                        <div key={v} className="text-center">
+                          <span className="text-base">{cfg[v]}</span>
+                          <p className={`text-lg font-black ${col[v]}`}>{count}</p>
+                          <p className="text-[10px] text-slate-500 capitalize">{v}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <button onClick={() => { setResults([]); setInput(''); }}
+                    className="flex-1 py-2.5 text-sm font-semibold text-slate-600 border border-slate-200 rounded-xl hover:bg-slate-50">
+                    Check more
+                  </button>
+                  <button onClick={onClose}
+                    className="flex-1 py-2.5 text-sm font-semibold text-white bg-slate-900 rounded-xl hover:bg-slate-800">
+                    Done
+                  </button>
+                </div>
+              </>
             )}
           </div>
         )}
