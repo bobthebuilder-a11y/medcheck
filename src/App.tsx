@@ -142,11 +142,12 @@ export default function App() {
                   <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></span>
                   ACP Student AI Championship 2026 · SDG 3 & 16
                 </div>
-                <h1 className="text-3xl font-black text-gray-900 tracking-tight mb-2">
-                  Is that health claim true?
+                <h1 className="text-4xl font-black text-gray-900 tracking-tight mb-3 leading-tight">
+                  Is that health claim<br className="hidden sm:block" /> actually true?
                 </h1>
-                <p className="text-gray-500 text-base mb-5">
-                  AI-powered analysis aligned with CDC, WHO & peer-reviewed science
+                <p className="text-gray-500 text-base mb-5 max-w-md mx-auto leading-relaxed">
+                  Paste any health claim, headline, or social media post.<br className="hidden sm:block" />
+                  Get a structured, sourced verdict in seconds.
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-2">
                   {[
@@ -321,8 +322,29 @@ export default function App() {
                 <p className="text-sm text-gray-600 leading-relaxed">
                   MedCheck is an AI-powered health misinformation detector. It analyzes any health claim,
                   breaks it into individual assertions, checks each against scientific consensus, and returns
-                  a calibrated verdict with honest confidence scores and real source citations.
+                  a structured verdict with honest confidence scores and real source citations — in seconds.
                 </p>
+                <p className="text-sm text-gray-500 leading-relaxed mt-2">
+                  Built to address a real problem: false health claims spread 6× faster than corrections,
+                  and most fact-checkers require you to already be skeptical. MedCheck meets people where they are.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  { icon: '✅', label: 'TRUE', desc: 'Supported by evidence', color: 'border-emerald-200 bg-emerald-50 text-emerald-700' },
+                  { icon: '❌', label: 'FALSE', desc: 'Contradicted by evidence', color: 'border-red-200 bg-red-50 text-red-700' },
+                  { icon: '⚠️', label: 'MISLEADING', desc: 'Partial truth, false impression', color: 'border-amber-200 bg-amber-50 text-amber-700' },
+                  { icon: '❓', label: 'UNVERIFIABLE', desc: 'Insufficient consensus', color: 'border-gray-200 bg-gray-50 text-gray-600' },
+                ].map(v => (
+                  <div key={v.label} className={`border rounded-xl p-3 ${v.color}`}>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span>{v.icon}</span>
+                      <span className="font-bold text-xs tracking-wide">{v.label}</span>
+                    </div>
+                    <p className="text-xs opacity-80">{v.desc}</p>
+                  </div>
+                ))}
               </div>
 
               <div>
