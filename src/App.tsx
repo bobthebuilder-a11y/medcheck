@@ -3,6 +3,7 @@ import { analyzeClaim } from './lib/analyzer';
 import ResultCard from './components/ResultCard';
 import ExampleClaims from './components/ExampleClaims';
 import HistoryPanel from './components/HistoryPanel';
+import StatsBar from './components/StatsBar';
 import type { ClaimAnalysis, HistoryEntry } from './types';
 
 const STORAGE_KEY = 'medcheck_history';
@@ -98,13 +99,21 @@ export default function App() {
           <>
             {/* Hero text */}
             {!result && !loading && (
-              <div className="text-center mb-8">
+              <div className="text-center mb-6">
                 <h1 className="text-3xl font-black text-gray-900 tracking-tight mb-2">
                   Is that health claim true?
                 </h1>
-                <p className="text-gray-500">
+                <p className="text-gray-500 mb-6">
                   AI-powered analysis aligned with CDC, WHO & peer-reviewed science
                 </p>
+                <div className="flex items-center justify-center gap-4 text-xs text-gray-400">
+                  {['Claim decomposition', 'Evidence synthesis', 'Confidence calibration', 'Source citations'].map((step, i) => (
+                    <div key={step} className="flex items-center gap-2">
+                      {i > 0 && <span className="text-gray-300">→</span>}
+                      <span className="font-medium">{step}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
 
@@ -201,6 +210,8 @@ export default function App() {
 
         {activeTab === 'about' && (
           <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-6">
+            <StatsBar />
+
             <div>
               <h2 className="text-xl font-black text-gray-900 mb-2">What is MedCheck?</h2>
               <p className="text-sm text-gray-600 leading-relaxed">
