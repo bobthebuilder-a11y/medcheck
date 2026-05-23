@@ -218,25 +218,25 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
         {analysis.sources?.length > 0 && (
           <div>
             <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
-              Sources · {analysis.sources.length} cited
+              Scientific Sources · {analysis.sources.length} cited
             </h3>
-            <div className="bg-white/60 rounded-lg border border-slate-200/60 divide-y divide-slate-100">
+            <div className="space-y-1.5">
               {analysis.sources.map((s, i) => (
-                <div key={i} className="flex items-start gap-3 p-3 hover:bg-white/80 transition-colors">
-                  <div className="w-5 h-5 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-black shrink-0 mt-0.5">
+                <a key={i} href={s.url} target="_blank" rel="noopener noreferrer"
+                  className="flex items-start gap-3 p-2.5 bg-white/60 hover:bg-white border border-slate-100 hover:border-slate-200 rounded-lg transition-all group">
+                  <div className="w-5 h-5 rounded bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-black shrink-0 mt-0.5 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                     {i + 1}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <a href={s.url} target="_blank" rel="noopener noreferrer"
-                      className="text-sm text-blue-600 hover:text-blue-800 hover:underline font-semibold flex items-center gap-1">
+                    <p className="text-sm text-blue-600 group-hover:text-blue-800 font-semibold flex items-center gap-1">
                       {s.name}
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 opacity-50 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 opacity-40 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                       </svg>
-                    </a>
+                    </p>
                     <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">{s.relevance}</p>
                   </div>
-                </div>
+                </a>
               ))}
             </div>
           </div>
