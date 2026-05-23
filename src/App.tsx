@@ -37,7 +37,7 @@ export default function App() {
   const [history, setHistory] = useState<HistoryEntry[]>(loadHistory);
   const [activeTab, setActiveTab] = useState<'check' | 'about'>('check');
   const [loadingStep, setLoadingStep] = useState(0);
-  const [streamText, setStreamText] = useState('');
+  const [, setStreamText] = useState('');
   const stepTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
