@@ -44,6 +44,23 @@ The scale path: V1 (web app) → V2 (browser extension, flags claims automatical
 
 ---
 
+### Technical Architecture (If Asked)
+
+**Stack:** React + TypeScript + Vite (frontend) · Llama 4 via Groq API (AI engine) · Tailwind CSS · Vercel (hosting)
+
+**Key technical decisions:**
+- Structured JSON output (not conversational) — makes the AI a tool, not a chatbot
+- Streaming responses — shows real-time processing for better UX
+- Explicit confidence calibration in the system prompt
+- Political charge detection and flagging
+- Social media post extraction (AI extracts core claim from longer posts)
+
+**Why Groq/Llama instead of OpenAI:**
+- Free tier available, fast inference, works for our use case
+- Demonstrates that this can scale without cost barriers
+
+---
+
 ## AI Involvement Disclosure
 
 *(Required by the submission form)*
