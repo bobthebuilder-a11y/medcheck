@@ -147,7 +147,7 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
       </div>
 
       {/* Body */}
-      <div className={`${vc.bg} px-5 py-5 space-y-4`}>
+      <div className={`${vc.bg} px-5 py-4 space-y-4`}>
 
         {/* Claim */}
         <div className="bg-white/70 rounded-lg p-3 border border-slate-200/60">
@@ -177,11 +177,11 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
         )}
 
         {/* Summary */}
-        <p className={`text-sm font-semibold ${vc.text} leading-relaxed`}>{analysis.summary}</p>
+        <div className={`text-sm font-bold ${vc.text} leading-relaxed border-l-4 ${vc.border} pl-3 py-0.5`}>{analysis.summary}</div>
 
         {/* Explanation */}
         <div>
-          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Analysis</h3>
+          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Full Analysis</h3>
           <div className="text-sm text-slate-700 leading-relaxed space-y-2">
             {analysis.explanation.split('\n').filter(p => p.trim()).map((para, i) => (
               <p key={i}>{para}</p>
