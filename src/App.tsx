@@ -5,6 +5,7 @@ import ExampleClaims from './components/ExampleClaims';
 import HistoryPanel from './components/HistoryPanel';
 import StatsBar from './components/StatsBar';
 import SessionStats from './components/SessionStats';
+import RelatedClaims from './components/RelatedClaims';
 import type { ClaimAnalysis, HistoryEntry } from './types';
 
 const STORAGE_KEY = 'medcheck_history';
@@ -351,6 +352,11 @@ export default function App() {
                     ℹ️
                   </button>
                 </div>
+                <RelatedClaims
+                  category={result.category}
+                  currentClaim={lastClaim}
+                  onSelect={(c) => { setClaim(c); handleAnalyze(c); }}
+                />
               </div>
             )}
 
