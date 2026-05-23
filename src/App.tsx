@@ -43,6 +43,15 @@ export default function App() {
 
   useEffect(() => { saveHistory(history); }, [history]);
 
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && phase === 'done') handleReset();
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [phase]);
+
   // Cycle through loading steps during streaming
   useEffect(() => {
     if (phase === 'streaming') {
