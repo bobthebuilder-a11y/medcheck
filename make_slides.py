@@ -323,7 +323,7 @@ risks = [
     ("AI Overconfidence", "AI might sound confident when wrong — dangerous in health contexts", "Confidence scores shown explicitly. Low confidence verdicts are a FEATURE, not a bug."),
     ("User Dependency", "People might blindly trust AI instead of thinking critically", "Tool explains WHY, not just WHAT. Builds literacy, not reliance. Citations always provided."),
     ("False Authority", "Users might treat AI as a medical oracle", 'Explicit medical disclaimer on EVERY result: "Not a substitute for medical advice."'),
-    ("Bias on Charged Topics", "AI may be less reliable on politically contested claims", "Political Charge Flag (⚡) warns users explicitly. Connected to our research paper."),
+    ("Bias on Charged Topics", "AI may be less reliable on politically contested claims", "Political Charge Flag (⚡) explicitly warns users when AI reliability may be lower."),
     ("Hallucination Risk", "AI might cite sources that don't exist or say wrong things", "Citations linked so users can verify. Confidence score reflects uncertainty. Encourage verification."),
 ]
 
