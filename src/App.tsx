@@ -300,7 +300,7 @@ export default function App() {
             {/* Result */}
             {phase === 'done' && result && (
               <div className="space-y-4">
-                <ResultCard analysis={result} claim={lastClaim} />
+                <ResultCard analysis={result} claim={lastClaim} onReset={handleReset} />
                 <div className="flex gap-3">
                   <button onClick={handleReset}
                     className="flex-1 py-3 border-2 border-dashed border-gray-300 rounded-xl text-gray-500 hover:border-blue-400 hover:text-blue-600 text-sm font-semibold transition-all hover:bg-blue-50">
