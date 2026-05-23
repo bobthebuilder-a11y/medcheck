@@ -306,21 +306,28 @@ export default function App() {
 
             {/* Why this matters (idle + no history) */}
             {phase === 'idle' && history.length === 0 && (
-              <div className="mt-5 bg-slate-900 rounded-xl p-4 text-white">
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Why this matters</p>
-                <p className="text-sm text-slate-300 leading-relaxed mb-3">
-                  Fake health claims kill. Unverified cancer "cures" delay real treatment.
-                  Vaccine myths cause outbreaks. Dangerous supplements harm people who trust them.
-                  MedCheck gives anyone the ability to verify a claim in seconds.
-                </p>
-                <div className="flex items-center gap-5 text-xs text-slate-400 pt-3 border-t border-slate-700">
-                  {['Free forever', 'No account needed', 'No data stored', 'Any device'].map(s => (
-                    <span key={s} className="flex items-center gap-1">
-                      <span className="w-1 h-1 rounded-full bg-blue-500"></span>
-                      {s}
-                    </span>
-                  ))}
+              <div className="mt-5 space-y-3">
+                <div className="bg-slate-900 rounded-xl p-4 text-white">
+                  <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Why this matters</p>
+                  <p className="text-sm text-slate-300 leading-relaxed mb-3">
+                    Fake health claims kill. Unverified cancer "cures" delay real treatment.
+                    Vaccine myths cause outbreaks. Dangerous supplements harm people who trust them.
+                    MedCheck gives anyone the ability to verify a claim in seconds.
+                  </p>
+                  <div className="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs text-slate-400 pt-3 border-t border-slate-700">
+                    {['Free forever', 'No account needed', 'No data stored', 'Any device'].map(s => (
+                      <span key={s} className="flex items-center gap-1">
+                        <span className="w-1 h-1 rounded-full bg-blue-500"></span>
+                        {s}
+                      </span>
+                    ))}
+                  </div>
                 </div>
+                <button onClick={() => setShowBatch(true)}
+                  className="w-full py-3 bg-white border border-slate-200 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-50 shadow-sm flex items-center justify-center gap-2">
+                  <span>📋</span>
+                  Check multiple claims at once (Batch Mode)
+                </button>
               </div>
             )}
           </>
