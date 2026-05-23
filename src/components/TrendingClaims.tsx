@@ -81,7 +81,7 @@ export default function TrendingClaims({ onSelect }: Props) {
         ))}
       </div>
       <div className="px-4 py-2.5 border-t border-slate-100 bg-slate-50">
-        <p className="text-[10px] text-slate-400">Pre-verified by MedCheck AI · Click to analyze fresh</p>
+        <p className="text-[10px] text-slate-400">Pre-verified · Click to run a fresh AI analysis</p>
       </div>
     </div>
   );

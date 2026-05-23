@@ -183,6 +183,16 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
           )}
         </div>
 
+        {/* Low confidence warning */}
+        {analysis.confidence === 'low' && analysis.politicalCharge !== 'high' && (
+          <div className="bg-slate-100 border border-slate-200 rounded-lg p-3 flex items-start gap-2">
+            <span className="shrink-0 text-slate-400">ℹ</span>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              <strong className="text-slate-700">Low confidence:</strong> The AI is uncertain about this verdict. This may be due to limited scientific consensus, an ambiguous claim, or a very specific/technical topic. Verify independently.
+            </p>
+          </div>
+        )}
+
         {/* Political charge warning */}
         {analysis.politicalCharge === 'high' && (
           <div className="bg-purple-50 border border-purple-200 rounded-lg p-3 flex items-start gap-2">
