@@ -105,10 +105,10 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
       <div className={`${vc.headerBg} px-4 py-4`}>
         {/* Row 1: verdict + actions */}
         <div className="flex items-center justify-between gap-2 mb-2">
-          <div className="flex items-center gap-4 min-w-0">
+          <div className="flex items-center gap-6 min-w-0">
             <span className="text-lg font-black text-white tracking-wide leading-none">{vc.icon} {vc.label}</span>
             {analysis.politicalCharge === 'high' && (
-              <span className="text-[10px] font-bold text-white/80 bg-white/15 border border-white/25 pl-2 pr-3 py-0.5 rounded shrink-0">
+              <span className="text-[10px] font-bold text-white/80 bg-white/15 border border-white/25 pl-2.5 pr-5 py-1 rounded shrink-0">
                 ⚡ Contested
               </span>
             )}
