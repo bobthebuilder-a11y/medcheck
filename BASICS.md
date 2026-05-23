@@ -127,6 +127,16 @@ That elevates you from "student who built an app" to "student doing original AI 
 
 ---
 
+## Keyboard Shortcuts
+
+| Shortcut | Action |
+|---|---|
+| ⌘+Enter | Analyze the current claim |
+| Escape | Clear result, go back to idle |
+| ⌘+B | Open Batch Mode |
+
+---
+
 ## Likely Judge Questions — Quick Answers
 
 **"Why is AI the right tool for this?"**
