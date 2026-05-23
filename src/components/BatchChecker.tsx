@@ -92,12 +92,12 @@ export default function BatchChecker({ onClose }: Props) {
                   'border-slate-200'
                 }`}>
                   {r.status === 'done' && vc && (
-                    <div className={`${vc.headerBg} px-3 py-2 flex items-center justify-between`}>
+                    <div className={`border-b border-slate-100 px-3 py-2 flex items-center justify-between bg-white`}>
                       <div className="flex items-center gap-2">
-                        <span className="text-sm font-black text-white">{vc.icon}</span>
-                        <span className="text-xs font-black text-white tracking-wide">{vc.label}</span>
+                        <span className={`text-sm font-black ${vc.text}`}>{vc.icon}</span>
+                        <span className={`text-xs font-black tracking-wide ${vc.text}`}>{vc.label}</span>
                       </div>
-                      <span className="text-xs text-white/70">{r.analysis?.confidenceScore}% confidence</span>
+                      <span className="text-xs text-slate-400">{r.analysis?.confidenceScore}% confidence</span>
                     </div>
                   )}
                   {r.status === 'analyzing' && (
@@ -106,7 +106,7 @@ export default function BatchChecker({ onClose }: Props) {
                       <span className="text-xs font-medium text-white">Analyzing...</span>
                     </div>
                   )}
-                  <div className={`p-3 ${r.status === 'done' && vc ? vc.bg : r.status === 'analyzing' ? 'bg-blue-50' : 'bg-white'}`}>
+                  <div className={`p-3 ${r.status === 'done' && vc ? vc.assertionBg : r.status === 'analyzing' ? 'bg-blue-50' : 'bg-white'}`}>
                     <p className="text-sm text-slate-800 font-medium italic mb-1">"{r.claim.length > 80 ? r.claim.substring(0, 80) + '…' : r.claim}"</p>
                     {r.status === 'pending' && <p className="text-xs text-slate-400">Waiting...</p>}
                     {r.status === 'error' && <p className="text-xs text-red-500">Analysis failed</p>}

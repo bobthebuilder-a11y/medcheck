@@ -36,15 +36,15 @@ const TRENDING = [
   },
 ];
 
-const VERDICT_STYLES = {
-  true: 'bg-emerald-50 border-emerald-200 text-emerald-700',
-  false: 'bg-red-50 border-red-200 text-red-700',
-  misleading: 'bg-amber-50 border-amber-200 text-amber-700',
-  unverifiable: 'bg-slate-50 border-slate-200 text-slate-600',
+const VERDICT_COLORS: Record<string, string> = {
+  true: 'text-emerald-600',
+  false: 'text-red-600',
+  misleading: 'text-amber-600',
+  unverifiable: 'text-slate-500',
 };
 
-const VERDICT_ICONS = {
-  true: '✅', false: '❌', misleading: '⚠️', unverifiable: '❓',
+const VERDICT_ICONS: Record<string, string> = {
+  true: '✓', false: '✗', misleading: '⚠', unverifiable: '?',
 };
 
 interface Props {
@@ -53,35 +53,25 @@ interface Props {
 
 export default function TrendingClaims({ onSelect }: Props) {
   return (
-    <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 bg-slate-50">
-        <div className="flex items-center gap-2">
-          <span className="text-sm">🔥</span>
-          <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">Most Checked Claims</p>
-        </div>
-        <span className="text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-100 px-1.5 py-0.5 rounded-full">NEW</span>
+    <div className="bg-white rounded-lg border border-slate-200 overflow-hidden">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-slate-100">
+        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Most Checked Claims</p>
       </div>
       <div className="divide-y divide-slate-50">
         {TRENDING.map((item) => (
           <button key={item.claim} onClick={() => onSelect(item.claim)}
-            className="w-full text-left px-4 py-3 hover:bg-slate-50 transition-colors group border-l-2 border-transparent hover:border-blue-400">
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex-1 min-w-0">
-                <p className="text-sm text-slate-800 font-medium group-hover:text-blue-600 leading-snug">
-                  "{item.claim}"
-                </p>
-                <p className="text-xs text-slate-500 mt-1 leading-relaxed">{item.summary}</p>
-                <p className="text-[10px] text-slate-400 mt-1">{item.checked} · Click to re-analyze</p>
-              </div>
-              <div className={`flex items-center gap-1 text-xs font-bold border rounded-lg px-2 py-1 shrink-0 mt-0.5 ${VERDICT_STYLES[item.verdict]}`}>
-                <span>{VERDICT_ICONS[item.verdict]}</span>
-              </div>
-            </div>
+            className="w-full text-left px-4 py-2.5 hover:bg-slate-50 transition-colors group flex items-center gap-3">
+            <span className={`text-xs font-bold shrink-0 ${VERDICT_COLORS[item.verdict]}`}>
+              {VERDICT_ICONS[item.verdict]}
+            </span>
+            <p className="text-sm text-slate-700 flex-1 leading-snug group-hover:text-blue-600 transition-colors">
+              "{item.claim}"
+            </p>
+            <span className="text-xs text-blue-600 font-medium shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+              Try →
+            </span>
           </button>
         ))}
-      </div>
-      <div className="px-4 py-2.5 border-t border-slate-100 bg-slate-50">
-        <p className="text-[10px] text-slate-400">Pre-verified · Click to run a fresh AI analysis</p>
       </div>
     </div>
   );
