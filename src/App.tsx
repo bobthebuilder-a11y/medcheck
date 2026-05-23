@@ -328,13 +328,14 @@ export default function App() {
                 <ResultCard analysis={result} claim={lastClaim} onReset={handleReset} />
                 <div className="flex gap-2">
                   <button onClick={handleReset}
-                    className="flex-1 py-2.5 border-2 border-dashed border-slate-300 rounded-xl text-slate-500 hover:border-blue-400 hover:text-blue-600 text-sm font-semibold transition-all">
-                    + Check another
+                    className="flex-1 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-600 hover:bg-slate-50 hover:border-slate-300 text-sm font-semibold transition-all shadow-sm flex items-center justify-center gap-2">
+                    <span className="text-base">+</span>
+                    Check another claim
                   </button>
                   <button onClick={() => { handleReset(); setActiveTab('about'); }}
-                    className="px-3.5 py-2.5 border border-slate-200 rounded-xl text-slate-400 hover:text-slate-600 text-sm transition-colors"
+                    className="px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-50 text-sm transition-colors shadow-sm"
                     title="About MedCheck">
-                    ℹ
+                    ℹ️
                   </button>
                 </div>
                 <RelatedClaims
