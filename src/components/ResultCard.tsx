@@ -59,12 +59,12 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
   const vc = VERDICT_CONFIG[analysis.verdict];
   const cc = CONFIDENCE_CONFIG[analysis.confidence];
 
-  const handleShare = async () => {
+  const getShareText = () => {
     const divider = '─'.repeat(40);
     const sourcesText = analysis.sources?.length
       ? '\n\nSources:\n' + analysis.sources.map((s, i) => `[${i+1}] ${s.name}`).join('\n')
       : '';
-    const text = [
+    return [
       '🔬 MEDCHECK FACT-CHECK REPORT',
       divider,
       `Claim: "${claim}"`,
@@ -81,12 +81,21 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
       divider,
       'Verified by MedCheck AI · https://medcheck-murex.vercel.app',
     ].filter(Boolean).join('\n');
+  };
 
+  const handleShare = async () => {
+    const text = getShareText();
     if (navigator.share) {
       try { await navigator.share({ title: 'MedCheck Fact-Check Report', text }); } catch { /* cancelled */ }
     } else {
       await navigator.clipboard.writeText(text);
     }
+  };
+
+  const handleTweet = () => {
+    const tweetText = `${vc.icon} ${vc.label}: "${claim.substring(0, 80)}${claim.length > 80 ? '...' : ''}"\n\n${analysis.summary.substring(0, 150)}\n\nVerified by MedCheck AI`;
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
+    window.open(url, '_blank');
   };
 
   return (
@@ -132,6 +141,13 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
             </div>
           </div>
           <div className="flex items-center gap-1.5 shrink-0">
+            <button onClick={handleTweet}
+              className="p-1.5 rounded-lg bg-black/20 hover:bg-black/30 text-white/80 transition-colors hidden sm:flex items-center"
+              title="Share on Twitter/X">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </button>
             {onReset && (
               <button onClick={onReset}
                 className="p-1.5 rounded-lg bg-black/20 hover:bg-black/30 text-white/80 transition-colors"
