@@ -8,6 +8,29 @@ const VERDICT_COLORS: Record<string, string> = {
   misleading: 'text-amber-600', unverifiable: 'text-slate-500',
 };
 
+function exportHistory(history: HistoryEntry[]) {
+  const lines = [
+    '🔬 MEDCHECK SESSION REPORT',
+    '═'.repeat(50),
+    `Generated: ${new Date().toLocaleString()}`,
+    `Claims checked: ${history.length}`,
+    '',
+    ...history.flatMap((e, i) => [
+      `${i + 1}. "${e.claim}"`,
+      `   Verdict: ${VERDICT_ICONS[e.analysis.verdict]} ${e.analysis.verdict.toUpperCase()} (${e.analysis.confidenceScore}% confidence)`,
+      `   Summary: ${e.analysis.summary}`,
+      '',
+    ]),
+    '─'.repeat(50),
+    'MedCheck AI · https://medcheck-murex.vercel.app',
+  ];
+  const blob = new Blob([lines.join('\n')], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'medcheck-report.txt'; a.click();
+  URL.revokeObjectURL(url);
+}
+
 interface Props {
   history: HistoryEntry[];
   onSelect: (entry: HistoryEntry) => void;
@@ -20,9 +43,14 @@ export default function HistoryPanel({ history, onSelect, onClear }: Props) {
     <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
       <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 bg-slate-50">
         <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest">Recent</h3>
-        <button onClick={onClear} className="text-xs text-slate-400 hover:text-red-500 transition-colors font-medium">
-          Clear
-        </button>
+        <div className="flex items-center gap-3">
+          <button onClick={() => exportHistory(history)} className="text-xs text-blue-500 hover:text-blue-700 transition-colors font-medium">
+            Export ↓
+          </button>
+          <button onClick={onClear} className="text-xs text-slate-400 hover:text-red-500 transition-colors font-medium">
+            Clear
+          </button>
+        </div>
       </div>
       <div className="divide-y divide-slate-50">
         {history.slice(0, 5).map((entry) => (
