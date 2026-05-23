@@ -158,9 +158,11 @@ export default function App() {
                   <span className="text-blue-600">actually true?</span>
                 </h1>
 
+                <p className="text-slate-500 text-base leading-relaxed mb-2 max-w-lg">
+                  Health misinformation kills. Fake cures delay real treatment. Vaccine myths cause outbreaks.
+                </p>
                 <p className="text-slate-500 text-base leading-relaxed mb-5 max-w-lg">
-                  Health misinformation kills. Paste any claim, headline, or viral post —
-                  AI cross-references CDC, WHO & peer-reviewed science and returns a structured verdict in seconds.
+                  Paste any claim, headline, or viral post — AI cross-references CDC, WHO & peer-reviewed science and returns a structured verdict in seconds.
                 </p>
 
                 {/* Stats row */}
