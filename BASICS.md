@@ -178,6 +178,39 @@ Browser extension → anyone browsing sees flags automatically. Then open-source
 
 ---
 
+## Ideal Demo Script (4-6 minutes)
+
+**[0:00-1:00] Setup**
+Open https://medcheck-murex.vercel.app on screen. Point out the dark navbar, the "Why this matters" section, the urgency banner.
+
+**[1:00-2:30] Demo 1 — Classic misinformation**
+Click "Vaccines cause autism" from the example chips. Let it stream. When result appears:
+- "Notice it returned FALSE with 99% confidence — very strong scientific consensus"
+- "It broke the claim into individual assertions and checked each one"
+- "Three real sources from CDC and peer-reviewed journals — you can verify directly"
+
+**[2:30-4:00] Demo 2 — Misleading claim**
+Type manually: "Natural immunity is always better than vaccines". When result appears:
+- "This one came back MISLEADING, not FALSE — important distinction"
+- "The claim contains real science but the word 'always' makes it dangerous"
+- "Notice the political charge flag — this topic intersects with political controversy"
+
+**[4:00-5:00] Demo 3 — Social media post OR Batch mode**
+
+Option A (social media): Click the long "BREAKING: New study shows ivermectin..." example
+- "Watch — I pasted a full viral post, not just a claim"
+- "The AI extracted the core health claim and checked it"
+- Show the MISLEADING verdict with political charge
+
+Option B (batch): Open batch mode (Batch button in navbar)
+- Enter 3-4 claims, click analyze
+- "This lets us check multiple claims simultaneously — useful for fact-checking viral threads"
+
+**[5:00-5:30] Wrap up**
+Switch to About tab briefly — show the SDG alignment and accuracy section.
+
+---
+
 ## What to Do If Something Goes Wrong During the Demo
 
 **If the app is slow:**
