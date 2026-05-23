@@ -111,7 +111,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen page-bg">
+    <div className="page-bg">
       {showBatch && <BatchChecker onClose={() => setShowBatch(false)} />}
 
       {/* Navbar */}
@@ -385,7 +385,7 @@ export default function App() {
           <span className="text-sm" style={{ color: '#767676' }}>MedCheck · David Xiao · ACP 2026</span>
           <div className="flex items-center gap-3 text-sm" style={{ color: '#767676' }}>
             <a href="https://github.com/bobthebuilder-a11y/medcheck" target="_blank" rel="noopener noreferrer"
-              className="hover:underline" style={{ color: '#0071bc' }}>
+              className="hover:underline">
               GitHub ↗
             </a>
             <span>·</span>
