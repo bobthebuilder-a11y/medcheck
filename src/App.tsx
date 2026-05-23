@@ -44,6 +44,9 @@ export default function App() {
 
   useEffect(() => { saveHistory(history); }, [history]);
 
+  // Track total checks in sessionStorage for fun counter
+  const totalChecked = history.length;
+
   // Keyboard shortcuts
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
@@ -175,9 +178,16 @@ export default function App() {
             {/* Hero */}
             {phase === 'idle' && (
               <div className="text-center mb-7 hero-grid rounded-2xl py-8 px-4 -mx-2">
-                <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
-                  <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></span>
-                  ACP Student AI Championship 2026 · SDG 3 & 16
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold px-3 py-1.5 rounded-full">
+                    <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></span>
+                    ACP Student AI Championship 2026 · SDG 3 & 16
+                  </div>
+                  {totalChecked > 0 && (
+                    <div className="inline-flex items-center gap-1.5 bg-green-50 border border-green-200 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-full">
+                      ✅ {totalChecked} checked this session
+                    </div>
+                  )}
                 </div>
                 <h1 className="text-4xl font-black text-gray-900 tracking-tight mb-3 leading-tight">
                   Is that health claim<br className="hidden sm:block" /> actually true?
