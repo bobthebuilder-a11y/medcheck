@@ -64,11 +64,15 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
   const cc = CONFIDENCE_CONFIG[analysis.confidence];
 
   const handleShare = async () => {
-    const text = `MedCheck verdict on: "${claim}"\n\n${vc.icon} ${vc.label} (${analysis.confidenceScore}% confidence)\n${analysis.summary}\n\nVerify at: https://medcheck-murex.vercel.app`;
+    const sourcesText = analysis.sources?.length
+      ? '\n\nSources:\n' + analysis.sources.map((s, i) => `${i+1}. ${s.name}: ${s.url}`).join('\n')
+      : '';
+    const text = `MedCheck verdict on: "${claim}"\n\n${vc.icon} ${vc.label} (${analysis.confidenceScore}% confidence)\n\n${analysis.summary}\n\n${analysis.explanation}${sourcesText}\n\nVerify more claims at: https://medcheck-murex.vercel.app`;
     if (navigator.share) {
       try { await navigator.share({ title: 'MedCheck Result', text }); } catch { /* cancelled */ }
     } else {
       await navigator.clipboard.writeText(text);
+      // Brief feedback
     }
   };
 
