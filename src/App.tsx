@@ -82,6 +82,13 @@ export default function App() {
       return;
     }
 
+    // URL detection
+    if (/^https?:\/\//i.test(target)) {
+      setError('Please paste the text of the claim, not a URL. Copy the actual health claim text and paste it here.');
+      setPhase('error');
+      return;
+    }
+
     setPhase('streaming');
     setError('');
     setResult(null);
