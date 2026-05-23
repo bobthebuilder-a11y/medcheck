@@ -13,6 +13,7 @@ const EXAMPLES = [
   { text: "Sunscreen causes vitamin D deficiency", category: "nutrition" },
   { text: "Antibiotics can cure viral infections", category: "medications" },
   { text: "You can sweat out a fever", category: "general health" },
+  { text: "🧵 BREAKING: New study shows ivermectin reduces COVID hospitalizations by 80%!! Big pharma doesn't want you to know this. Share before deleted! 👇", category: "COVID-19", hot: true },
 ];
 
 const CATEGORY_STYLES: Record<string, string> = {
