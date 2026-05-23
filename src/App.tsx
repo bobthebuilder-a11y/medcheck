@@ -142,7 +142,7 @@ export default function App() {
         </div>
       </nav>
 
-      <div className="mx-auto px-16 pt-10 pb-24" style={{ maxWidth: '720px' }}>
+      <div className="mx-auto px-16 pt-10 pb-6" style={{ maxWidth: '720px' }}>
 
         {activeTab === 'check' && (
           <>
@@ -380,7 +380,7 @@ export default function App() {
 
       </div>
 
-      <footer className="border-t border-[#d6d7d9] bg-white">
+      <footer className="border-t border-[#d6d7d9] bg-white sticky bottom-0 z-10">
         <div className="mx-auto px-16 py-4 flex items-center justify-between" style={{ maxWidth: '720px' }}>
           <span className="text-sm" style={{ color: '#767676' }}>MedCheck · David Xiao · ACP 2026</span>
           <div className="flex items-center gap-3 text-sm" style={{ color: '#767676' }}>
