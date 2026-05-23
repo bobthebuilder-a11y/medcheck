@@ -103,16 +103,18 @@
 
 *[Open https://medcheck-murex.vercel.app on screen]*
 
-**Demo sequence:**
-1. Click "Vaccines cause autism" → show ❌ FALSE, High Confidence, claim breakdown, CDC citations
-2. Type manually: "Natural immunity is always better than vaccines" → show ⚠️ MISLEADING, ⚡ Politically Charged, nuanced breakdown
-3. Click About tab → show the 4 verdicts explained, stats bar, how it works
+**Demo sequence (3 minutes max):**
+1. **Click** "Vaccines cause autism" from the example chips → wait ~8 seconds → show ❌ FALSE, 95% confidence, claim breakdown, CDC citations
+2. **Type manually** "Natural immunity is always better than vaccines" → show ⚠️ MISLEADING, ⚡ Politically Charged, nuanced breakdown
+3. **Click the social media post example** (the long BREAKING NEWS one) → show how AI extracts the core claim from a full post
+4. **Click About tab** → briefly show problem stats and how it works
 
 **Key lines during demo:**
-- "Notice it doesn't just say false — it says *why* with specific scientific reasoning"
-- "MISLEADING is more honest than FALSE here — this claim has partial truth in it"
-- "The political charge flag means: treat this verdict with extra skepticism — AI is less reliable on politically contested topics."
-- "The About page explains how it works and shows the problem scale"
+- "It doesn't just say false — it says *why* with specific scientific reasoning"
+- "MISLEADING is more honest than FALSE — this claim has partial truth"
+- "The political charge flag signals when AI reliability may be lower — treat these results with extra scrutiny"
+- "Watch this — I'll paste a full viral social media post and it extracts and checks the actual claim"
+- "The confidence score is the most honest part — when it's low, the AI is telling you to be skeptical of its own answer""
 
 ---
 
