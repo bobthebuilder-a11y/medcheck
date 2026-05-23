@@ -1,5 +1,5 @@
 # MedCheck — Build Process & Research Journal
-*Written from the perspective of David Xiao, student researcher*
+*Written from the perspective of David Xiao*
 
 ---
 
@@ -39,7 +39,7 @@ Most people have none of those things in the moment they're reading a claim. An 
 
 The core question was: what should the output look like?
 
-A simple true/false answer felt wrong. I've been thinking about my research project on AI confidence miscalibration, and I realized the same problem would apply here — an AI that just says "FALSE" teaches people to trust AI verdicts, not to think critically themselves. That's dependency, not literacy.
+A simple true/false answer felt wrong. I realized that an AI that just says "FALSE" teaches people to trust AI verdicts, not to think critically themselves. That's dependency, not literacy.
 
 So the output became:
 1. **A verdict** (true / false / misleading / unverifiable) — the quick answer
@@ -48,7 +48,7 @@ So the output became:
 4. **An explanation** — *why* something is wrong, not just *that* it's wrong
 5. **Real citations** — CDC, WHO, PubMed — so users can verify themselves
 
-The political charge flag came from my research angle. One of the things I'm investigating in my paper is whether AI systems are more confidently wrong on politically charged health topics. Flagging it in the UI makes that visible to users — it's a signal to be more careful, not less.
+The political charge flag came from thinking carefully about where AI might be least reliable. On politically contested topics, the training data contains more conflicting viewpoints, which can cause AI to be inconsistent. Flagging it gives users a signal to apply extra scrutiny — it's honest design.
 
 ---
 
@@ -62,7 +62,7 @@ I spent a long time thinking about how to instruct the AI. The key insight was: 
 
 > *"Never express false confidence. A 'low confidence' honest answer is better than a 'high confidence' wrong answer."*
 
-This is directly connected to my research hypothesis — that LLMs often express high confidence when wrong, especially on politically charged topics. I wanted MedCheck to model better behavior.
+I wanted MedCheck to model better behavior than typical AI tools — which often sound confident when they shouldn't.
 
 The JSON output structure required careful design. I needed assertions (plural) because most health claims contain multiple factual statements bundled together. "Vaccines cause autism and damage the immune system" is two claims, not one. Breaking them apart forces precision.
 
@@ -74,7 +74,7 @@ The JSON output structure required careful design. I needed assertions (plural) 
 
 **On design:** The hardest design decision was the disclaimer at the bottom: *"Not a substitute for medical advice."* I almost removed it because it felt like legal boilerplate. But I kept it because honesty about limitations is part of what makes a tool trustworthy. Users need to know what this can and can't do.
 
-**On the research question:** Building this tool deepened my interest in the paper. Every time I tested a politically charged claim (vaccine mandates, COVID origins), I noticed the model would sometimes hedge more than on neutral claims — sometimes in the wrong direction. That's real-world evidence for what I want to study systematically.
+**On AI behavior:** Building this tool taught me a lot about how AI handles contested topics. Every time I tested a politically charged claim (vaccine mandates, COVID origins), I noticed the model would sometimes hedge more than on neutral claims — sometimes in the wrong direction. That's an interesting pattern worth understanding.
 
 **On impact:** A tool like this is only useful if people use it. Right now it requires someone to already be skeptical enough to check a claim. The next version needs to go to where claims are — browsers, social media feeds, messaging apps. That's V2.
 
@@ -82,11 +82,9 @@ The JSON output structure required careful design. I needed assertions (plural) 
 
 ## The Bigger Picture
 
-This project started as a competition entry. But it's grown into something I actually want to pursue. The research question — do AI systems show measurable bias in confidence calibration on politically charged topics — is something I want to answer rigorously, with real data, in a publishable paper.
+This project started as a competition entry. But it's grown into something I actually want to pursue further. The question of whether AI fact-checkers have systematic weaknesses on politically charged topics is something I want to explore more deeply — because if AI is being deployed at scale on social media platforms, understanding those weaknesses matters.
 
-If the answer is yes (and I think it is), that has real implications for how AI fact-checkers get deployed at scale. Social media platforms are already using AI to flag content. If those systems are confidently wrong on contested health topics, they're not just failing to help — they might be actively misleading people.
-
-That's worth studying. And it started with a health claim checker I built in one night for a competition.
+That's a question worth pursuing. And it started with a health claim checker I built in one night for a competition.
 
 ---
 
@@ -94,14 +92,14 @@ That's worth studying. And it started with a health claim checker I built in one
 
 After the first version was working, I didn't stop. I went through several feedback loops:
 
-**Iteration 1** was about functionality — making the tool actually useful. I added history tracking (so you can review past checks), a share button (so results can spread), category tags (so you can see what domain a claim falls in), and the About page that explains the research angle. The loading screen went from a simple spinner to an animated state that tells you what's happening.
+**Iteration 1** was about functionality — making the tool actually useful. I added history tracking (so you can review past checks), a share button (so results can spread), category tags (so you can see what domain a claim falls in), and the About page that explains how the tool works. The loading screen went from a simple spinner to an animated state that tells you what's happening.
 
 **Iteration 2** was about context. The problem with a fact-checking tool is that people might not understand *why* this problem is worth solving. I added a stats bar with real numbers: 30M+ uninsured Americans affected, false claims spread 6x faster than corrections, 1 in 3 Americans have acted on unverified social media health advice. Now the scope of the problem is visible before you even check your first claim. I also added a pipeline flow diagram showing how the analysis works: claim decomposition → evidence synthesis → confidence calibration → source citations.
 
-**Iteration 3** was about visibility of the research angle. The project isn't just an app — it's the instrument for a real research paper. I added a "Research Project" badge to the navbar and a purple callout banner explaining that MedCheck is the foundation for research on AI bias in politically charged health claims. This matters for judges: it elevates the project from "cool app" to "systematic investigation."
+**Iteration 3** was about communicating the "why" more clearly. I added context to the About page explaining the political charge flag and the scale of the health misinformation problem. This matters for judges: it shows thoughtful design, not just technical execution.
 
 **What I learned from iteration:**
-Every version revealed something I hadn't thought of. The stats bar came from thinking "how do judges know why this problem matters?" The research callout came from realizing judges might not connect the tool to the paper without being told. The confidence score's design — showing low confidence on contested topics — came from realizing that false confidence is itself a form of misinformation. Good design is mostly iteration.
+Every version revealed something I hadn't thought of. The stats bar came from thinking "how do judges know why this problem matters?" The political charge explainer came from realizing judges might not understand what it means without context. The confidence score's design — showing low confidence on contested topics — came from realizing that false confidence is itself a form of misinformation. Good design is mostly iteration.
 
 ---
 
