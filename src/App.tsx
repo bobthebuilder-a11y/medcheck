@@ -189,7 +189,7 @@ export default function App() {
                     </div>
                   )}
                 </div>
-                <h1 className="text-4xl font-black text-gray-900 tracking-tight mb-3 leading-tight">
+                <h1 className="text-4xl sm:text-5xl font-black text-gray-900 tracking-tight mb-3 leading-tight">
                   Is that health claim<br className="hidden sm:block" /> actually true?
                 </h1>
                 <p className="text-gray-500 text-base mb-4 max-w-md mx-auto leading-relaxed">
