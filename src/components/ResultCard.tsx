@@ -179,8 +179,8 @@ export default function ResultCard({ analysis, claim, onReset }: Props) {
         <div className={`text-sm font-bold ${vc.text} leading-relaxed border-l-4 ${vc.border} pl-3 py-0.5`}>{analysis.summary}</div>
 
         {/* Explanation */}
-        <div>
-          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Full Analysis</h3>
+        <div className="bg-white/50 rounded-lg p-3.5 border border-slate-200/40">
+          <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Full Analysis</h3>
           <div className="text-sm text-slate-700 leading-relaxed space-y-2">
             {analysis.explanation.split('\n').filter(p => p.trim()).map((para, i) => (
               <p key={i}>{para}</p>
